@@ -1,0 +1,69 @@
+<app-sidebar [current_menu_item]="'settings'"></app-sidebar>
+
+<div class="content-area floated add-job-white" #content_area>
+      <div class="main-head no-tabs">
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Settings</h2>
+				</div>
+				<app-header-right></app-header-right>
+            </div>
+        </div>
+
+		<div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh;">
+           <div class="row justify-content-md-center">
+              <div class="col-md-9">
+                 <div class="card job-grid new-job-block">
+                    <div class="inner">
+                       <div>
+                          <div class="main-content-content form-style-v2">
+                             <div class="element-box">
+								<form action="">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group s-form-row">
+												<!-- {{ form.settings.client_overtime_rate}} -->
+												<label class="form-label" for="exampleInputEmail1">Client Overtime Rate</label>
+												<input type="text" name="client_overtime_rate" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" [(ngModel)]="form.settings.client_overtime_rate">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group s-form-row">
+												<label class="form-label" for="exampleInputEmail1">Client Doubletime Rate</label>
+												<input type="text" name="client_doubletime_rate" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" [(ngModel)]="form.settings.client_doubletime_rate">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group s-form-row">
+												<label class="form-label" for="exampleInputEmail1">Candidate Overtime Rate</label>
+												<input type="text" name="candidate_overtime_rate" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" [(ngModel)]="form.settings.candidate_overtime_rate">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group s-form-row">
+												<label class="form-label" for="exampleInputEmail1">Candidate Doubletime Rate</label>
+												<input type="text" name="candidate_doubletime_rate" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" [(ngModel)]="form.settings.candidate_doubletime_rate">
+											</div>
+										</div>
+									</div>
+									<div class="card job-grid new-job-block" style="padding-bottom: 0px !important; ">
+										<div class="inner">
+											<div class="s-details job-form-block" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+												<div class="form-action-buttons">
+													<button type="submit" class="btn btn-lg btn-primary" (click)="UpdateSetting()" [disabled]="isLoading"><span *ngIf="!isLoading">Update</span><span *ngIf="isLoading">Updateing...</span></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+</div>

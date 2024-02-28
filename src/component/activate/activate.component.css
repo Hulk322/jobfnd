@@ -1,0 +1,18 @@
+.show-hide-password {
+	position: absolute;
+    top: 35px;
+    right: 10px;
+}
+
+
+.has-error{
+    border:1px solid red;
+}
+
+.has-success{
+    border:1px solid green;
+}
+
+.hide {
+    display: none;
+}

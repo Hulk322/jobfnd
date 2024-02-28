@@ -1,0 +1,87 @@
+<div class="dashboard-nav">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li [ngClass]="{'nav-item':true, 'active':current_menu_item=='dashboard'}">
+                    <a class="nav-link" routerLink="/candidate/dashboard"><i class="material-icons">speed</i>Dashboard</a>
+                </li>
+                <!-- <li [ngClass]="{'nav-item':true, 'active':current_menu_item=='profile'}">
+                    <a class="nav-link" routerLink="/candidate/profile"><i class="material-icons">layers</i>Profile</a>
+                </li> -->
+
+                <li [ngClass]="{'nav-item':true, 'active':current_menu_item=='resume'}">
+                    <a class="nav-link" routerLink="/candidate/resume"><i class="material-icons">person_pin</i>My Resume</a>
+                </li>
+
+                <li [ngClass]="{'nav-item':true, 'active':current_menu_item=='my-jobs'}">
+                    <a class="nav-link" routerLink="/candidate/my-jobs"><i class="material-icons">work</i>Saved Jobs</a>
+                </li>
+                
+
+                <!-- <li [ngClass]="{'nav-item':true, 'active':current_menu_item=='submissions'}">
+                    <a class="nav-link" routerLink="/candidate/submissions"><i class="material-icons">send</i>Submissions</a>
+                </li> -->
+            <li  [ngClass]="{'nav-item':true, 'active':current_menu_item=='applied-jobs'}">
+               <a class="nav-link" routerLink="/candidate/applied-jobs" id="navbardrop" >
+               <i class="material-icons">folder_special</i> My Applications
+               </a>
+              
+            </li>
+
+                
+              <!--   <li [ngClass]="{'nav-item':true, 'active':current_menu_item=='inbox'}">
+                     <a class="nav-link" ><i class="material-icons">inbox</i>Inbox   <span>3</span></a>
+                 </li> -->
+
+                 
+
+                <!-- <li class="nav-item">
+                    <a class="nav-link" >Timesheet & Expenses </a>
+                </li> -->
+            </ul>
+           
+            <ul class="navbar-nav ">
+
+                <li>
+                    <div class="search-mini">
+                        <input type="text" placeholder="Search jobs" [(ngModel)]="filters.what" (keyup.enter)="search()" >
+                        <!-- <input type="text" placeholder="Location" [(ngModel)]="filters.where" (keyup.enter)="search()"> -->
+                        <button (click)="search()"><i class="material-icons">search</i></button>
+                    </div>
+                </li>
+            
+            </ul>
+         
+            <div class="col-md-3">
+                <div class="btn-group custom-btn-group pull-right" role="group">
+                      <button   class="btn btn-default btn-sm" type="button">
+                            <i  
+                             class="material-icons">apps</i></button>
+                         
+                            <button class="btn btn-default btn-sm" type="button"  >
+                               <i _ngcontent-ces-c5="" 
+                              
+                                class="material-icons">menu</i></button>
+                   <!-- <button type="button" class="btn btn-default btn-sm"><i class="material-icons">graphic_eq</i> <span>Filter</span></button> -->
+                </div>
+             </div>
+        </div>
+    </nav>
+</div>
+
+
+<div class="account-alert-wrap" *ngIf="setup_password=='false'">
+    <div class="inner-wrap">
+
+        <label><i class="material-icons">done_all</i> 
+            <span>We have sent an email at  ({{ email }}) please click on link setup your password.  
+                <a href="#" style="display: none;"><i class="material-icons">vpn_key</i> Setup your Account Password</a>
+            </span>
+        </label>
+
+    </div>
+</div>

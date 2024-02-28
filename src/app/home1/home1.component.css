@@ -1,0 +1,11 @@
+@import url("../../assets/css/style.css");
+
+#google_autocomplete_input {
+    height: 60px !important;
+}
+.logo {
+    /* background: #fff;
+    padding: 10px 16px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px; */
+  }

@@ -1,0 +1,21 @@
+.submission-status.red{
+    color:red;
+}
+
+.submission_tab {
+    padding: 15px 10px 10px 10px;
+    margin-right: 15px;
+}
+
+.active_submission_tab {
+    border: 1px solid lightgray;
+    background-color: lightblue;
+}
+
+.text_align {
+	vertical-align: text-bottom;
+	font-size: 17px;
+}
+.job-grid .job-additionalinfo ul li {
+    padding-top: 5px;
+}

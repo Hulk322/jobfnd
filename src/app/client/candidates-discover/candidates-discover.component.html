@@ -1,0 +1,267 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+
+
+<div class="content-area floated invite-user-job">
+
+    <div class="main-head tabs-active" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Invite user to job</h2>
+                <a routerLink="/client/jobs" class="btn-secondary">
+                   <i class="material-icons">arrow_back</i> Back to Jobs Listing</a>
+            </div>
+            <app-header-right></app-header-right>
+
+
+        </div>
+
+    </div>
+    <div class="discover-candidate-wrap">
+   <div class="job-for-invitation">
+       <div class="card" style="cursor: pointer;" >
+          <h2 routerLink="/client/job/{{job?.id}}">{{ job?.title | slice:0:25 }} ({{ job?.id }})</h2>
+          <label routerLink="/client/job/{{job?.id}}" style="cursor: pointer;" class="sub-head">{{ job?.job_location }}</label>
+          <div>
+              <label routerLink="/client/job/{{job?.id}}" style="cursor: pointer;" class="badge large red"
+                  *ngIf="job?.job_type=='Temp Hire'">{{ job?.job_type }}</label>
+              <label routerLink="/client/job/{{job?.id}}" style="cursor: pointer;" class="badge large green"
+                  *ngIf="job?.job_type=='Full Time'">{{ job?.job_type }}</label>
+              <label routerLink="/client/job/{{job?.id}}" style="cursor: pointer;" *ngIf="job?.category != null" class="badge large gray">{{job?.category?.name}}</label>
+
+              
+          </div>
+       </div>
+   </div>
+        <div class="invite-users-list" (scroll)="onScroll($event)">
+            <ul [@listAnimation]="candidates.length">
+                <!-- Li loop start here -->
+                <li  *ngFor="let candidate of candidates; let index=index"  class="{{index}}" id="{{index}}" [className]="item == index ? 'item active' : ''">
+                    <span (click)="toggleList(index)" class="item-arrow">
+                            <i class="material-icons">
+                                keyboard_arrow_down
+                            </i>
+                        </span>
+
+                    <div  [className]="candidate?.WeightedScore > 29 ? 'perfect profile-status' : 'incomplete profile-status'">
+                         <svg  class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+                                <circle class="circle-chart__background" stroke="#efefef" stroke-width="4" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />
+                                <circle class="circle-chart__circle" stroke="#2F52DC" stroke-width="4" attr.stroke-dasharray="{{candidate?.WeightedScore}}, 100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.915494" r="15.91549431" />
+
+                                <g class="circle-chart__info">
+                                    <text class="circle-chart__percent" x="16.91549431" fill="#2F52DC" y="17" alignment-baseline="central" text-anchor="middle" font-size="12">{{ candidate?.WeightedScore }}</text>
+                                </g>
+                            </svg>
+
+                                 
+
+                    </div>
+                    <div class="title-location"  (click)="toggleList(index); candidateView( candidate.talent.id )">
+                        
+                        <h5>{{ candidate?.talent?.Name }} </h5>
+                        <p *ngIf="candidate?.talent?.Address != null &&
+                                         candidate?.talent?.Address != ''
+                                         && candidate?.talent?.Address != ', ' ">
+                            <i class="material-icons">
+                            location_on
+                            </i>
+                           {{ candidate?.talent?.Address | slice:0:20 }}</p>
+
+                    </div>
+
+                    <ng-container *ngIf="mode != 'search'">
+                        <span class="pool" *ngIf="candidate?.pool_category == 'S'" style="color: green;">{{candidate?.pool_category}}</span>
+                        <span class="pool" *ngIf="candidate?.pool_category == 'P'" style="color: orangered;">{{candidate?.pool_category}}</span>
+
+                    <div class="invitation-status invited" *ngIf="candidate.invited != true && current_invited_id != candidate.id">
+                        <a  (click)="inviteToJob(candidate); current_invited_id=candidate.id" (click)="toggleList(index)">
+                            <i class="material-icons">
+                            how_to_reg
+                            </i>
+                        </a>
+                    </div>
+
+                    <div class="invitation-status" *ngIf="candidate.invited===true || current_invited_id === candidate.id">
+                        <a>
+                            <i class="material-icons">
+                            how_to_reg
+                            </i>
+                        </a>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="mode == 'search'">
+                    <span class="pool" *ngIf="candidate?.talent?.pool_category == 'S'" style="color: green;">{{candidate?.talent?.pool_category}}</span>
+                    <span class="pool" *ngIf="candidate?.talent?.pool_category == 'P'" style="color: orangered;">{{candidate?.talent?.pool_category}}</span>
+
+                <div class="invitation-status invited" *ngIf="candidate.invited != true && current_invited_id != candidate.talent.id">
+                    <a  (click)="inviteToJob(candidate); current_invited_id=candidate.talent.id" (click)="toggleList(index)">
+                        <i class="material-icons">
+                        how_to_reg
+                        </i>
+                    </a>
+                </div>
+
+                <div class="invitation-status" *ngIf="candidate.invited===true || current_invited_id === candidate.talent.id">
+                    <a>
+                        <i class="material-icons">
+                        how_to_reg
+                        </i>
+                    </a>
+                </div>
+            </ng-container>
+
+<!--                     <div class="invitation-status" style="margin-right: 5px;">
+                        <a  (click)="dismiss(candidate)">
+                            <i class="material-icons">
+                            close
+                            </i>
+                        </a>
+                    </div> -->
+
+                    <div class="dismiss-user">
+                        <a (click)="dismiss(candidate)">
+                            <i class="material-icons">
+                                cancel
+                            </i>
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="other-info">
+                        <div class="work">
+                            <i class="material-icons">
+                                work_outline
+                            </i>
+                            <ul>
+                                <li>
+                                    <h6>{{ candidate.talent?.experiences[0]?.JobTitle | slice:0:25 }}</h6>
+                                    <p>{{ candidate.talent?.experiences[0]?.Organization | slice:0:25 }} <br>
+                                    <span> {{ candidate.talent?.experiences[0]?.StartDate }}
+                                    <span *ngIf="candidate.talent?.experiences[0]?.EndDate ">{{ "- " + candidate.talent?.experiences[0]?.EndDate }}</span>
+                                    <span *ngIf="!candidate.talent?.experiences[0]?.EndDate ">- Present</span></span></p>
+                                </li>
+                                <li>
+                                    <h6>{{ candidate.talent?.experiences[1]?.JobTitle | slice:0:25 }}</h6>
+                                    <p>{{ candidate.talent?.experiences[1]?.Organization | slice:0:25 }} <br>
+                                    <span> {{ candidate.talent?.experiences[0]?.StartDate }}
+                                    <span *ngIf="candidate.talent?.experiences[0]?.EndDate ">{{ "- " + candidate.talent?.experiences[0]?.EndDate }}</span>
+                                    <span *ngIf="!candidate.talent?.experiences[0]?.EndDate ">- Present</span></span></p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="education">
+                            <i class="material-icons">
+                                school
+                            </i>
+                            <ul>
+                                <li>
+                                    <h6 *ngIf="candidate.talent?.Institution">{{ candidate.talent?.Institution | slice:0:35 }}</h6>
+                                    <h6 *ngIf="!candidate.talent?.Institution">N/A</h6>
+                                    <p *ngIf="candidate.talent?.DegreeName">{{ candidate.talent?.DegreeName | slice:0:35 }}</p>
+                                    <p *ngIf="!candidate.talent?.DegreeName">N/A</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </li>
+            <!-- Listing Loader -->
+            <li class="item" *ngIf="isLoadingMore">
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <span class="shine" style="width: 100%;"></span>
+                <div class="clearfix"></div>
+            </li>
+            <!-- Listing Loader -->
+            </ul>
+
+        </div>
+
+        <!-- Right part start here-->
+        <div class="resume-section" *ngIf="current_tab == 'discover'">
+            <h3 *ngIf="!this.talent_id">Discover Candidate</h3>
+            <h3 *ngIf="this.talent_id">View Similar profile <span *ngIf="this.candidate_id">({{ similar_profile_candidate }})</span></h3>
+            <div class="similar">
+                <a (click)="getSimilarCandidates()" *ngIf="this.candidate_id">View Similar profiles</a>
+                <span>
+<!--                 <a style="text-align: left;" (click)="graph = false">Resume</a>
+                <a style="text-align: left;" (click)="graph = true">Graph</a> -->
+                <!-- <ul class="nav nav-pills">
+                <li>
+                    <a (click)="graph = false">Resume</a>
+                </li>
+                <li style="margin-left: 10px;">
+                    <a (click)="graph = true">Candidate Ontology</a>
+                    </li>
+
+                    <input type="text" 
+                class="form-control" 
+                name="skills" 
+                [(ngModel)]="filters.skills"
+                placeholder="Employer Name" style="width: 23%;
+                margin-left: 12px; font-size: 13px;">
+
+                    <input type="text" 
+                    class="form-control" 
+                    name="titles" 
+                    [(ngModel)]="filters.titles"
+                    placeholder="Angular Developer etc" style="width: 23%;
+                    margin-left: 10px; font-size: 13px;">
+
+                    <button class="btn btn-primary btn-sm" 
+                    style="margin-left: 10px;
+                    padding-left: 10px;
+                    padding-right: 10px;" 
+                    [disabled]="isLoading"
+                    (click)="filterCandidates()">Search 
+                    <span *ngIf="isLoading && searching" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span>
+                </button>
+
+                </ul> -->
+
+                
+
+            </span>
+
+            </div>
+            <div class="resume-wrap">
+                   <ngx-extended-pdf-viewer  *ngIf="submission.resumeFullUrl != '' && submission.resumeFullUrl != null && !graph" 
+                   [src]="fullUrl"
+                   useBrowserLocale="true"
+                   height="78vh">
+                   </ngx-extended-pdf-viewer>
+                   <iframe id="myIframe" *ngIf="graph" style=" width:100%; height:700px;" [src] ="urlSafe"></iframe>
+                </div>
+            <div class="row" style="text-align: center;
+            margin-top: 40%; padding-left: 40%;" *ngIf="isLoadingMore">
+                <p>Fetching more talents  <i class="fa fa-spinner fa-spin"></i></p>
+
+            </div>
+
+        </div>
+
+        <div class="resume-section" *ngIf="current_tab == 'compare'">
+            <app-compare-candidates 
+             [comparison_data]="compare_data"  
+            [compare_ids]="compare_ids"
+            ></app-compare-candidates>
+        </div>
+
+    </div>
+
+</div>

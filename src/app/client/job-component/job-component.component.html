@@ -1,0 +1,645 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+<div class="content-area floated" #content_area>
+   <div class="main-head tabs-active" #main_head>
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Job Details</h2>
+            <a (click)="backClicked()" class="btn-secondary">
+            <i class="material-icons">arrow_back</i> Back</a>
+         </div>
+         <app-header-right></app-header-right>
+         <div class="easytabs">
+            <ul>
+               <li style="cursor: pointer;" [ngClass]="{'active':current_tab=='job_details'}"
+               (click)="current_tab='job_details'"><a><label class="blue dot"></label> Job Details</a></li>
+               <li style="cursor: pointer;" [ngClass]="{'active':current_tab=='submissions'}"
+               (click)="current_tab='submissions'" >
+               <a><label class="green dot"></label> Applications <span>{{ job.submissionsCount ? job?.submissionsCount : 0 }}</span></a></li>
+               <li style="cursor: pointer;"
+               [ngClass]="{'active':current_tab=='interviews'}"
+               (click)="current_tab='interviews'" (click)="getJobInterviews()"><a><label class="orange dot" ></label> Interviews <span> {{ job.interviews?.length ? job.interviews?.length : 0 }}</span></a></li>
+               <li style="cursor: pointer;"
+               [ngClass]="{'active':current_tab=='offers'}"
+               (click)="current_tab='offers'" (click)="getJobOffers()"><a><label class="gray dot"></label> Offers <span>{{ job?.offers?.length ? job.offers.length:0 }}</span></a></li>
+            </ul>
+         </div>
+      </div>
+   </div>
+   <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="row job_details" *ngIf="current_tab=='job_details'">
+         <div class="col-md-9">
+            <div class="card job-grid single-job" style="min-height: 800px;">
+               <div class="btn-group job-grid-actions">
+
+
+                  <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">share</i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                     <a class="dropdown-item" >Copy Direct Job Link</a>
+                     <a class="dropdown-item" >LInked In</a>
+                  </div>
+               </div>
+               <div class="inner">
+                  <div class="s-details ">
+                     <div class="job-head-list">
+                        <a class="card-title-lg">
+                           <h2>{{ job?.title }}</h2>
+                        </a>
+                        <label>{{ job.address}}</label>
+                     </div>
+                     <div>
+                     <label class="badge large red"
+                         *ngIf="job.job_type=='Temp Hire'">{{ job.job_type }}</label>
+                     <label class="badge large green"
+                         *ngIf="job.job_type=='Full Time'">{{ job.job_type }}</label>
+                        <label class="badge large gray">{{ job?.category?.name }}</label>
+                        <button type="button"
+                        data-toggle="modal" data-target="#refer_modal"
+                         class="btn btn-primary btn-xs" style="margin-left: 13px; padding: 0.175rem 0.55rem;font-size: 14px;" >Refer</button>
+
+                        <button type="button"
+                        data-toggle="modal" data-target="#integrate_pool_modal"
+                         class="btn btn-primary" style="margin-left: 13px; padding: 0.175rem 0.55rem;font-size: 14px;">Integrate Pool</button>
+
+                        <label class="badge large gray" style="float: right;"><i class="material-icons">access_time</i>  <span>{{ job.posted }}</span></label>
+                     </div>
+                     <div class="job-description">
+                        <h3>Description</h3>
+                        <p [innerHTML]="job.description">
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div class="row">
+               <div class="btn-group col-md-12">
+                  <button class="btn btn-primary btn-lg dropdown-toggle"  data-toggle="dropdown" type="button"
+                   aria-haspopup="true" aria-expanded="false">
+                  Actions
+                  </button>
+                  <div class="dropdown-menu">
+                     <a class="dropdown-item" routerLink="/client/jobs/edit/{{job.id}}">Edit</a>
+                     <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#job_delete_model">Delete</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item"
+                     *ngIf="!isLoading" routerLink="/client/discover-candidates/{{job.id}}">Discover Candidates</a>
+                     <a class="dropdown-item" >Copy Direct URL</a>
+                  </div>
+               </div>
+            </div>
+            <div class="card job-grid" style="margin-top: 15px;">
+               <div class="card job-grid billrate-widget no-bottom-margin"  style="margin-top: 0px;">
+                  <h3 *ngIf="job.job_type == 'Temp Hire'"><i class="material-icons">trending_up</i> Bill Rate</h3>
+                  <h3 *ngIf="job.job_type == 'Full Time'"> Bill Rate </h3>
+                  <div class="inner">
+                     <div class="row" *ngIf="job.job_type == 'Temp Hire'">
+                        <div class="col-md-6">
+                           <h2>${{ job.min_rate  | number: '1.2-2' }}</h2>
+                           <span>Minumum</span>
+                        </div>
+                        <div class="col-md-6">
+                           <h2>${{ job.max_rate  | number: '1.2-2' }}</h2>
+                           <span>Maximum</span>
+                        </div>
+                     </div>
+                     <div class="row" *ngIf="job.job_type == 'Full Time'">
+                        <div class="col-md-12">
+                           <h2>${{ job.salary | number: '1.2-2' }}</h2>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+               <div class="inner">
+                  <div class="s-details ">
+                     <div class="job-head-list">
+                        <a class="card-title-sm ">
+                           <h2>Additional Details</h2>
+                        </a>
+                     </div>
+                     <div>
+                        <table class="table-job-info job-table-responsive">
+                           <tr>
+                              <td><i class="material-icons">offline_bolt</i>Salary Type</td>
+                              <td>{{ job.salary_type  }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">money</i>Currency</td>
+                              <td>{{ job.currency!=null?job.currency:'USD' }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">calendar_today</i>Start Date</td>
+                              <td>{{ job.start_date | date:'MM/dd/yyyy'  }}</td>
+                           </tr>
+                           <tr *ngIf="job.job_type=='Temp Hire'">
+                              <td><i class="material-icons">event</i>End Date   </td>
+                              <td>{{ job.tentative_end_date | date:'MM/dd/yyyy'  }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">check_circle_outline</i>Openings</td>
+                              <td>{{ job.openings}}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">equalizer</i>Experience</td>
+                              <td>{{ job.experience}}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">gps_fixed</i>Location</td>
+                              <td>{{ job.address }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">category</i>Category</td>
+                              <td>{{ job?.category?.name | titlecase }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">waves</i> Skills</td>
+                           </tr>
+                           <tr>
+                              <td colspan="2">
+                                 <div class="skillswrap">
+                                    <ul>
+                                       <li *ngFor="let skill of job.skills | slice:0:defaultSkillsCount">{{ skill.name | slice:0:45 }}</li>
+                                    </ul>
+                                 </div>
+                              </td>
+                           </tr>
+                           <tr style="padding-bottom: 0px;
+                           cursor: pointer;
+                           text-decoration: underline;">
+                              <td colspan="2" style="padding-top:0px;">
+                                   <span class="more" *ngIf="job.skills.length>10" (click)="toggleSkillsCount()">{{showMoreText}}</span>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="submissions" *ngIf="current_tab=='submissions'">
+         <div class="row">
+            <div class="col-12">
+               <div class="row" *ngIf="isLoading">
+                  <div class="col-md-3" *ngFor="let number of [0,1,2,3,4,5,6,7]">
+                     <div class="card job-grid">
+                        <div class="inner">
+                           <div class="s-details">
+                              <div class="job-head-list">
+                                 <a href="#" class="card-title-lg">
+                                    <h2>
+                                       <div class="shine mini"></div>
+                                    </h2>
+                                 </a>
+                                 <div class="shine mini"></div>
+                              </div>
+                              <div>
+                                 <div class="shine mini"></div>
+                                 <div class="shine mini"></div>
+                              </div>
+                           </div>
+                           <div class="skillswrap">
+                              <div class="row">
+                                 <div class="col-md-3">
+                                    <div class="shine mini"></div>
+                                 </div>
+                                 <div class="col-md-3">
+                                    <div class="shine mini"></div>
+                                 </div>
+                                 <div class="col-md-3">
+                                    <div class="shine mini"></div>
+                                 </div>
+                                 <div class="col-md-3">
+                                    <div class="shine mini"></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="job-additionalinfo">
+                              <div class="shine mini"></div>
+                           </div>
+                           <div class="job-statisticsv1 submissions">
+                              <div class="shine mini"></div>
+                              <div class="shine mini"></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+
+
+               <div *ngIf="!isLoading">
+               <app-submissions-grid
+               [single_job_id]="job.id"></app-submissions-grid>
+
+
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="interviews" *ngIf="current_tab=='interviews'">
+         <div class="col-12">
+            <div role="tabpanel" class="tab-pane " id="Interviews">
+               <div class="element-box">
+                  <div class="element-box">
+                     <div class="talent-pool">
+                        <div class="talent-pool_content form-style-v2">
+                           <input type="text" name="" id="input" class="form-control m-b-20" placeholder="Search by title, job title, candiate name">
+                           <div class="no-padding job-int-table">
+                              <table class="custom-table">
+                                 <tbody>
+                                    <tr *ngIf="interviews?.length==0">
+                                       <td class="text-center not-found" colspan="4">There are no interviews currently.</td>
+                                    </tr>
+                                    <tr *ngFor="let interview of interviews | orderBy:'id':true">
+                                       <td style="width: 50%; ">
+                                          <div class="media">
+                                             <a class="pull-left">
+                                             <img *ngIf="interview?.candidate?.meta?.profilePictureFullUrl!=null"
+                                                class="media-object"
+                                                style="width: 50px;
+                                                border-radius: 50%;
+                                                margin-right: 20px;"
+                                                src="{{ interview?.candidate?.meta?.profilePictureFullUrl }}" alt="Image">
+                                             </a>
+                                             <div class="media-body">
+                                                <h4 class="media-heading">{{ interview.title }}</h4>
+                                                <p class="title">{{ interview?.job?.title }}</p>
+                                                <p class="date" [title]="interview.location">
+                                                   <i class="material-icons">
+                                                      calendar_today
+                                                   </i> {{ interview.location | slice:0:16 }} - {{ interview.type }}</p>
+                                             </div>
+                                          </div>
+                                       </td>
+                                       <td>
+                                          <p class="Interviews__date">
+                                             <i class="material-icons">
+                                                calendar_today
+                                             </i> {{ interview?.dates[0]?.date | date:'MM/dd/yyyy' }}
+                                          </p>
+                                          <p class="Interviews__date">
+                                             <i class="material-icons">
+                                                access_time
+                                             </i>
+                                             <span> {{ interview?.dates[0]?.time_in | date:'shortTime' }}</span>
+                                             <i class="material-icons">
+                                                keyboard_arrow_right
+                                             </i>
+                                                <span>{{ interview?.dates[0]?.time_out | date:'shortTime' }}</span>
+                                          </p>
+                                       </td>
+                                       <td>
+                                          <div [ngClass]="{'interviews__label': true,
+                                             'btn-success': interview.current_status=='Vendor Accepted',
+                                             'btn-danger': interview.current_status=='Vendor Rejected',
+                                             'new': interview.current_status=='New'}" >{{ interview.current_status }}</div>
+                                       </td>
+                                       <td>
+                                          <a routerLink="/client/interview/{{interview.id}}"
+                                             class="btn btn-primary" style="margin-right:5px;">
+                                          <i class="fa fa-eye"></i>
+                                          </a>
+                                          <button (click)="deleteInterview(interview.id, interview)"
+                                          [disabled]="interview.deleted"
+                                          class="btn btn-danger"
+                                          >
+                                          <i class="fa fa-trash"></i>
+                                          <span *ngIf="interview.deleted"> Deleting...</span>
+                                          </button>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                        <!-- talent-pool_content -->
+                        <div class="talent-pool_sidebar_outer" style="display: none;">
+                           <div class="talent-pool_sidebar_inner">
+                              <div class="card">
+                                 <p class="filter">Sort By</p>
+                                 <div class="radio radio-blue">
+                                    <label for="optionsRadios1">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option2">
+                                    <span class="label-text">Todays Interview</span>
+                                    </label>
+                                 </div>
+                                 <div class="radio radio-blue">
+                                    <label for="optionsRadios2">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    <span class="label-text">This week</span>
+                                    </label>
+                                 </div>
+                                 <div class="radio radio-blue">
+                                    <label for="optionsRadios3">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option2">
+                                    <span class="label-text">Asceding</span>
+                                    </label>
+                                 </div>
+                                 <div class="radio radio-blue">
+                                    <label for="optionsRadios4">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios4" value="option2">
+                                    <span class="label-text">Descending</span>
+                                    </label>
+                                 </div>
+                                 <p class="filter">Filter By Status</p>
+                                 <div class="radio radio-blue">
+                                    <label for="optionsRadios5">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios5" value="option2">
+                                    <span class="label-text">Pending</span>
+                                    </label>
+                                 </div>
+                                 <div class="radio radio-blue">
+                                    <label for="optionsRadios6">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios6" value="option2">
+                                    <span class="label-text">Cancelled</span>
+                                    </label>
+                                 </div>
+                                 <div class="radio radio-blue">
+                                    <label for="optionsRadios6">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios6" value="option2">
+                                    <span class="label-text">Reschedule</span>
+                                    </label>
+                                 </div>
+                                 <div class="radio radio-blue">
+                                    <label for="optionsRadios6">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios6" value="option2">
+                                    <span class="label-text">Completed</span>
+                                    </label>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- talent-pool -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row offers" *ngIf="current_tab=='offers'">
+         <div class="col-md-12">
+            <div role="tabpanel" class="tab-pane " id="Offers">
+               <div class="element-box">
+                  <table class="custom-table">
+                     <thead>
+                        <tr>
+                           <th>Id</th>
+                           <th>Offer Title</th>
+                           <th>Type</th>
+                           <th>Salary / Bill Rate</th>
+                           <th>Vendor Markup / Bill Rate Overtime</th>
+                           <th>Created At</th>
+                           <th>Status</th>
+                           <th>Actions</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngIf="offers?.length==0">
+                           <td class="text-center not-found" colspan="9">There are no offers currently.</td>
+                        </tr>
+                        <tr *ngFor="let offer of offers | orderBy:'id':true">
+                           <td>{{ offer.id }}</td>
+                           <td>{{ offer.title }}</td>
+                           <td>{{ offer.type }}</td>
+                           <td>${{ (offer.type=='Full Time'?offer.salary:offer.bill_rate) | number: '1.2-2' }} </td>
+                           <td>%{{ (offer.type=='Full Time'?offer.vendor_markup:offer.bill_rate_overtime) | number: '1.2-2' }}</td>
+                           <td>{{ offer.created_at | date:'MM/dd/yyyy' }}</td>
+                           <td class="btn" style="margin-top:5px;"
+                           [ngClass] = "{ 'btn btn-success': offer.current_status=='Vendor Accepted'}"
+                           [ngClass] = "{ 'btn btn-danger': offer.current_status=='Vendor Rejected' }"
+                           [ngClass] = "{ 'btn btn-primary': offer.current_status=='New'}">
+                           {{ offer.current_status }}</td>
+                           <td>
+                              <a routerLink="/client/offer/{{offer.id}}" class="btn btn-primary action" style="margin-right:5px;">
+                              <i class="fa fa-eye"></i>
+                              </a>
+                              <button (click)="deleteOffer(offer.id, offer)"
+                              [disabled]="offer.deleted"
+                              class="btn btn-danger action"
+                              >
+                              <i class="fa fa-trash"></i>
+                              <span *ngIf="offer.deleted"> Deleting...</span>
+                              </button>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Job modal -->
+<div class="modal fade" id="job_delete_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Job Delete</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+       <form>
+         <div class="form-group">
+           <label for="exampleInputEmail1">Reason</label>
+           <select class="form-control" name="reason" [(ngModel)]="job_delete.reason">
+             <option value="job closed">Job Closed</option>
+             <option value="test job">Test Job</option>
+           </select>
+         </div>
+         <div class="form-group">
+           <label for="exampleInputPassword1">Note</label>
+           <textarea  cols="20" rows="5" name="notes" [(ngModel)]="job_delete.notes" class="form-control" ></textarea>
+         </div>
+       </form>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary"  (click)="deleteJob(job.id, job)" data-dismiss="modal">Delete Job</button>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+ <!-- Refer modal -->
+<div class="modal fade" id="refer_modal" data-keyboard="false" data-backdrop="static" #completeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Refer</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+       <form>
+         <section class="s-form-row radio-box">
+            <div class="s-radio" style="float: left;">
+                <input type="radio" id="email_type" value="email" [(ngModel)]="refer.type" name="refer_type">
+                <label for="email_type"><span>Email</span></label>
+               </div>
+               <div class="s-radio">
+           <input type="radio" id="sms_type" value="sms" [(ngModel)]="refer.type" name="refer_type">
+           <label for="sms_type"><span>SMS</span></label>
+         </div>
+         </section>
+         <div class="form-group" *ngIf="refer.type=='email'">
+            <label for="exampleInputPassword1">Email(s)</label>
+            <button class="btn
+            btn-sm btn-primary"
+            style="margin-left: 5px;"
+            (click)="addEmailField()">
+               Add More
+               </button>
+            <div class="row" *ngFor="let email of refer.emails; let index = index">
+               <div class="col-md-11">
+            <input
+
+             type="text" class="form-control"
+             style="margin-top: 7px;"
+
+             name="email_{{index}}" [(ngModel)]="email.email">
+               </div>
+               <div class="col-md-1">
+                   <a *ngIf="index>0" (click)="deleteReferEmail(index)" class="remove-int-time"><i style="color: red;margin-right: 17px; margin-top: 14px;" class="material-icons">cancel</i></a>
+               </div>
+            </div>
+
+
+         </div>
+
+         <div class="form-group" *ngIf="refer.type=='sms'">
+            <label for="exampleInputPassword1">Mobile(s)</label>
+            <button class="btn
+            btn-sm btn-primary"
+            style="margin-left: 5px;"
+            (click)="addPhoneField()">
+               Add More
+               </button>
+            <div class="row" *ngFor="let mobile of refer.mobiles; let index = index">
+               <div class="col-md-11">
+                  <input type="text"
+                   class="form-control"
+                   style="margin-top: 7px;"
+                    name="mobile_{{index}}" [(ngModel)]="mobile.mobile">
+               </div>
+               <div class="col-md-1">
+                  <a *ngIf="index>0" (click)="deleteReferMobile(index)" class="remove-int-time"><i style="color: red;margin-right: 17px; margin-top: 14px;" class="material-icons">cancel</i></a>
+               </div>
+            </div>
+
+         </div>
+
+         <div class="form-group">
+           <label for="exampleInputPassword1">Description</label>
+           <textarea
+           *ngIf="refer.type=='email'"
+           cols="20" rows="8" name="email_description" [(ngModel)]="refer.email_description" class="form-control" ></textarea>
+
+           <textarea
+           *ngIf="refer.type=='sms'"
+           cols="20" rows="5" name="sms_description" [(ngModel)]="refer.sms_description" class="form-control" ></textarea>
+
+         </div>
+       </form>
+       </div>
+       <div class="modal-footer">
+       <button type="button" [disabled]="isLoading" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-secondary" [disabled]="referisLoading" (click)="referViaEmailPreviewOrSms()">Preview<span *ngIf="referisLoading" style="padding-left: 5px;float: right;margin-left: 17px;margin-top: 4px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         <button type="button"
+            [disabled]="isLoading"
+         class="btn btn-primary"  (click)="referViaEmailOrSms()" >Send
+         <span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span> </button>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <!-- integrate pool modal -->
+<div class="modal fade" id="integrate_pool_modal" data-keyboard="false" data-backdrop="static" #completeModal2 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Integrate Pool</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+       <form>
+
+         <div class="form-group">
+            <label for="exampleInputPassword1">Email(s)</label>
+            <button class="btn
+            btn-sm btn-primary"
+            style="margin-left: 5px;"
+            (click)="addIntegratePool()">
+               Add More
+               </button>
+         <div class="row" *ngFor="let email of integrate_pool.emails; let index = index">
+            <div class="col-md-11">
+               <input type="text"
+               class="form-control"
+               style="margin-top: 7px;"
+                name="integrate_pool_email_{{index}}" [(ngModel)]="email.email">
+            </div>
+            <div class="col-md-1">
+               <a *ngIf="index>0" (click)="deleteIntegratePoolEmail(index)" class="remove-int-time"><i style="color: red;margin-right: 17px; margin-top: 14px;" class="material-icons">cancel</i></a>
+            </div>
+         </div>
+
+         </div>
+
+
+
+         <div class="form-group">
+           <label for="exampleInputPassword1">Description</label>
+           <textarea
+
+           cols="20" rows="8" name="integrate_pool.description" [(ngModel)]="integrate_pool.description" class="form-control" ></textarea>
+
+
+
+         </div>
+       </form>
+       </div>
+       <div class="modal-footer">
+       <button type="button" [disabled]="isLoading" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-secondary" [disabled]="referisLoading" (click)="integratePoolPreview()">Preview<span *ngIf="referisLoading" style="padding-left: 5px;float: right;margin-left: 17px;margin-top: 4px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         <button type="button" [disabled]="isLoading" class="btn btn-primary"  (click)="integratePool()">Send
+            <span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span>
+         </button>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+<!-- Refer Email Preview -->
+ <div class="modal fade" id="refer_email_previwe" data-keyboard="false" data-backdrop="static" #completeModal3 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 693px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Preview</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 80vh;overflow: auto;">
+         <div [innerHTML]="preview_text"></div>
+        <div class="modal-footer">
+        <button type="button" [disabled]="isLoading" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        <button type="button" class="btn btn-primary" (click)="referViaEmailOrSmsOrIntegratePool()" >Send<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+        </div>
+      </div>
+    </div>
+  </div>

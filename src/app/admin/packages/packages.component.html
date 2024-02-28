@@ -1,0 +1,215 @@
+<app-sidebar [current_menu_item]="'packages'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Packages</h2>
+              <a routerLink="/admin/packages/create" class="btn-orange"><i class="material-icons">add</i>Add Package</a>
+            </div>
+            <app-header-right></app-header-right>
+            
+        </div>
+
+    </div>
+
+     <div style=" margin:120px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+              
+              
+        <div class="row justify-content-md-center">
+            
+            
+            <div class="col-md-12">
+                
+                <table class="custom-table table-style-2">
+                    <thead>
+                        <tr>
+                        <th>Package Name</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Job Limit</th>
+                        <th>Created at</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        
+                        <tr *ngFor="let _package of packages">
+                          <td>
+                             <label class="title-bold">{{ _package?.name | titlecase }}</label>
+                         </td>
+                         <td>
+                            <label class="title-bold">{{ _package.type | uppercase }}</label>
+                         </td>
+                         <td>
+                            <label class="title-bold">$ {{ _package.price }}</label>
+                         </td>
+                         <td>
+                            <label class="title-bold">{{ _package.job_limit }}</label>
+                         </td>
+                        <td>
+                           <label class="title-bold">{{ _package.created_at | date }}</label>
+                        </td>
+                                   <td style="text-align: center;">
+                                      <div class="btn-group">
+                                         <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                           <i class="material-icons">more_horiz</i>
+                                         </button>
+                                         <div class="dropdown-menu dropdown-menu-right">
+                                         <a class="dropdown-item" data-target="#edit_job_model" data-toggle="modal" (click)="editPackage(_package)">View Detail</a>
+                                         <a class="dropdown-item"  data-target="#edit_job_model" data-toggle="modal" (click)="editPackage(_package)">Edit</a>
+                                          <a class="dropdown-item" style="cursor: pointer;" (click)="deleteIndustrie(indsutry.id, indsutry)">Delete</a>
+                                         </div>
+                                       </div>
+                                   </td>
+                                </tr>                         
+                    </tbody>
+                </table>
+            </div>
+        </div>
+           <div class="row">
+            <div class="col-md-12" style="margin-top: 20px;">
+                  <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                  [collectionSize]="pageObj.totalElements"
+                  [(page)]="pageObj.page"
+                  [maxSize]="5"
+                  (pageChange)="pageChange($event)" 
+                  [pageSize]="pageObj.pageSize"
+                  [boundaryLinks]="true">
+                  </ngb-pagination>
+               </div>
+        </div>
+    </div>
+
+</div>
+
+<!--Edit Job modal -->
+<div class="modal smodal custom-form-group-flat" id="edit_job_model" style="margin-top:100px;">
+   <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+         <div class="modal-header">
+               <h4 class="modal-title">Edit Package</h4>
+            <button class="close" data-dismiss="modal">&times;</button>
+            
+         </div>
+         <div class="modal-body" style="height: 400px !important;">
+         <form autocomplete="off">
+            <input autocomplete="false" name="hidden" type="text" style="display:none;">
+            
+            <div class="row">
+            <div class="col-md-6">
+            	<div class="form-group">
+               		<label for="">Package Name</label>
+               		<input type="text" class="form-control" name="name" [(ngModel)]="_package.name">
+           		</div>
+            </div>
+               <div class="col-md-6">
+            	<div class="form-group">
+               		<label for="">Type</label>
+               		<select name="type" [(ngModel)]="_package.type" class="form-control">
+                     <option value="">Select</option>
+                     <option value="monthly">Monthly</option>
+                     <option value="yearly">Yearly</option>
+                  </select>
+            		</div>
+            	</div>
+            </div>
+
+		 <div class="row">
+		 <div class="col-md-6">
+		 	<div class="form-group">
+		    		<label for="">Price</label>
+		    		<input type="text" class="form-control" name="price"  [(ngModel)]="_package.price">
+				</div>
+		 </div>
+		    <div class="col-md-6">
+		 	<div class="form-group">
+		    		<label for="">Package Limit</label>
+		    		<input type="number" class="form-control" name="job_limit" min="1" [(ngModel)]="_package.job_limit">
+		 		</div>
+		 	</div>
+		 </div>
+		 	<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+					<label for="">Description</label>
+					<editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew"
+                      [init]="{plugins: 'link',  height : '180px'}"
+                      name="description" [(ngModel)]="_package.description"></editor>
+					</div>
+
+				</div>
+			</div>
+         </form>
+        
+         </div>
+           <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" (click)="updatePackage()">Update</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- View Job modal-->
+
+<div class="modal smodal custom-form-group-flat" id="view_job_model" style="margin-top:100px;">
+   <div class="modal-dialog modal-lg" >
+      <div class="modal-content">
+         <div class="modal-header">
+               <h4 class="modal-title">View Package</h4>
+            <button class="close" data-dismiss="modal">&times;</button>
+            
+         </div>
+         <div class="modal-body" style="height: 400px !important;">
+         <form autocomplete="off">
+            <input autocomplete="false" name="hidden" type="text" style="display:none;">
+            
+            <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label for="">Package Name</label>
+                  <input type="text" class="form-control" name="name" [(ngModel)]="_package.name" disabled="">
+              </div>
+            </div>
+               <div class="col-md-6">
+              <div class="form-group">
+                  <label for="">Type</label>
+                  <input name="type" [(ngModel)]="_package.type" class="form-control" disabled="">
+                </div>
+              </div>
+            </div>
+
+     <div class="row">
+     <div class="col-md-6">
+      <div class="form-group">
+            <label for="">Price</label>
+            <input type="text" class="form-control" name="price"  [(ngModel)]="_package.price" disabled="">
+        </div>
+     </div>
+        <div class="col-md-6">
+      <div class="form-group">
+            <label for="">Package Limit</label>
+            <input type="number" class="form-control" name="job_limit" min="1" [(ngModel)]="_package.job_limit" disabled="">
+        </div>
+      </div>
+     </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+          <label for="">Description</label>
+                    <editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew"
+                                [init]="{plugins: 'link',  height : '180px'}"
+                                name="description" [(ngModel)]="_package.description" [disabled]="true"></editor>
+          </div>
+
+        </div>
+      </div>
+         </form>
+        
+         </div>
+      </div>
+   </div>
+</div>

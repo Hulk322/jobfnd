@@ -1,0 +1,679 @@
+<div class="wrap btm-padding-1 graybg">
+   <div class="shadow-header-wrap header-publicnav">
+      <app-header [saved_jobs_count_from_parent]="new_saved_count"></app-header>
+      <app-sub-menu [current_menu_item]="'my-jobs'"></app-sub-menu>
+   </div>
+   <div class="inner-wrap">
+      <div class="job-list-grid">
+         <div class="page-subhead" *ngIf="saved_jobs?.length>=1">
+            <div class="row">
+
+               <div class="col-md-9">
+                  <div class="header-tabs">
+                     <div class="header-tabs">
+                        <a><i class="material-icons">chat_bubble</i>Saved Jobs</a>
+                        <!-- <a><i class="material-icons">offline_bolt</i>Top Matchings</a> -->
+                     </div>
+                  </div>
+               </div>
+
+               <div class="col-md-3" *ngIf="!isLoading">
+                  <div class="btn-group custom-btn-group pull-right" role="group">
+                     <button (click)="view_type='grid'" type="button" class="btn btn-default btn-sm"><i
+                           class="material-icons">apps</i></button>
+                     <button (click)="view_type='list'" type="button" class="btn btn-default btn-sm"><i
+                           class="material-icons">menu</i></button>
+                     <button type="button" class="btn btn-default btn-sm"><i class="material-icons">graphic_eq</i>
+                        <span>Filter</span></button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="applied_jobs" *ngIf="current_tab=='applied_jobs' && !isLoading">
+
+            <app-jobs-list class="row list" *ngIf="view_type=='list'" [jobs]="jobs"></app-jobs-list>
+
+            <app-jobs-grid class="row grid" *ngIf="view_type=='grid'" [jobs]="jobs"></app-jobs-grid>
+
+         </div>
+         <div class="saved_jobs" *ngIf="current_tab=='saved_jobs' && !isLoading">
+
+            <app-empty-list *ngIf="saved_jobs?.length<1" [pageName]="'saved-jobs'"></app-empty-list>
+
+            <div class="row" *ngIf="view_type=='list'">
+               <div class="col-md-12" *ngFor="let job of saved_jobs" style="cursor: pointer;">
+                  <div *ngIf="job.saved==1" class="card-grid-job list-card-jobs" (click)="goToJob(job.id)">
+                     <div class="row">
+                        <div class="col-md-10 sborder-right">
+                           <div class="job-title">
+                              <h4 (click)="goToJob(job.id)">{{job.title }}</h4>
+                           </div>
+                           <div class="job-info">
+                              <div class="row">
+                                 <div class="col-md-2">
+                                    <div class="blckinfo">
+                                       <i class="material-icons">apartment</i>
+                                       <span>{{ job?.client_organization?.name }}</span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-3">
+                                    <div class="blckinfo">
+                                       <i class="material-icons">room</i>
+                                       <span>{{ job.job_location!=null?job.job_location:'Not Available' }}</span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-2">
+                                    <div class="blckinfo">
+                                       <input type="hidden" value="{{ job?.category?.name }}" itemprop="industry">
+                                       <input type="hidden" value="{{ job.openings }}" itemprop="totalJobOpenings">
+                                       <input type="hidden" value="{{job.star_date}}" itemprop="jobStartDate">
+                                       <div class="icon-exp">
+                                          <svg *ngIf="job.experience=='Entry'||job.experience==null"
+                                             xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5"
+                                             viewBox="0 0 20.245 18.5">
+                                             <defs>
+                                                <style>
+                                                   .a,
+                                                   .b {
+                                                      fill: none;
+                                                      stroke-linecap: round;
+                                                      stroke-width: 3px;
+                                                   }
+
+                                                   .a {
+                                                      stroke: #5bcb58;
+                                                   }
+
+                                                   .b {
+                                                      stroke: #c8c7c7;
+                                                   }
+                                                </style>
+                                             </defs>
+                                             <g transform="translate(-87 -506.736)">
+                                                <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                                                <line class="b" y1="11.126" transform="translate(94.123 512.609)" />
+                                                <line class="b" y1="12.916" transform="translate(99.745 510.82)" />
+                                                <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                                             </g>
+                                          </svg>
+                                          <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'"
+                                             xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5"
+                                             viewBox="0 0 20.245 18.5">
+                                             <defs>
+                                                <style>
+                                                   .a,
+                                                   .b {
+                                                      fill: none;
+                                                      stroke-linecap: round;
+                                                      stroke-width: 3px;
+                                                   }
+
+                                                   .a {
+                                                      stroke: #5bcb58;
+                                                   }
+
+                                                   .b {
+                                                      stroke: #c8c7c7;
+                                                   }
+                                                </style>
+                                             </defs>
+                                             <g transform="translate(-87 -506.736)">
+                                                <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                                                <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                                                <line class="b" y1="12.916" transform="translate(99.745 510.82)" />
+                                                <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                                             </g>
+                                          </svg>
+                                          <svg
+                                             *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'"
+                                             xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5"
+                                             viewBox="0 0 20.245 18.5">
+                                             <defs>
+                                                <style>
+                                                   .a,
+                                                   .b {
+                                                      fill: none;
+                                                      stroke-linecap: round;
+                                                      stroke-width: 3px;
+                                                   }
+
+                                                   .a {
+                                                      stroke: #5bcb58;
+                                                   }
+
+                                                   .b {
+                                                      stroke: #c8c7c7;
+                                                   }
+                                                </style>
+                                             </defs>
+                                             <g transform="translate(-87 -506.736)">
+                                                <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                                                <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                                                <line class="a" y1="12.916" transform="translate(99.745 510.82)" />
+                                                <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                                             </g>
+                                          </svg>
+                                          <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg"
+                                             width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                             <defs>
+                                                <style>
+                                                   .a {
+                                                      fill: none;
+                                                      stroke: #5bcb58;
+                                                      stroke-linecap: round;
+                                                      stroke-width: 3px;
+                                                   }
+                                                </style>
+                                             </defs>
+                                             <g transform="translate(-87 -506.736)">
+                                                <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                                                <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                                                <line class="a" y1="12.916" transform="translate(99.745 510.82)" />
+                                                <line class="a" y1="15.5" transform="translate(105.745 508.236)" />
+                                             </g>
+                                          </svg>
+                                       </div>
+                                       <span>{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-3"
+                                    *ngIf="(job.job_type=='Full Time' && job.salary!=null) || (job.job_type=='Temp Hire' && (job.min_rate>0 || job.max_rate>0))">
+                                    <div class="blckinfo">
+                                       <i class="material-icons">monetization_on</i>
+                                       <span *ngIf="job.job_type=='Temp Hire'">${{ job.min_rate | number: '1.2-2' }} /
+                                          {{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}
+                                          <label *ngIf="job.max_rate>0"> - ${{ job.max_rate | number: '1.2-2' }} /
+                                             {{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}</label></span>
+                                       <label *ngIf="job.job_type=='Full Time' && job.salary!=null">
+                                          {{job.salary | currency: '$' }}
+                                       </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="job-description">
+                              <p [innerHtml]="job.excerpt"></p>
+                           </div>
+                           <div class="badges">
+                              <span class="badge badge-green">{{ job.job_type }}</span>
+                              <span class="badge badge-white"
+                                 *ngFor="let skill of job.skills | slice:0:2">{{ skill.name | slice:0:15 }}</span>
+                              <span *ngIf="job?.skills?.length > 2" class="badge badge-more badge-white"> +2 </span>
+                           </div>
+                        </div>
+                        <div class="col-md-2">
+                           <a *ngIf="job.hasApplied!=true" href="javascript:void(0)"
+                              (click)="oneClickApplyToJob(job.id)" class="btn btn-primary btn-apply-1">Apply</a>
+                           <a *ngIf="job.hasApplied==true" (click)="$event.stopPropagation();" href="javascript:void(0)"
+                              class="btn btn-primary btn-apply-1 apply-disable">
+                              <i class="material-icons">done_all</i>
+                           </a>
+                           <a href="javascript:void(0)" *ngIf="job.saved == 1"
+                              (click)="toggleSavedJob(job.id); job.saved=!job.saved; $event.stopPropagation();" class=""
+                              [ngStyle]="{'color':job.saved == 1 ? '#007bff' : '#cac7c7' }">
+                              <i class="material-icons bookmark-active">bookmark</i></a>
+                           <a href="javascript:void(0)" *ngIf="job.saved != 1"
+                              (click)="toggleSavedJob(job.id); job.saved=!job.saved; $event.stopPropagation();" class=""
+                              [ngStyle]="{'color':job.saved == 1 ? '#007bff' : '#cac7c7' }">
+                              <i class="material-icons">bookmark_border</i></a>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row" *ngIf="view_type=='grid'">
+               <div class="col-md-4" *ngFor="let job of saved_jobs" style="cursor: pointer;">
+                  <div *ngIf="job.saved==1" class="card-grid-job" (click)="goToJob(job.id)">
+                     <div class="job-title">
+                        <h4 (click)="goToJob(job.id)">{{job.title  }}</h4>
+                     </div>
+                     <div class="job-info">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="blckinfo">
+                                 <i class="material-icons">apartment</i>
+                                 <span>{{ job?.client_organization?.name }}</span>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="blckinfo">
+                                 <i class="material-icons">room</i>
+                                 <span>{{ job.job_location!=null?job.job_location:'Not Available' }}</span>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="blckinfo">
+                                 <input type="hidden" value="{{ job?.category?.name }}" itemprop="industry">
+                                 <input type="hidden" value="{{ job.openings }}" itemprop="totalJobOpenings">
+                                 <input type="hidden" value="{{job.star_date}}" itemprop="jobStartDate">
+                                 <div class="icon-exp">
+                                    <svg *ngIf="job.experience=='Entry'||job.experience==null"
+                                       xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5"
+                                       viewBox="0 0 20.245 18.5">
+                                       <defs>
+                                          <style>
+                                             .a,
+                                             .b {
+                                                fill: none;
+                                                stroke-linecap: round;
+                                                stroke-width: 3px;
+                                             }
+
+                                             .a {
+                                                stroke: #5bcb58;
+                                             }
+
+                                             .b {
+                                                stroke: #c8c7c7;
+                                             }
+                                          </style>
+                                       </defs>
+                                       <g transform="translate(-87 -506.736)">
+                                          <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                                          <line class="b" y1="11.126" transform="translate(94.123 512.609)" />
+                                          <line class="b" y1="12.916" transform="translate(99.745 510.82)" />
+                                          <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                                       </g>
+                                    </svg>
+                                    <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'"
+                                       xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5"
+                                       viewBox="0 0 20.245 18.5">
+                                       <defs>
+                                          <style>
+                                             .a,
+                                             .b {
+                                                fill: none;
+                                                stroke-linecap: round;
+                                                stroke-width: 3px;
+                                             }
+
+                                             .a {
+                                                stroke: #5bcb58;
+                                             }
+
+                                             .b {
+                                                stroke: #c8c7c7;
+                                             }
+                                          </style>
+                                       </defs>
+                                       <g transform="translate(-87 -506.736)">
+                                          <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                                          <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                                          <line class="b" y1="12.916" transform="translate(99.745 510.82)" />
+                                          <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                                       </g>
+                                    </svg>
+                                    <svg
+                                       *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'"
+                                       xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5"
+                                       viewBox="0 0 20.245 18.5">
+                                       <defs>
+                                          <style>
+                                             .a,
+                                             .b {
+                                                fill: none;
+                                                stroke-linecap: round;
+                                                stroke-width: 3px;
+                                             }
+
+                                             .a {
+                                                stroke: #5bcb58;
+                                             }
+
+                                             .b {
+                                                stroke: #c8c7c7;
+                                             }
+                                          </style>
+                                       </defs>
+                                       <g transform="translate(-87 -506.736)">
+                                          <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                                          <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                                          <line class="a" y1="12.916" transform="translate(99.745 510.82)" />
+                                          <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                                       </g>
+                                    </svg>
+                                    <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg"
+                                       width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                       <defs>
+                                          <style>
+                                             .a {
+                                                fill: none;
+                                                stroke: #5bcb58;
+                                                stroke-linecap: round;
+                                                stroke-width: 3px;
+                                             }
+                                          </style>
+                                       </defs>
+                                       <g transform="translate(-87 -506.736)">
+                                          <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                                          <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                                          <line class="a" y1="12.916" transform="translate(99.745 510.82)" />
+                                          <line class="a" y1="15.5" transform="translate(105.745 508.236)" />
+                                       </g>
+                                    </svg>
+                                 </div>
+                                 <span>{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                              </div>
+                           </div>
+                           <div class="col-md-6"
+                              *ngIf="(job.job_type=='Full Time' && job.salary!=null) || (job.job_type=='Temp Hire' && (job.min_rate>0 || job.max_rate>0))">
+                              <div class="blckinfo">
+                                 <i class="material-icons">monetization_on</i>
+                                 <span *ngIf="job.job_type=='Temp Hire'">${{ job.min_rate | number: '1.2-2' }} /
+                                    {{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}
+                                    <label *ngIf="job.max_rate>0"> - ${{ job.max_rate | number: '1.2-2' }} /
+                                       {{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}</label></span>
+                                 <label *ngIf="job.job_type=='Full Time' && job.salary!=null">
+                                    {{job.salary | currency: '$' }}
+                                 </label>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="job-description">
+                        <p [innerHtml]="job.excerpt"></p>
+                     </div>
+                     <div class="badges">
+                        <span class="badge badge-green">{{ job.job_type }}</span>
+                        <span class="badge badge-white"
+                           *ngFor="let skill of job.skills | slice:0:2">{{ skill.name | slice:0:15 }}</span>
+                        <span *ngIf="job?.skills?.length > 2" class="badge badge-more badge-white">
+                           +{{ job?.skills?.length-2 }} </span>
+                     </div>
+                     <div class="card-footer-job">
+                        <div class="row">
+
+                           <div class="col-md-12 card-footer-no-score">
+
+                              <a *ngIf="job.hasApplied!=true" href="javascript:void(0)"
+                                 (click)="oneClickApplyToJob(job.id)" class="btn btn-primary btn-apply-1">Apply</a>
+                              <a *ngIf="job.hasApplied==true" (click)="$event.stopPropagation();"
+                                 href="javascript:void(0)" class="btn btn-primary btn-apply-1 apply-disable">
+                                 <i class="material-icons">done_all</i>
+                              </a>
+                              <a href="javascript:void(0)" *ngIf="job.saved == 1"
+                                 (click)="toggleSavedJob(job.id); job.saved=!job.saved; $event.stopPropagation();"
+                                 class="" [ngStyle]="{'color':job.saved == 1 ? '#007bff' : '#cac7c7' }">
+                                 <i class="material-icons bookmark-active ">bookmark</i></a>
+                              <a href="javascript:void(0)" *ngIf="job.saved != 1"
+                                 (click)="toggleSavedJob(job.id); job.saved=!job.saved; $event.stopPropagation();"
+                                 class="" [ngStyle]="{'color':job.saved == 1 ? '#007bff' : '#cac7c7' }">
+                                 <i class="material-icons">bookmark_border</i></a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-md-12" style="padding-left: 15px;">
+                       <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                       [collectionSize]="pageObj.totalElements"
+                       [(page)]="pageObj.page"
+                       (pageChange)="pageChange($event)" 
+                       [pageSize]="pageObj.pageSize"
+                       [boundaryLinks]="true">
+                       </ngb-pagination>
+               </div>
+           </div>
+
+         </div>
+         <div class="row" *ngIf="isLoading" style="margin-top: 0px;">
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

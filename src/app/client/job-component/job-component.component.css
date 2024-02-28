@@ -1,0 +1,27 @@
+.label-success{
+    padding: 10px;
+    font-size: 13px;
+    font-weight: normal;
+    display: inline-block;
+    margin: 2px;
+}
+
+.btn-danger {
+    margin-left: 3px;
+}
+
+.heading a {
+    margin-right: 5px !important;
+}
+
+
+.business-logo{
+    width: 50px;
+}
+.more:hover{
+	cursor: pointer;
+}
+.table-job-info >  tr > td {
+  width: 50% !important;
+  display: table-cell;
+}

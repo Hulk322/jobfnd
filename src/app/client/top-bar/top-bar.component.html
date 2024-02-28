@@ -1,0 +1,40 @@
+<router-outlet></router-outlet>
+<div id="togglesidebar" class="transition notificationswrap notification-client-side toggle-sidebar">
+   <div class="head">
+      <h3>Notifications</h3>
+      <a class="close_notifications_bar_button" style="cursor: pointer;"><i class="material-icons">cancel</i></a>
+   </div>
+   <div class="notifications-content">
+      <div *ngIf="notifications?.length>0">
+         <div class="inner">
+            <div class="s-details">
+               <section 
+               style="cursor:pointer"
+               (click)="markRead(notification)"
+               [ngClass]="{'notifications-item':true,
+               'new':notification.is_read==0}" *ngFor="let notification of notifications">
+               <label 
+               style="cursor:pointer"
+               [ngClass]="{'notification-head':true,
+                  'purple':notification.notification_type=='jobs',
+                  'green':notification.notification_type=='submissions',
+                  'red':notification.notification_type=='interviews',
+                  'blue':notification.notification_type=='offers'
+                  }">{{notification.notification_type}}<i class="material-icons">
+               {{ notification.notification_type=='jobs'?'work_outline':'' }}
+               {{ notification.notification_type=='submissions'?'attach_file':'' }}
+               {{ notification.notification_type=='interviews'?'chat_bubble':'' }}
+               {{ notification.notification_type=='offers'?'assignment_ind':'' }}</i> {{ notification.title }}
+               <span>{{ notification.posted }}</span></label>
+               <div class="notificationinfo" style="cursor:pointer">
+                  {{ notification.description }}
+               </div>
+               <!-- <div class="notification-actions">
+                  <a href="#">View Job</a>
+                  </div> -->
+               </section>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

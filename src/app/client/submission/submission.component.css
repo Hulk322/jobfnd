@@ -1,0 +1,146 @@
+.label-success{
+    padding: 10px;
+    font-size: 13px;
+    font-weight: normal;
+    display: inline-block;
+    margin: 2px;
+}
+
+.sidebar-toggle {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 0;
+    border-left: 1px solid #ececec;
+    overflow-y: scroll;
+    /* sidebar-toggle__header */
+    /* sidebar-toggle__body */
+  }
+  
+  .sidebar-toggle::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 10px;
+  }
+  
+  .sidebar-toggle::-webkit-scrollbar {
+    width: 10px;
+    background: #ddd;
+  }
+  
+  .sidebar-toggle::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #ddd;
+  }
+  
+  .sidebar-toggle.opened {
+    width: 450px;
+  }
+  
+  .sidebar-toggle .sidebar-toggle__header {
+    position: relative;
+    padding: 15px 10px;
+    border-bottom: 1px solid #ececec;
+  }
+  
+  .sidebar-toggle .sidebar-toggle__header i {
+    margin-right: 6px;
+  }
+  
+  .sidebar-toggle .sidebar-toggle__header h4 {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .sidebar-toggle .sidebar-toggle__header a.closebtn {
+    position: absolute;
+    top: 18px;
+    right: 25px;
+    font-size: 20px;
+    color: #ddd;
+  }
+  
+  .sidebar-toggle .sidebar-toggle__header a.closebtn:hover, .sidebar-toggle .sidebar-toggle__header a.closebtn:focus {
+    text-decoration: none;
+  }
+  
+  .sidebar-toggle .sidebar-toggle__body {
+    padding: 20px;
+  }
+  
+  .sidebar-toggle .sidebar-toggle__body .text-blue {
+    color: #2B50ED;
+    font-size: 12px;
+  }
+  
+  .sidebar-toggle .add-more-interview {
+    position: absolute;
+    top: 34px;
+    right: 0;
+    color: #1062E5;
+    font-size: 20px;
+  }
+  
+  .sidebar-toggle .three-fields {
+    position: relative;
+  }
+  
+  /* sidebar-toggle */
+  .interview-cards {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+  
+.three-fields .div{
+  padding: 7px;
+}
+
+.time {
+  padding-right: 0px !important;
+}
+
+#mySidebar{
+  z-index: 1000 !important;
+}
+
+.__sidebar__skills .label {
+  border-radius: 29px;
+  border: 1px solid #CECECE;
+  background: transparent;
+  color: #000;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.billrate-widget h2 .price{
+  color:#fff;
+}
+
+bs-datepicker-container,
+bs-daterangepicker-container {
+  z-index: 99999999 !important;
+}
+
+[aria-label="calendar"] {
+  z-index: 99999999 !important;
+}
+
+select {
+  height: 48px;
+  -webkit-appearance:none; 
+}
+
+.table-job-info >  tr > td {
+  width: 50% !important;
+  display: table-cell;
+}

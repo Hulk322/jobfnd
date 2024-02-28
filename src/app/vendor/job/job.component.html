@@ -1,0 +1,435 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+    <div class="main-head tabs-active" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                  <h2 class="page-title">Job Details</h2>
+                  <a routerLink="/vendor/jobs" class="btn-secondary">
+                     <i class="material-icons">arrow_back</i> Back to Jobs Listing</a>
+              </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs">
+                  <ul>
+                      <li style="cursor: pointer;" [ngClass]="{'active':current_tab=='job_details'}" 
+                      (click)="current_tab='job_details'" ><a><label class="blue dot"></label> Job Details</a></li>
+
+                      <li style="cursor: pointer;" 
+                      [ngClass]="{'active':current_tab=='submissions'}" 
+                      (click)="current_tab='submissions'" ><a>
+                         <label class="green dot"></label> Submissions <span>{{ job?.user_submissions?.length ? job?.user_submissions?.length : 0 }}</span></a></li>
+
+                      <li style="cursor: pointer;" 
+                      [ngClass]="{'active':current_tab=='interviews'}" 
+                      (click)="current_tab='interviews'" ><a>
+                         <label class="orange dot" ></label> Interviews <span>{{ job?.user_interviews?.length ? job?.user_interviews?.length : 0  }}</span></a></li>
+
+                      <li style="cursor: pointer;" 
+                      [ngClass]="{'active':current_tab=='offers'}" 
+                      (click)="current_tab='offers'" ><a>
+                         <label class="gray dot"></label> Offers <span>{{ job?.user_offers?.length ? job.user_offers.length:0 }}</span></a></li>
+                  </ul>
+                  
+                  
+                  
+                  
+              </div>
+        </div>
+
+    </div>
+
+    <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+         <div class="row job_details" *ngIf="current_tab=='job_details'">
+             
+             
+             <div class="col-md-9">
+                 
+                 <div class="card job-grid single-job" style="min-height: 800px;">
+                     
+                     <div class="btn-group job-grid-actions">
+                       <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         <i class="material-icons">share</i>
+                       </button>
+                       <div class="dropdown-menu dropdown-menu-right">
+                         <a class="dropdown-item" >Copy Direct Job Link</a>
+                         <a class="dropdown-item" >LInked In</a>
+                       </div>
+                     </div>
+                     
+                     
+                     <div class="inner">
+                         
+                         <div class="s-details ">
+                             
+                             <div class="job-head-list">
+                                 <a class="card-title-lg"><h2>{{ job?.title }}</h2></a>
+                                 <label>{{ job.address}}</label>
+                             </div>
+                             
+                             <div>
+                                 <label class="badge large red">{{ job.job_type }}</label>
+                                 <label class="badge large gray">{{ job?.category?.name }}</label>
+                                 <label class="badge large gray" style="float: right;"><i class="material-icons">access_time</i>  <span>{{ job.posted }}</span></label>
+                                 
+                             </div>
+                             
+                             
+                             
+                             <div class="job-description">
+                                 <h3>Description</h3>
+                                 
+                                 <p [innerHTML]="job.description">
+
+                             </div>
+                         
+                         </div>
+                         
+                         
+                         
+
+                         
+                     
+                     </div>
+                 </div>
+             
+             </div>
+             
+             
+             <div class="col-md-3">
+                 
+                 
+                 <div class="row">
+                     
+                     
+                     
+                 </div>
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 <div class="card job-grid" style="margin-top: 0px;">
+                     <div class="card job-grid billrate-widget no-bottom-margin"  style="margin-top: 0px;">
+                     
+                     <h3><i class="material-icons">trending_up</i> Bill Rate</h3>
+                     <div class="inner">
+                         <div class="row">
+                             <div class="col-md-6">
+                                 <h2>${{ job.min_rate  | number: '1.2-2' }}</h2>
+                                 <span>Minumum</span>
+                             </div>
+
+                             <div class="col-md-6">
+                                 <h2>${{ job.max_rate  | number: '1.2-2' }}</h2>
+                                 <span>Maximum</span>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                     
+                     <div class="inner">
+                         
+                         <div class="s-details ">
+                             
+                             <div class="job-head-list">
+                                 <a class="card-title-sm "><h2>Additional Details</h2></a>
+                             </div>
+                             
+                             <div>
+                                <table class="table-job-info">
+                                    <tr>
+                                        <td><i class="material-icons">offline_bolt</i>Salary Type</td>
+                                        <td>{{ job.salary_type  }}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td><i class="material-icons">money</i>Currency</td>
+                                        <td>{{ job.currency!=null?job.currency:'USD' }}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td><i class="material-icons">calendar_today</i>Start Date</td>
+                                        <td>{{ job.start_date | date:'MM/dd/yyyy'  }}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td><i class="material-icons">event</i>End Date	</td>
+                                        <td>{{ job.tentative_end_date | date:'MM/dd/yyyy'  }}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td><i class="material-icons">check_circle_outline</i>Openings</td>
+                                        <td>{{ job.openings}}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td><i class="material-icons">equalizer</i>Experience</td>
+                                        <td>{{ job.experience}}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td><i class="material-icons">gps_fixed</i>Location</td>
+                                        <td>{{ job.address }}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td><i class="material-icons">category</i>Category</td>
+                                        <td>{{ job?.category?.name | titlecase }}</td>
+                                    </tr> 
+                                    <tr>
+                                     <td><i class="material-icons">waves</i> Skills</td>
+                                     
+                                    </tr>
+                                    <tr>
+                                     <td colspan="2">
+                                         <div class="skillswrap">
+                                             <ul>
+                                                 <li *ngFor="let skill of job.skills">{{ skill.name }}</li>
+                                                 
+                                                 
+                                             </ul>
+                                         </div>
+                                     </td>
+                                    </tr>
+                                </table>
+                             </div>
+                             
+                         </div>
+                         
+                     </div>
+                 </div>
+                 
+                 
+             
+             </div>
+             
+             
+         </div>
+
+         <div class="row submissions" *ngIf="current_tab=='submissions'">
+                <div class="col-md-12">
+                     <div role="tabpanel" class="card single-job" id="submissions">
+                           <a style="margin-bottom:20px; width: 150px;" class="btn btn-success" [routerLink]="['/vendor/upload-resume/', id]">Add Submission</a>
+                          <div class="element-box">
+                              
+                           <div class="content-header_2">
+                              <div class="clearfix">
+                                    <ul class="nav navbar-nav pull-left">
+                                      
+                                          <li (click)="showInGrid()"><a><i class="fa fa-th-large" [ngClass]="{'active':isGrid}"></i></a></li>
+                                          <li (click)="showInList()"><a><i class="fa fa-bars" [ngClass]="{'active':isList}"></i></a></li>
+                                    </ul>
+                                    <label class="pull-right form-group">
+                                      <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                                      <input type="search" name="" class="form-control" placeholder="Search  Job By ID, Title">
+                                    </label>
+                              </div>
+                        </div>
+                        
+                        <div class="main-content-content">
+                          <app-submissions-list *ngIf="isList" [submissionsData]="job?.user_submissions"></app-submissions-list>   
+                          <app-submissions-grid *ngIf="isGrid" [submissionsData]="job?.user_submissions"></app-submissions-grid>    
+                        </div>
+                          </div>
+                       </div>
+                </div>
+         </div>
+
+         <div class="row interviews" *ngIf="current_tab=='interviews'">
+               <div class="col-md-12">
+                     <div role="tabpanel" class="tab-pane " id="Interviews">
+                           <div class="element-box">
+                              <div class="element-box">
+                                 <h6>
+                                    Interviews
+                                 </h6>
+                                 <div class="talent-pool">
+                                 
+                              
+                                  <div class="talent-pool_content form-style-v2">
+                                      
+                                      <input type="text" name="" id="input" class="form-control m-b-20" placeholder="Search by title, job title, candiate name">
+                          
+                                       <div class="card no-padding">
+                          
+                                          <table class="table table-transparent">
+                                            <tbody>
+                                                  <tr *ngIf="job?.user_interviews?.length==0"><td class="text-center not-found" colspan="4">There are no interviews currently.</td></tr>
+                                              <tr *ngFor="let interview of job?.user_interviews | orderBy:'id':true">
+                                                <td style="width: 50%; ">
+                                                  <div class="media">
+                                                    <a class="pull-left">
+                                                      <img class="media-object" src="assets/images/domnic-brown.png" alt="Image">
+                                                    </a>
+                                                    <div class="media-body">
+                                                      <h4 class="media-heading">{{ interview.title }}</h4>
+                                                      <p class="title">{{ interview?.job?.title }}</p>
+                                                      <p class="date" [title]="interview.location"><i class="fa fa-calendar "></i> {{ interview.location | slice:0:16 }} - {{ interview.type }}</p>
+                                                    </div>
+                                                  </div>
+                                                </td>
+                                                <td>
+                                                  <p class="Interviews__date">
+                                                    <i class="fa fa-calendar"></i> {{ interview?.dates[0]?.date | date:'MM/dd/yyyy' }}
+                                                  </p>
+                                                  <p class="Interviews__date">
+                                                    <i class="fa fa-clock-o"></i> <span> {{ interview?.dates[0]?.time_in | date:'shortTime' }}</span> <i class="fa  fa-arrow-right m-r-5"></i>  <span>{{ interview?.dates[0]?.time_out | date:'shortTime' }}</span>
+                                                  </p>
+                                                </td>
+                                                <td>
+                                                  <div [ngClass]="{'interviews__label': true, 
+                                                  'btn-success': interview.current_status=='Vendor Accepted', 
+                                                  'btn-danger': interview.current_status=='Vendor Rejected', 
+                                                  'new': interview.current_status=='New'}" >{{ interview.current_status }}</div>
+                                                </td>
+                 
+                                                <td>
+                                                 <a routerLink="/vendor/interview/{{interview.id}}"  
+                                                 class="btn btn-primary" style="margin-right:5px;">
+                                              <i class="fa fa-eye"></i>
+                                              </a>
+                                               </td>
+                                              </tr>
+                          
+                                              
+                          
+                                              
+                          
+                                               
+                          
+                                              
+                                            </tbody>
+                                          </table>
+                                            
+                                      </div>
+                          
+                          
+                                  </div> <!-- talent-pool_content -->
+                          
+                                  <div class="talent-pool_sidebar_outer">
+                                        <div class="talent-pool_sidebar_inner">
+                                          
+                                          
+                          
+                                          <div class="card">
+                          
+                                            <p class="filter">Sort By</p>
+                          
+                                            <div class="radio radio-blue">
+                                              <label for="optionsRadios1">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option2">
+                                               <span class="label-text">Todays Interview</span>
+                                              </label>
+                                            </div>
+                          
+                          
+                                            <div class="radio radio-blue">
+                                              <label for="optionsRadios2">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                               <span class="label-text">This week</span>
+                                              </label>
+                                            </div>
+                          
+                          
+                                            <div class="radio radio-blue">
+                                              <label for="optionsRadios3">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option2">
+                                               <span class="label-text">Asceding</span>
+                                              </label>
+                                            </div>
+                          
+                          
+                                            <div class="radio radio-blue">
+                                              <label for="optionsRadios4">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios4" value="option2">
+                                               <span class="label-text">Descending</span>
+                                              </label>
+                                            </div>
+                          
+                          
+                                            <p class="filter">Filter By Status</p>
+                                            
+                                            <div class="radio radio-blue">
+                                              <label for="optionsRadios5">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios5" value="option2">
+                                               <span class="label-text">Pending</span>
+                                              </label>
+                                            </div>
+                          
+                                            <div class="radio radio-blue">
+                                              <label for="optionsRadios6">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios6" value="option2">
+                                               <span class="label-text">Cancelled</span>
+                                              </label>
+                                            </div>
+                          
+                                             <div class="radio radio-blue">
+                                              <label for="optionsRadios6">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios6" value="option2">
+                                               <span class="label-text">Reschedule</span>
+                                              </label>
+                                            </div>
+                          
+                                            <div class="radio radio-blue">
+                                              <label for="optionsRadios6">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios6" value="option2">
+                                               <span class="label-text">Completed</span>
+                                              </label>
+                                            </div>
+                          
+                          
+                                          </div>
+                          
+                                        </div>
+                                        
+                                  </div>
+                          
+                          
+                                </div> <!-- talent-pool -->
+                              </div>
+                           </div>
+                        </div>
+                  </div>
+                  </div>
+
+                  <div class="row offers" *ngIf="current_tab=='offers'">
+                        <div class="col-md-12">
+                              <div role="tabpanel" class="tab-pane " id="Offers">
+                                    <div class="element-box">
+                                        <table class="table">
+                                              <thead>
+                                                <tr>
+                                                  <th>Id</th>
+                                                  <th>Title</th>
+                                                  <th>Type</th>
+                                                  <th>Salary / Bill Rate</th>
+                                                  <th>Vendor Markup / Bill Rate Overtime</th>
+                                                  <th>Status</th>
+                                                  <th>Actions</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr *ngFor="let offer of job?.user_offers">
+                                                  <td>{{ offer.id }}</td>
+                                                  <td>{{ offer.title }}</td>
+                                                  <td>{{ offer.type }}</td>
+                                                  <td>${{ (offer.type=='Direct Hire'?offer.salary:offer.bill_rate) | number: '1.2-2' }} </td>
+                                                  <td>${{ (offer.type=='Direct Hire'?offer.vendor_markup:offer.bill_rate_overtime) | number: '1.2-2' }}</td>
+                                                  <td class="btn" style="margin-top:5px;"
+                                                    [ngClass]="{'btn btn-success': offer.current_status=='Vendor Accepted', 'btn btn-info': offer.current_status=='New'}">
+                                                    {{ offer.current_status }}</td>
+                                                  <td>
+                                                    <a routerLink="/vendor/offer/{{offer.id}}" class="btn btn-primary" style="margin-right:5px;">
+                                                      <i class="fa fa-eye"></i>
+                                                    </a>
+                                
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                    </div>
+                                 </div>
+                           </div>
+                           </div>
+         
+     </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="emptyscreen-style2  card-grid-job">
+<div class="row">
+
+    <div class="col-md-6">
+
+        <img src="assets/images/{{props.img}}" width="70%" class="svg-noimage">
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="emptyscreen-msg">
+            <h1>{{props.title}}</h1>
+            <p>{{props.desc}}</p>
+
+            <div class="search-mini">
+                <input type="text" placeholder="Search jobs" [(ngModel)]="filters.what" (keyup.enter)="search()" >
+                
+                <button (click)="search()"><i class="material-icons">search</i></button>
+            </div>
+
+            <div style="clear: both; "></div>
+
+            <div style="margin-top: 20px;">
+                <a routerLink="/candidate/dashboard" class="btn btn-md btn-default" >View Recommended Jobs</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+</div>

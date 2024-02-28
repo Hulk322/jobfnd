@@ -1,0 +1,278 @@
+<app-sidebar></app-sidebar>
+
+<div class="content-area" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">New Submission</h2>
+                    
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+
+                              <div class="main-content-content form-style-v2">
+                                  <div class="card">
+                                      
+                                                  <form autocomplete="off" #step1Form=ngForm (ngSubmit)="onSubmit()" ngNativeValidate> 
+                                                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                                                  <app-errors></app-errors>
+                                                  
+                                                  <div class="row">
+                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="form-row form-group">
+                                                           <label>Location <span class="text-danger">*</span></label>
+                                                           
+                                                           <AutocompleteComponent name="address" [autocompleteInput]="submission.location"
+                                                           (setAddress)="getAddress($event)" adressType="geocode">
+                                                        </AutocompleteComponent>
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                                  <div class="row">
+                                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="form-row form-group">
+                                                           <label>First Name</label>
+                                                           <input  [(ngModel)]="submission.first_name"
+                                                           name="first_name" type="text"  class="form-element form-control"
+                                                           placeholder="">
+                                                        </div>
+                                                     </div>
+                                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="form-row no-padding form-group">
+                                                           <label>Middle Name</label>
+                                                           <input [(ngModel)]="submission.middle_name" 
+                                                           name="middle_name" type="text"  class="form-element form-control"
+                                                           placeholder="Middle Name">
+                                                        </div>
+                                                     </div>
+                                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="form-row no-padding form-group">
+                                                           <label>Last Name</label>
+                                                           <input  [(ngModel)]="submission.last_name" 
+                                                           name="last_name" type="text"  class="form-element form-control"
+                                                           placeholder="">
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                                  <div class="row">
+                                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="form-row form-group">
+                                                           <label>Date of Birth</label>
+                                                           <input type="text"
+                                                           placeholder="MM/DD/YYYY"
+                                                           class="form-control"
+                                                           [(ngModel)]="submission.dob"
+                                                           name="dob"
+                                                           [bsConfig]="{ containerClass: 'theme-blue', 
+                                                           dateInputFormat: 'MM/DD/YYYY' }"
+                                                           bsDatepicker>
+                                                        </div>
+                                                     </div>
+                                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="form-row no-padding form-group">
+                                                           <label>Gender</label>
+                                                           <select  [(ngModel)]="submission.gender" 
+                                                           name="gender" class="form-element form-control"
+                                                           >
+                                                           <option value="Male">Male</option>
+                                                           <option value="Female">Female</option>
+                                                           <option value="Other">Other</option>
+                                                           </select>
+                                                        </div>
+                                                     </div>
+                                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="form-row no-padding form-group">
+                                                           <label>Willing to Relocated</label>
+                                                           <select  [(ngModel)]="submission.willing_to_relocated" 
+                                                           name="willing_to_relocated" class="form-element form-control"
+                                                           >
+                                                           <option value="yes">Yes</option>
+                                                           <option value="no">No</option>
+                                                           </select>
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                                  <submission-step1-contact-information [submission]="submission"></submission-step1-contact-information>
+                                                  <div class="row">
+                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <label for="">
+                                                        Is this candidate legally authorized to work in the United States? <span class="asterik">*</span></label>
+                                                     </div>
+                                                  </div>
+                                                  <div class="row">
+                                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="form-group">
+                                                           <select 
+                                                           name="authorized_in_us" 
+                                                           [(ngModel)]="submission.authorized_in_us" 
+                                                           class="form-control select2" >
+                                                           <option value="">Select</option>
+                                                           <option value="1">Yes</option>
+                                                           <option value="0">No</option>
+                                                           </select>
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                                  <div *ngIf="submission.authorized_in_us==1">
+                                                     <div class="row">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                           <label for="">
+                                                           Will this candidate now or in the future require employment visa sponsorship? <span class="asterik">*</span></label>
+                                                        </div>
+                                                     </div>
+                                                     <div class="row">
+                                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                           <div class="form-group">
+                                                              <select *ngIf="submission.authorized_in_us==1"
+                                                              name="require_visa_sponsorship" 
+                                                              [(ngModel)]="submission.require_visa_sponsorship" 
+                                                              class="form-control select2" >
+                                                              <option value="">Select</option>
+                                                              <option value="1">Yes</option>
+                                                              <option value="0">No</option>
+                                                              </select>
+                                                           </div>
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                                  <div class="row">
+                                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" *ngIf="job.job_type=='Direct Hire'">
+                                                        <div class="form-group">
+                                                           <label for="">Salary Amount <span class="asterik">*</span></label>
+                                                           <input type="text" 
+                                                           name="salary" 
+                                                           class="form-control" 
+                                                           required
+                                                           [(ngModel)]="submission.salary_amount">
+                                                        </div>
+                                                     </div>
+
+                                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" *ngIf="job.job_type=='Temp Hire'">
+                                                      <div class="form-group">
+                                                         <label for="">Bill Rate (MIN) <span class="asterik">*</span></label>
+                                                         <input type="text" name="bill_rate_min" required class="form-control" [(ngModel)]="submission.bill_rate_min">
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" *ngIf="job.job_type=='Temp Hire'">
+                                                      <div class="form-group">
+                                                         <label for="">Bill Rate (MAX) <span class="asterik">*</span></label>
+                                                         <input type="text" name="bill_rate_max" required class="form-control" [(ngModel)]="submission.bill_rate_max">
+                                                      </div>
+                                                   </div>
+
+                                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                        <div class="form-group">
+                                                           <label for="">Salary Type <span class="asterik">*</span></label>
+                                                           <select name="salary_type" [(ngModel)]="submission.salary_type" class="form-control select2" tabindex="-1">
+                                                           <option value="">Select</option>
+                                                           <option value="{{ pay_type }}" *ngFor="let pay_type of pay_types" >{{ pay_type }}</option>
+                                                           </select>
+                                                        </div>
+                                                     </div>
+                                                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                        <div class="form-group">
+                                                           <label for="">Available Date</label>
+                                                           <input type="text"
+                                                           placeholder="MM/DD/YYYY"
+                                                           class="form-control"
+                                                           [(ngModel)]="submission.estimated_joning_date"
+                                                           name="estimated_joning_date"
+                                                           [bsConfig]="{ containerClass: 'theme-blue', 
+                                                           dateInputFormat: 'MM/DD/YYYY' }"
+                                                           bsDatepicker>
+                                                        </div>
+                                                     </div>
+                                                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                        <div class="form-group">
+                                                           <label for="">Employment Status <span class="asterik">*</span></label>
+                                                           <select 
+                                                           name="current_job" 
+                                                           [(ngModel)]="submission.current_job" 
+                                                           class="form-control select2" >
+                                                           <option value="">Select</option>
+                                                           <option value="Full Time">Full Time</option>
+                                                           <option value="Contract">Contract</option>
+                                                           </select>
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                                  <div>
+
+                                  
+                                                      <div class="row">
+                                                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                              <label class="section-title" style="font-weight:bold;">Skills </label>  
+                                                          </div>
+                                                      </div>
+                                                      <div *ngIf="submission.skills">
+                                                    
+                                                            
+                                                            <tag-input name="skills" [(ngModel)]='submission.skills' required>
+                                                       
+                                                                </tag-input> 
+
+                                                                
+                                                    
+                                                          
+                                                      </div>
+                                                      
+                                                    </div>
+                                                  <div class="row">
+                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-20">
+                                                        <div class="form-group">
+                                                           <label>Additional Information</label>
+                                                           <textarea 
+                                                           class="form-control" 
+                                                           [(ngModel)]="submission.quick_summary" 
+                                                           name="quick_summary"
+                                                           style="height: 100px"></textarea>
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                                  <div class="form-divider"></div>
+                                                  <div class="form-row">
+                                                      <button [disabled]="isLoading" style="margin-top:20px" type="submit" class="btn btn-success">
+                                                             <span *ngIf="!isLoading"> Submit</span>
+                                                             <span *ngIf="isLoading"> Processing...</span>
+                                                     </button>
+                                                  </div>
+                                                  </form>
+                                               
+                                  </div>
+                              </div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div>
+
+
+
+</div>
+        
+        
+    
+
+        
+    

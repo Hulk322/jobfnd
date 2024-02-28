@@ -1,0 +1,120 @@
+<div class="navigation" >
+
+    <div stickySidebar
+          containerSelector=".stickynavs"
+          innerWrapperSelector=".sidebar__inners" 
+          topSpacing= "0"
+          bottomSpacing= "0">
+        <div class="sidebar__inners vp-height">
+            <ul>
+                <!--                <div class="logo"><label>S</label></div>-->
+                          <div class="logo imglogo">
+                             <img src="assets/images/login/logo2.png">
+                            <!-- LOGO -->
+                        </div>
+                          
+                          <li><a routerLink="/client/dashboard" 
+                              [ngClass]="{'active':current_menu_item=='dashboard'}">
+                              <i class="material-icons">dashboard</i><label>Dashboard</label></a>
+                          </li>
+                          <li>
+                              <a routerLink="/client/jobs" 
+                              [ngClass]="{'active':current_menu_item=='jobs'}">
+                              <i class="material-icons">work</i><label>Jobs</label></a>
+                
+                          </li>
+                          <li>
+                              <a routerLink="/client/submissions" 
+                              [ngClass]="{'active':current_menu_item=='submissions'}">
+                              <i class="material-icons">offline_bolt</i><label>Applications</label></a>
+                          </li>
+                          <li>
+                              <a routerLink="/client/interviews" 
+                              [ngClass]="{'active':current_menu_item=='interviews'}">
+                              <i class="material-icons">contacts</i><label>Interviews</label>
+                              </a>
+                          </li>
+              
+                          <li>
+                              <a routerLink="/client/offers" 
+                              [ngClass]="{'active':current_menu_item=='offers'}">
+                              <i class="material-icons">assignment_ind</i><label>Offers
+                              </label>
+                          </a></li>
+              
+                          <li>
+                                  <a routerLink="/client/contracts" 
+                                  [ngClass]="{'active':current_menu_item=='contracts'}">
+                                  <i class="material-icons">description</i><label>Assignment 
+                                  </label>
+                              </a></li>
+              
+                          <li><a routerLink="/client/on-boarding" 
+                              [ngClass]="{'active':current_menu_item=='on-boarding'}">
+                              <i class="material-icons">how_to_reg</i>
+                              <label>On-boarding</label></a></li>
+              
+                         <!--  <li><a routerLink="/client/background-verifications" 
+                              [ngClass]="{'active':current_menu_item=='background-verifications'}" >
+                              <i class="material-icons">verified_user</i>
+                          <label>Contracts</label></a></li> -->
+              
+                          <li><a routerLink="/client/templates" 
+                              [ngClass]="{'active':current_menu_item=='templates'}">
+                              <i class="material-icons">view_quilt</i><label>Templates</label></a>
+                          </li>
+                          <li>
+                              <a style="color: #d3ccf9; cursor: pointer;" 
+                              (click)="submenu_active = !submenu_active"
+                              [ngClass]="{'has-submenu':true, 'active':current_menu_item=='settings'}">
+                                  <i class="material-icons">settings</i><label>Settings</label>
+                              </a>
+                              <div [ngClass]="{'submenu':true, 
+                                                'active':submenu_active==true }">
+                                  <div class="submenu-title close-included">
+                                    <a href="javascript:void(0);" 
+                                    (click)="submenu_active=false"
+                                     class="submenu-close">
+                                        <i class="material-icons">close</i>
+                                        </a>
+                                      <i class="material-icons">settings</i><label>Settings</label>
+                                  </div>
+                                  <ul>
+                                      <li><a routerLink="/client/business-setup">Business Setup</a></li>
+                                      <li><a routerLink="/client/team-members">Team Members</a></li>
+                                      <li><a routerLink="/client/departments">Departments</a></li>
+                                      <li><a routerLink="/client/programs">Programs</a></li>
+                                      <li><a routerLink="/client/cost-center">Cost Centers</a></li>
+                                      <li><a routerLink="/client/billing-codes">Bill Codes</a></li>
+                                      <li><a routerLink="/client/timesheet-codes">Timesheet Codes</a></li>
+                                      <li><a routerLink="/client/locations">Locations</a></li>
+                                      <li><a routerLink="/client/custom-fields">Custom Fields</a></li>
+                                      <li><a routerLink="/client/settings">Settings</a></li>
+                                  </ul>
+                              </div>
+                          </li>
+                          
+                
+                      </ul>
+        </div>
+    </div>
+
+    <!-- <div class="nav-wrapper">
+    <div class="sidebar__inner">
+        
+    </div>
+        
+        
+    </div> -->
+    <div class="quickaction-tabs">
+        <a style="cursor: pointer;" class="add-new-btn"><label style="cursor: pointer; color: white;">+</label></a>
+        <ul>
+            <span>Add New</span>
+            <li><a class="link"><i class="icon icon-user-outline"></i><label>Offer</label></a></li>
+            <li><a class="link"><i class="icon icon-bubble-1"></i><label>Work Order</label></a></li>
+            <li><a class="link"><i class="icon icon-windows"></i><label>Contract</label></a></li>
+            <li><a class="link"><i class="icon icon-stopwatch"></i><label>Timesheet</label></a></li>
+            <li><a class="link"><i class="icon icon-files"></i><label>Expense</label></a></li>
+        </ul>
+    </div>
+  </div>

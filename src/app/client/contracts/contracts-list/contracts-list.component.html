@@ -1,0 +1,221 @@
+<app-sidebar [current_menu_item]="'contracts'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Contracts</h2>
+                <a routerLink="/client/create-contract" class="btn-orange"><i class="material-icons">add</i>Create Contract</a>
+                
+            </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs">
+                
+
+                
+
+                <div class="view-switcher" style="display: none;">
+
+                    <ul>
+                        
+                        <li [ngClass]="{'active': view_type=='list'}">
+                            <a href="javascript:void(0)" (click)="view_type='list'"><i class="material-icons">menu</i></a></li>
+                        <li [ngClass]="{'active': view_type=='grid'}">
+                            <a href="javascript:void(0)" (click)="view_type='grid'"><i class="material-icons">view_module</i></a></li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+            <div class="col-md-12" *ngIf="contracts?.length<1 && !isLoading" style="text-align: center;">
+            
+                <div class="errormsgscreen">
+                    <img src="assets/admin/images/graphics/no-contracts.svg" style="margin-top: 13%;">
+                    <h3>No Contracts Found</h3>
+                    <a href="#" class="btn btn-success btn-sm">Create new Contract</a>
+                </div>
+                
+            </div>
+
+        <div class="row" *ngIf="isLoading && view_type=='grid'">
+            <div class="col-md-4" *ngFor="let number of [0,1,2,3,4,5]">
+
+                <div class="card job-grid">
+
+
+
+
+                    <div class="inner">
+
+                        <div class="s-details">
+
+                            <div class="job-head-list">
+                                <a  class="card-title-lg">
+                                    <h2>
+                                        <div class="shine"></div>
+                                    </h2>
+                                </a>
+                            </div>
+
+                            <div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                            </div>
+
+                            <div class="job-description">
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="job-additionalinfo">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="shine mini"></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="job-statisticsv1">
+
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" *ngIf="view_type=='grid'">
+
+
+
+
+
+            <div class="col-md-4"  *ngFor="let contract of contracts | orderBy:'id':true">
+
+                <div class="card job-grid">
+
+                    <div class="btn-group job-grid-actions" style="display: none;">
+                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                           
+                        </div>
+                    </div>
+
+
+                    <div class="inner" >
+
+                        <div class="s-details" style="cursor: pointer;">
+
+                            <div class="job-head-list">
+                                <a  class="card-title-lg" [routerLink]="['/client/job/', contract?.job?.id]">
+                                    <h2>{{ contract?.job?.title | slice:0:25 }} ({{ contract?.job?.id }})</h2>
+                                </a>
+                                <label>Contract ID# {{ contract.id }} 
+                                     </label>
+                            </div>
+
+                            <div>
+                                <label class="badge large red"
+                                    *ngIf="contract.type=='Temp Hire'">{{ contract.type }}</label>
+                                <label class="badge large green"
+                                    *ngIf="contract.type=='Full Time'">{{ contract.type }}</label>
+                                
+                            </div>
+
+                            <div class="job-head-list">
+                                    <label>Start Date {{ contract.start_date | date:'MM/dd/yyyy' }} </label>
+                                    <label *ngIf="contract.end_date">End Date {{ contract.end_date | date:'MM/dd/yyyy' }} </label>
+                            </div>
+
+                            <div class="job-description" >
+                                <label>Notes</label>
+                                <span>{{ contract.notes }}...</span>
+                            </div>
+
+                        </div>
+
+                        <div class="job-additionalinfo" style="cursor: pointer;">
+                            <ul>
+                                <li><i class="material-icons">monetization_on</i> <span>
+                                        <span class="salary"
+                                            *ngIf="contract.type=='Full Time'">
+                                            {{ contract.salary  | currency: '$' }}</span>
+                                        <span class="bill_rate"
+                                            *ngIf="contract.type=='Temp Hire'"><label>
+                                                    <span itemprop="baseSalary" *ngIf="contract.bill_rate>0">{{contract.bill_rate | currency: '$' }}/h - </span> 
+                                                    {{ contract.bill_rate | currency: '$' }}/h </label></span>
+                                    </span></li>
+                                
+                            </ul>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            
+        </div>
+
+        
+
+        <div class="row">
+            <div class="colo-md-12" style="padding-left: 15px;">
+                    <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                    [collectionSize]="pageObj.totalElements"
+                    [(page)]="pageObj.page"
+                    (pageChange)="pageChange($event)" 
+                    [pageSize]="pageObj.pageSize"
+                    [boundaryLinks]="true">
+                    </ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

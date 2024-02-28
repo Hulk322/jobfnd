@@ -1,0 +1,143 @@
+<app-sidebar [current_menu_item]="'profile'"></app-sidebar>
+
+<div class="content-area floated add-job-white" #content_area>
+
+      <div class="main-head no-tabs nav-down">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Profile</h2>
+                    
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row justify-content-md-center">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid new-job-block">
+                        <div class="inner">
+                            <div class="s-details job-form-block">
+
+<div class="main-content-content form-style-v2">
+   <div class="element-box">
+        <form #updateProfileForm=ngForm class="custom-form" (submit)="onSubmit()" ngNativeValidate>
+                
+                <div class="alert alert-danger" *ngIf="errors">
+                    {{ errors }}
+                  </div>
+            
+                  <div class="alert alert-success" *ngIf="success">
+                      {{ success }}
+                    </div>
+    
+                <div class="row">
+                    <div class="col-md-9">
+                        <section class="s-form-row medium">
+                            <label class="form-label">First Name</label>
+                            <input [(ngModel)]="user.first_name" name="first_name" id="first_name" class="form-control" type="text">
+                        </section>
+                    
+    
+                    
+                        <section class="s-form-row medium">
+                            <label class="form-label">Last Name</label>
+                            <input  [(ngModel)]="user.last_name" name="last_name" id="last_name" class="form-control" type="text">
+                        </section>
+
+                        <section class="s-form-row medium">
+                            <label class="form-label">Email</label>
+                            <input [(ngModel)]="user.email" name="email" id="email" class="form-control" type="email" readonly>
+                        </section>
+
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="company-profile-logo-upload">
+
+                            <input name="user.profile_picture" type="file" (change)="handleFileUpload($event.target.files)" id="profile_picture_edit_time" ref="file" class="form-element form-control"style="display: none;">
+
+                            <a href="javascript:void(0)" style="cursor: pointer;" onclick="document.getElementById('profile_picture_edit_time').click();">
+                                <label style="cursor: pointer;">
+                                    <i class="material-icons">cloud_upload</i>
+                                    Upload Picture
+                                </label> 
+                            </a>
+                             <img src="{{ user.meta.profilePictureFullUrl }}" style="min-width: 194px;">
+                             
+                         </div>
+                    </div>
+
+                </div>
+    
+                
+    
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <section class="s-form-row medium">
+                            <label class="form-label">Phone</label>
+                            <input 
+                             
+                            ngxPhoneMask
+                            [(ngModel)]="user.meta.phone" name="phone" id="phone"
+                             class="form-control" type="text"
+                             valueType='full'>
+                        </section>    
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <section class="s-form-row medium">
+                            <label class="form-label">Name of Business / Organization</label>
+                            <input   name="business_name" id="business_name" 
+                                [(ngModel)]="userOrganization.name"  
+                            class="form-control" type="text">
+                        </section>
+                    </div>
+                </div>
+    
+                <section class="s-form-row medium">
+                    <label class="form-label">Describe your business</label>
+                    <textarea   name="business_description" 
+                    id="business_description" 
+                    rows="7" class="form-control"
+                    [(ngModel)]="userOrganization.description"  
+                    ></textarea>
+                    
+                </section>
+    
+                
+    
+                <div class="form-divider"></div>
+    
+                <div class="pull-right">
+                    <button style="margin-top: 15px;"
+                        type="submit" 
+                        class="btn btn-primary"
+                        [disabled]="isLoading"><span *ngIf="!isLoading">Update Profile</span><span *ngIf="isLoading">Updating Profile...</span></button>
+                </div>
+    
+            </form>
+   </div>
+</div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div>
+<!-- templates modal-->
+
+
+</div>
+        
+        
+    

@@ -1,0 +1,77 @@
+#about_me_input {
+    height: 250px;
+}
+
+#work_history_description {
+    height: 100px;
+}
+
+.references-outer {
+    margin-bottom: 10px;
+}
+
+.modal-body {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.profile-social-links a{
+    display: block;
+}
+
+.profile-social-links .action {
+    color: #10A9F5;
+}
+
+.tag-wrapper {
+    color: black;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.btn-step {
+    color: white; 
+    cursor:pointer;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.modal-header .close{
+    margin-left: 0px;
+}
+
+.has-error {
+    border: 1px solid red;
+}
+
+.label-has-error {
+    color:red;
+}
+
+.help-block{
+    color:red;
+}
+
+*required {
+    color: red;
+}
+
+.main__content {
+    background-color: white;
+}
+
+.checkbox {
+    cursor: pointer;
+}
+.candidate-setup-profile {
+        border: 1px solid #ddd;
+        padding: 21px;
+        background: #f7f7f7;
+        border-radius: 7px;
+}
+
+.is-dragover {
+    background: #f6f6f6;
+}

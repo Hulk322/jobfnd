@@ -1,0 +1,122 @@
+<div class="header---2">
+    <!-- <div class="logo">
+        <a routerLink="/">
+            <img src="assets/images/logo.svg">
+        </a>
+    </div> -->
+    <nav class="publicnav navbar navbar-expand-lg navbar-light" style="width: 100%;">
+        <a class="navbar-brand" href="/">
+            <div class="logo">
+                <img src="assets/images/login/logo.png" style="width: 140px;height: 40px;">
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link bookmarks-notifications" [routerLink]="['/candidate/my-jobs/']" style="cursor: pointer;">
+                        <i class="material-icons">bookmarks</i>
+                        <span *ngIf="saved_jobs_count_from_parent!='0'">{{ saved_jobs_count_from_parent }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+
+                    <!-- if notification is zero -->
+                    <a class="nav-link notification-bell" (click)="togglesidebar($event)" *ngIf="notifications_count<1">
+
+                        <i class="material-icons">notifications_none</i>
+                        <!-- <i class="material-icons">notifications_active</i> -->
+                    </a>
+
+                    <!-- if notification is not zero -->
+
+                    <a class="nav-link bookmarks-notifications" (click)="togglesidebar($event)" *ngIf="notifications_count>0" style="cursor: pointer;">
+
+                        <i class="material-icons">notifications_active</i>
+                        <span *ngIf="notifications_count<10">{{ notifications_count }}</span>
+                        <span *ngIf="notifications_count == 0"></span>
+                        <span *ngIf="notifications_count>9">9+</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item dropdown login-user-info">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        <span class="hpic"><img class="picture" src="{{ profile_picture }}"></span><span class="user-name">
+                     {{ full_name | titlecase }}..</span>
+                        <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" routerLink="/candidate/dashboard"><i class="material-icons">dashboard</i>
+                     Dashboard</a>
+                        <a class="dropdown-item" routerLink="/candidate/profile"><i class="material-icons">person</i>
+                     Profile</a>
+                        <a class="dropdown-item" routerLink="/candidate/resume"><i
+                        class="material-icons">description</i>Resume</a>
+
+                        <a class="dropdown-item" routerLink="/candidate/account-settings"><i
+                        class="material-icons">settings_applications</i>Account Settings</a>
+                        <a style="cursor:pointer" class="dropdown-item" (click)="logout()"><i
+                        class="material-icons">exit_to_app</i>Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</div>
+
+
+<div class="togglesidebar transition" [ngClass]="sidebar_open? 'open': ''">
+
+    <header>
+        <h3>Notifications</h3>
+        <a (click)="togglesidebar($event)"><i class="material-icons">close</i></a>
+    </header>
+
+    <section [ngClass]="{'notifications-item':true,
+                            '':notification.is_read==0}" *ngFor="let notification of notifications">
+        <label [ngClass]="{'notification-head':true,
+                            'blue':notification.notification_type=='submissions',
+                            'orange':notification.notification_type=='interviews',
+                            'green':notification.notification_type=='offers'
+                              }"><i class="material-icons">
+            {{ notification.notification_type=='submissions'?'work':'' }}
+            {{ notification.notification_type=='interviews'?'chat_bubble':'' }}
+            {{ notification.notification_type=='offers'?'grain':'' }}</i> {{ notification.title }}
+         <span>{{ notification.posted }}</span></label>
+        <div class="notificationinfo ">
+
+            <a class="nav-link notification-bell" *ngIf="notification.description==''" href="javascript:void(0)">
+                <i class="material-icons">notifications_none</i>
+            </a>
+
+
+
+
+            <a class="nav-link notification-bell active" style="padding-left:0;" (click)="markRead(notification)" *ngIf="notification.description!='' && notification.notification_type!='jobs'" href="javascript:void(0)">
+            
+            {{ notification.description }}
+         </a>
+
+            <a class="nav-link notification-bell active" style="padding-left:0;" *ngIf="notification.description!='' && notification.notification_type=='jobs' && notification.type=='view'" (click)="markRead(notification)">
+                <i style="padding-right:2px;vertical-align: middle;" class="material-icons">notifications_active</i> {{ notification.description }}
+            </a>
+
+
+        </div>
+        <!-- <div class="notification-actions">
+         <a href="#">View Job</a>
+      </div> -->
+    </section>
+
+
+
+
+
+</div>
+
+<div (click)="togglesidebar($event)" class="blackoverlay" [ngClass]="sidebar_open? 'open': ''"></div>

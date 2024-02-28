@@ -1,0 +1,15 @@
+h4 {
+    margin-bottom: 15px;
+}
+.page-wraper{
+	padding-left: 0px !important;
+}
+
+.btn-success {
+    margin-top: 235px !important;
+    margin-left: 27px;
+}
+
+.resume-upload-page .resume-upload.custom-file label.custom-file-label:after {
+    cursor: pointer;
+}

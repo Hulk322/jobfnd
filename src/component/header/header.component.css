@@ -1,0 +1,23 @@
+@import url("../../assets/css/style.css");
+@import url("../../assets/css/honeywell.css");
+
+
+.picture{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.user-name {
+    padding-left: 5px;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+.logo {
+    background: #fff;
+    padding: 10px 16px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }

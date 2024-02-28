@@ -1,0 +1,6 @@
+@import url("../../assets/css/style.css");
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #e9ecef !important;
+    opacity: 1;
+}

@@ -1,0 +1,101 @@
+<div class="box-blog" style="display: none;">
+    
+
+        
+  </div>       
+  
+  
+  
+  
+  
+  
+  <div class="row">
+      <div class="col-md-3" *ngFor="let submission of submissionsData"  >
+        
+          <div class="card job-grid"  >
+              
+              
+              <div class="btn-group job-grid-actions" style="display: none;">
+                <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">more_vert</i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="#">Edit</a>
+                  <a class="dropdown-item" href="#">Delete</a>
+                </div>
+              </div>
+  
+              
+              
+              
+              <div class="inner">
+                  
+                  <div class="s-details" (click)="goToView( submission.id )" style="cursor: pointer;">
+                      
+                      <div class="job-head-list">
+                          <div class="text-avatar">
+                              <img style="width: 45px; border-radius: 50%;" src="{{ submission?.talent?.meta?.profilePictureFullUrl }}">
+                          </div>
+                          <a class="card-title-lg"><h2 (click)="goToView( submission.id )">{{ submission.first_name }} {{ submission.last_name }}</h2></a>
+                          <label>{{(submission?.full_address?.length>0?submission.full_address:'Any location') | slice:0:21}}</label>
+                      </div>
+                      
+                      <div>
+                          <label class="badge large gray">
+                              <i class="material-icons">work</i>
+                              {{ submission?.job?.title }}
+                          </label>
+                      </div>
+                      
+                      
+                  </div>
+                  <div class="skillswrap" (click)="goToView( submission.id )" style="cursor: pointer;">
+                      <ul>
+                          <li *ngFor="let skill of submission.skills | slice:0:5;  let i=index">{{skill.name  | slice:0:8 }}</li>
+                          <li style="display: none;" class="morebtn"><i class="material-icons">keyboard_arrow_right</i></li>
+                      </ul>
+                  </div>
+                  <div class="job-additionalinfo" (click)="goToView( submission.id )" style="cursor: pointer;">
+                      <ul>
+                          <li class="estimated-date">
+                            <i class="material-icons">event</i>  
+                            <span *ngIf="submission.estimated_joning_date">{{submission.estimated_joning_date | date:'MM/dd/yyyy' }}</span>
+                            <span *ngIf="!submission.estimated_joning_date">Not defined
+                              </span>
+                          </li>
+                          
+                      </ul>
+                  </div>
+  
+                  <div class="job-statisticsv1 submissions">
+  
+                      <div class="btn-group dropup">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Actions
+                        </button>
+                        <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#" style="display: none;">Accept</a>
+                              <a class="dropdown-item" href="#" style="display: none;">Reject</a>
+                              <hr style="display: none;">
+                              <a style="display: none;" class="dropdown-item">Schedule Interview</a>
+                              <a style="cursor: pointer;" 
+                               class="dropdown-item" 
+                                (click)="goToView( submission.id )">View Details</a>
+                              
+                              <a target="_blank" *ngIf="submission.resumeFullUrl!=null" class="dropdown-item" href="{{ submission.resumeFullUrl }}">Download Resume</a>
+                        </div>
+                      </div>
+                      
+                      <label *ngIf="submission.status!='Rejected'" class="submission-status green">{{ submission.status }}</label>
+                    <label *ngIf="submission.status=='Rejected'" class="submission-status red">{{ submission.status }}</label>
+  
+                      
+                  </div>
+  
+                  
+              
+              </div>
+          </div>
+      
+      </div>
+  </div>

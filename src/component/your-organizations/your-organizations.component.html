@@ -1,0 +1,45 @@
+<div class="wrap">
+       
+            <nav appLoginNavbar class="navbar navbar-expand-lg navbar-light">
+                  </nav>
+   
+   <section class="login-page">  
+          <div class="row">
+                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <img class="group"  src="assets/images/08-05-2019 20-53-18.png" alt="">
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                       <h4> Select Your Company.</h4>
+                        
+                       <form #loginForm=ngForm (ngSubmit)="onSubmit()" ngNativeValidate>
+                        <app-errors></app-errors>
+
+                       <div role="tabpanel">
+                             <div class="tab-content">
+                                   <div role="tabpanel" class="tab-pane active" id="job">
+                                         
+                                         <div class="radio"  *ngFor="let organization of organizations">
+                                          <label>
+                                            <input  [(ngModel)]="form.organization_id" type="radio" name="organization_id"  [value]="organization.id"> {{organization.name}}
+                                          </label>
+                                         </div>
+
+                                   </div> <!-- #job -->
+                             </div>
+                             <div class="row m-t-20 m-b-10">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                      <button [disabled]="isLoading" type="submit" class="btn btn-primary btn-login">Submit<i class="fa fa-arrow-circle-right"></i></button> 
+                                </div>
+                             </div>
+                       </div>
+                       </form>
+                  </div>
+         </div>  
+   </section>
+   
+
+  
+   
+</div>
+    <!-- /wrap -->
+     <app-footer></app-footer>

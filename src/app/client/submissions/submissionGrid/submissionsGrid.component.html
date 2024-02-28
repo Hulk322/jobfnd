@@ -1,0 +1,419 @@
+<div class="box-blog" style="display: none;">
+
+
+
+</div>
+
+
+<div class="row">
+  <div class="header-tabs with-btns" style="margin-bottom: 20px;" *ngIf="single_job_id>0">
+    <a class="active"
+    (click)="current_tab='applied'; changeTab()"
+     [ngClass]="{'submission_tab': true, 'active_submission_tab': current_tab=='applied' }">
+        <i class="material-icons text_align">touch_app</i>
+        Applied ({{ applied.length }})
+
+    </a>
+    <a (click)="current_tab='engaged'; changeTab()"
+    [ngClass]="{'submission_tab': true, 'active_submission_tab': current_tab=='engaged' }"
+    >
+        <i class="material-icons text_align">spellcheck</i>
+        Matched ({{ engaged.length }})
+
+    </a>
+
+    <a (click)="current_tab='referred'; changeTab()"
+    [ngClass]="{'submission_tab': true, 'active_submission_tab': current_tab=='referred' }"
+    >
+        <i class="material-icons text_align">people_alt</i>
+        Referred ({{ referred.length }})
+
+    </a>
+
+    <a (click)="current_tab='integrated_pool'; changeTab()"
+    [ngClass]="{'submission_tab': true, 'active_submission_tab': current_tab=='integrated_pool' }"
+    >
+        <i class="material-icons text_align">person_add_alt_1</i>
+        Integrated Pool ({{ integrated_pool.length }})
+
+    </a>
+
+    <button class="btn btn-primary btn-sm" style="display: none;">
+              (click)="compareCandidates()"
+              [disabled]="isLoading || compare_ids.length<2"
+              style="margin-left: 10px;">Compare
+              <span *ngIf="isLoading && comparing" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span> </button>
+
+ </div>
+
+</div>
+ <div class="row" *ngIf="isLoading">
+    <div class="col-md-3" *ngFor="let number of [0,1,2,3,4,5,6,7]">
+       <div class="card job-grid">
+          <div class="inner">
+             <div class="s-details">
+                <div class="job-head-list">
+                   <a href="#" class="card-title-lg">
+                      <h2>
+                         <div class="shine mini"></div>
+                      </h2>
+                   </a>
+                   <div class="shine mini"></div>
+                </div>
+                <div>
+                   <div class="shine mini"></div>
+                   <div class="shine mini"></div>
+                </div>
+             </div>
+             <div class="skillswrap">
+                <div class="row">
+                   <div class="col-md-3">
+                      <div class="shine mini"></div>
+                   </div>
+                   <div class="col-md-3">
+                      <div class="shine mini"></div>
+                   </div>
+                   <div class="col-md-3">
+                      <div class="shine mini"></div>
+                   </div>
+                   <div class="col-md-3">
+                      <div class="shine mini"></div>
+                   </div>
+                </div>
+             </div>
+             <div class="job-additionalinfo">
+                <div class="shine mini"></div>
+             </div>
+             <div class="job-statisticsv1 submissions">
+                <div class="shine mini"></div>
+                <div class="shine mini"></div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+<div class="row">
+
+    <div class="col-md-12" *ngIf="submissionsData?.length<1 && !isLoading" style="text-align: center;">
+        <div class="errormsgscreen">
+           <img src="assets/admin/images/graphics/no-submission.svg" style="margin-top: 13%;">
+           <h3>No Applications Found</h3>
+       </div>
+     </div>
+
+    <div class="col-md-3" *ngFor="let submission of submissionsData"  >
+
+        <div class="card job-grid" style="min-height: 264px;" >
+
+
+            <div class="btn-group job-grid-actions" style="display: none;">
+              <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Delete</a>
+              </div>
+            </div>
+
+
+
+
+            <div class="inner">
+
+                <div class="s-details"  style="cursor: pointer;">
+
+                    <div class="job-head-list">
+                        <div class="text-avatar" data-target="#submissionscore" data-toggle="modal">
+                            <img style="width: 45px; border-radius: 50%;" src="{{ submission?.candidate?.meta?.profilePictureFullUrl }}">
+                        </div>
+                        <a class="card-title-lg" *ngIf="!submission.candidate?.first_name == '' && !submission.candidate?.last_name == ''"><h2 (click)="goToView( submission.id )">{{ submission.candidate?.first_name | slice:0:8}} {{ submission.candidate?.last_name | slice:0:6 }}</h2></a>
+                        <a class="card-title-lg" *ngIf="submission.candidate?.first_name == '' && submission.candidate?.last_name == ''"><h2 (click)="goToView( submission.id )">Unknown User</h2></a>
+                        <label>{{(submission?.location?.length>0?submission.location:'Any location') | slice:0:12}}
+                            <input type="checkbox"
+                            *ngIf="single_job_id>0"
+                            name="compare_id_{{ submission?.cv?.api_id }}"
+                            (change)="FieldsChange($event)"
+                            (click)="foo($event)"
+                            value="{{ submission?.cv?.api_id }}"
+                            style="margin-left: 8px; display:none;">
+                        </label>
+
+                        <div
+                        style="float: right;
+                        margin-top: -25px;"
+
+                        [className]="submission?.match_score ? 'incomplete profile-status' : 'perfect profile-status'">
+                            <a href="javascript:void(0)" (click)="show_modal_window(submission);">
+                                <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+                                    <circle class="circle-chart__circle" stroke="#007bff" stroke-width="2" attr.stroke-dasharray="{{submission?.match_score==null?0:submission?.match_score}}, 100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.915494" r="15.91549431"></circle>
+
+                                    <g class="circle-chart__info">
+                                        <text class="circle-chart__percent" x="16.91549431" fill="#007bff" y="17" alignment-baseline="central" text-anchor="middle" font-size="10">{{ submission?.match_score==null?0:submission?.match_score }}</text>
+                                    </g>
+                                </svg>
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <label class="badge large gray" *ngIf="single_job_title=='' || single_job_title==null ">
+                            <i class="material-icons">work</i>
+                            {{ submission?.job?.title | slice:0:33 }}...
+                        </label>
+
+                        <label class="badge large gray" *ngIf="single_job_title!=null">
+                            <i class="material-icons">work</i>
+                            {{ single_job_title | slice:0:33 }}...
+                        </label>
+
+                    </div>
+
+
+                </div>
+                <div class="skillswrap" (click)="goToView( submission.id )" style="cursor: pointer;">
+                    <ul>
+                        <li *ngFor="let skill of submission.skills | slice:0:2;  let i=index">{{skill.name  | slice:0:15 }}</li>
+                        <li *ngIf="submission?.skills?.length > 2">+{{ submission?.skills?.length-2 }}</li>
+                        <li *ngIf="submission?.skills?.length < 1"> No Skills</li>
+                        <li style="display: none;" class="morebtn"><i class="material-icons">keyboard_arrow_right</i></li>
+                    </ul>
+                </div>
+                <div class="job-additionalinfo" (click)="goToView( submission.id )" style="cursor: pointer;">
+                    <ul>
+                        <li class="estimated-date">
+                          <i class="material-icons">event</i>
+                          <span *ngIf="submission.estimated_joning_date">Start Date :{{submission.estimated_joning_date | date:'MM/dd/yyyy' }}</span>
+                          <span *ngIf="!submission.estimated_joning_date">Not defined
+                            </span>
+
+                        </li>
+
+                    </ul>
+                    <span class="from_discover_similar" style="float: right;" *ngIf="submission.from_discover_similar==true">
+                        <img src="assets/client/s.svg" style="width: 27px;">
+                    </span>
+                    <span class="private_pool" style="float: right;" *ngIf="submission.from_discover_similar==false">
+                        <img src="assets/client/p.svg" style="width: 27px;">
+                    </span>
+                </div>
+
+                <div class="job-statisticsv1 submissions">
+
+                    <div class="btn-group dropup">
+                      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+                        Actions
+                      </button>
+                      <div class="dropdown-menu">
+                            <a (click)="acceptSubmission(submission.id)"
+                             class="dropdown-item"
+                             *ngIf="submission.status!='Accepted'" href="javascript:void(0)"  >Accept</a>
+                            <a (click)="rejectSubmission(submission.id)"
+                            *ngIf="submission.status!='Rejected'" class="dropdown-item" href="javascript:void(0)">Reject</a>
+
+                            <a (click)="withdrawSubmission(submission.id)"
+                            *ngIf="submission.status != 'Withdrawn' && submission.from_discover_similar == true" class="dropdown-item" href="javascript:void(0)">Withdraw</a>
+
+                            <hr>
+                            <a class="dropdown-item" style="cursor: pointer;" href="javascript:void(0)" (click)="togglesidebar(submission, $event)" >Schedule Interview</a>
+                            <a *ngIf="submission.status!='Rejected'" class="dropdown-item" [routerLink]="['/client/create-offer/', submission.id]">Create Offer</a>
+                            <hr *ngIf="submission.resumeFullUrl!=null">
+                            <a target="_blank" *ngIf="submission.resumeFullUrl!=null" class="dropdown-item" href="{{ submission.resumeFullUrl }}">Download Resume</a>
+                      </div>
+
+                        <div [ngClass]="{'bookmark-btn': true,
+                                          'active' : submission.is_client_fav==1 }">
+                                          <a
+                                          (click)="toggleFavorite(submission.id, submission)" >
+                            <i class="material-icons" *ngIf="submission.is_client_fav!=1">favorite_border</i>
+                            <i class="material-icons" *ngIf="submission.is_client_fav==1">favorite</i>
+                            </a>
+                        </div>
+                    </div>
+
+
+
+                    <label *ngIf="submission.status!='Rejected'" class="submission-status green">{{ submission.status }}</label>
+                    <label *ngIf="submission.status=='Rejected'" class="submission-status red">{{ submission.status }}</label>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<app-interview-modal
+[current_submission]='current_submission'
+[locations] = 'locations'
+ [sidebar_open]='sidebar_open'></app-interview-modal>
+
+
+ <div *ngIf="current_submission" [ngClass]="{'modal smodal fade submission-score-modal':true,
+                    'show': show_modal==true }"
+  tabindex="-1" role="dialog"
+  [ngStyle]="{'display': show_modal==true?'block':'none' }" >
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="show_modal=false" data-dismiss="modal" aria-label="Close">×</button>
+        <h4 class="modal-title" id="exampleModalLongTitle">Submission Score Details #{{ current_submission?.id }}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-12" *ngIf="display_sovren_score == 'false' && display_simplifyai_score == 'false'">
+                <h4 style="text-align: center;">No Match Score Found</h4>
+              </div>
+              <div class="col-md-7">
+                  <div class="row">
+                      <div class="col text-center" *ngIf="display_sovren_score == 'true'">
+                        <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="130" height="130" xmlns="http://www.w3.org/2000/svg" *ngIf="current_submission?.sovern_score > 0">
+                            <circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+                            <circle class="circle-chart__circle" stroke="#007bff" stroke-width="2" attr.stroke-dasharray="{{current_submission?.sovern_score==null?0:current_submission?.sovern_score}}, 100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.915494" r="15.91549431"></circle>
+
+                            <g class="circle-chart__info" >
+                                <text class="circle-chart__percent" x="16.91549431" fill="#007bff" y="17" alignment-baseline="central" text-anchor="middle" font-size="10">{{ current_submission?.sovern_score }}</text>
+                            </g>
+                        </svg>
+                        <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="130" height="130" xmlns="http://www.w3.org/2000/svg"  *ngIf="current_submission?.sovern_score < 1">
+                            <circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+
+
+                            <g class="circle-chart__info">
+                                <text class="circle-chart__percent" x="16.91549431" fill="#3257d9" y="17" alignment-baseline="central" text-anchor="middle" font-size="10">N/A</text>
+                            </g>
+                        </svg>
+
+                        <p class="mt-2">Weighted score</p>
+                      </div>
+                      <div class="col text-center" *ngIf="display_simplifyai_score == 'true'">
+                        <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="130" height="130" xmlns="http://www.w3.org/2000/svg" *ngIf="current_submission?.simplifyai_score > 0">
+                            <circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+                            <circle class="circle-chart__circle" stroke="#EF8166" stroke-width="2" attr.stroke-dasharray="{{current_submission?.simplifyai_score==null?0:current_submission?.simplifyai_score}}, 100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.915494" r="15.91549431"></circle>
+
+                            <g class="circle-chart__info">
+                                <text class="circle-chart__percent" x="16.91549431" fill="#EF8166" y="17" alignment-baseline="central" text-anchor="middle" font-size="10">{{ current_submission?.simplifyai_score }}</text>
+                            </g>
+                        </svg>
+                        <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="130" height="130" xmlns="http://www.w3.org/2000/svg" *ngIf="current_submission?.simplifyai_score < 1">
+                            <circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+
+                            <g class="circle-chart__info">
+                                <text class="circle-chart__percent" x="16.91549431" fill="#EF8166" y="17" alignment-baseline="central" text-anchor="middle" font-size="10">N/A</text>
+                            </g>
+                        </svg>
+                        <p class="mt-2">Weighted score</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <!-- <div class="col text-center powered" *ngIf="display_sovren_score == 'true'">
+                          <p class="mt-2">Powered By<img src="assets/client/sovern-logo.jpg" alt=""></p>
+                      </div> -->
+                      <!-- <div class="col text-center powered" *ngIf="display_simplifyai_score == 'true'">
+                          <p class="mt-2">Powered By <span style="color: royalblue">SimplifyAi</span></p>
+
+                      </div> -->
+                  </div>
+              </div>
+              <!-- <div class="col-md-5 text-center" *ngIf="display_sovren_score != 'false' || display_simplifyai_score != 'false'">
+                      <img src="assets/client/diagram-score-calculation.svg" class="diagrap-score" alt="" >
+              </div> -->
+          </div>
+          <div class="row" *ngIf="(current_submission?.unweighted_category_scores[0]?.skills.length > 0
+           || current_submission?.unweighted_category_scores[1]?.skills.length > 0) || (current_submission?.unweighted_category_scores[0]?.score > 0 || current_submission?.unweighted_category_scores[1]?.score > 0)">
+              <div class="col">
+                  <div class="row">
+                      <div class="col"  *ngIf="display_sovren_score != 'false' || display_simplifyai_score != 'false'">
+                          <h5 class="mt-4 mb-4">Unweighted Category Scores</h5>
+                      </div>
+                  </div>
+                  <span  *ngIf="display_sovren_score == 'true'">
+                    <!-- <h4 style="margin-bottom: 2px;">Sovren Details</h4> -->
+                    <div class="col-md-12" *ngIf="sovrenData?.length < 1 " style="text-align: center;">
+                           <span>No Detail Found</span>
+                     </div>
+                    <div class="row" *ngFor="let unweighted_category_score of sovrenData">
+                        <div class="col">
+                        <div class="row" *ngIf="unweighted_category_score?.skills.length > 0 || unweighted_category_score?.score > 1 ">
+                            <div class="col-md-10"  *ngIf="unweighted_category_score?.parser_type == 'sovren'">
+                                <h6 *ngIf="unweighted_category_score?.skills.length > 0">{{ unweighted_category_score.category }}</h6><br>
+                                <ul>
+                                    <li *ngFor="let skill of  unweighted_category_score?.skills">{{ skill }}</li>
+                                 </ul>
+                            </div>
+                            <div class="col-md-2" *ngIf="unweighted_category_score?.parser_type == 'sovren'">
+                                <p class="total-value" *ngIf="unweighted_category_score?.score > 0">{{ unweighted_category_score?.score }}</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                  </span>
+
+                <span *ngIf="display_simplifyai_score == 'true'">
+                    <h4  style="margin-bottom: 2px;">Simplify AI Details</h4>
+                    <div class="col-md-12" *ngIf="simplifyaiData?.length < 1 " style="text-align: center;">
+                      <span>No Detail Found</span>
+                      </div>
+                    <div class="row" *ngFor="let unweighted_category_score of simplifyaiData">
+                      <div class="col">
+                      <div class="row" *ngIf="unweighted_category_score?.skills.length > 0 || unweighted_category_score?.score > 1 ">
+                          <div class="col-md-10"  *ngIf="unweighted_category_score?.parser_type == 'simplifyai'">
+                              <h6 *ngIf="unweighted_category_score?.skills.length > 0">{{ unweighted_category_score.category }}</h6><br>
+                              <ul>
+                                  <li *ngFor="let skill of  unweighted_category_score?.skills">{{ skill }}</li>
+                               </ul>
+                          </div>
+                          <div class="col-md-2" *ngIf="unweighted_category_score?.parser_type == 'simplifyai'">
+                              <p class="total-value" *ngIf="unweighted_category_score?.score > 0">{{ unweighted_category_score?.score }}</p>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+                </span>
+
+
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"
+        (click)="show_modal=false" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+   </div>
+
+
+   <!-- Comparison Preview -->
+ <div class="modal fade" id="refer_email_previwe" data-keyboard="false" data-backdrop="static" #completeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 70%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Comparison</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 80vh;overflow: auto;">
+         <div>
+            <app-compare-candidates
+            [comparison_data]="compare_data"
+           [compare_ids]="compare_ids"
+           ></app-compare-candidates>
+        </div>
+        <div class="modal-footer">
+        <button type="button" [disabled]="isLoading" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

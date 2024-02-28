@@ -1,0 +1,229 @@
+<app-client-header [title]="title"></app-client-header>
+
+ <div class="content-sub-header">
+    <div class="left" style="    width: 80%;">
+       <ul class="list-inline">
+          <li role="presentation" class="nav-item active">
+              <a href="#job-details" data-toggle="tab" class=" active show"> Template Details</a>
+           </li>
+           
+           
+       </ul>
+    </div>
+ </div>
+ <div class="main-content-content">
+       <div class="card">
+             <app-errors></app-errors>
+         <!-- Tab panes -->
+         <div class="tab-content">
+            <div role="tabpanel" class="tab-pane m-t-20 active" id="job-details">
+               <div class="element-box">
+ 
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+ 
+                      
+                      <p class="bold" style="font:bold;">Start Date</p>
+                      <div class="m-b-20">
+                         {{ job.start_date | date:'MM/dd/yyyy'  }}
+                      </div> 
+ 
+                      <p class="bold" style="font:bold;">Salary Type</p>
+                      <div class="m-b-20">
+                         {{ job.salary_type  }}
+                      </div>
+ 
+                      <div *ngIf="job.job_type=='Direct Hire'">
+                          <p class="bold" style="font:bold;">Salary</p>
+                          <div class="m-b-20">
+                             ${{ job.salary  | number: '1.2-2' }}
+                          </div>
+                       </div>
+ 
+                       <div *ngIf="job.job_type=='Temp Hire'">
+                          <p class="bold" style="font:bold;">Bill Rate (MIN) </p>
+                          <div class="m-b-20">
+                             ${{ job.min_rate  | number: '1.2-2' }}
+                          </div>
+                       </div>
+ 
+                       <div *ngIf="job.job_type=='Temp Hire'">
+                          <p class="bold" style="font:bold;">Bill Rate (MAX) </p>
+                          <div class="m-b-20">
+                             ${{ job.max_rate  | number: '1.2-2' }}
+                          </div>
+                       </div>
+ 
+                       <p class="bold" style="font:bold;" *ngIf="job.currency!=null">Currency</p>
+                       <div class="m-b-20" *ngIf="job.currency!=null">
+                          {{ job.currency }}
+                       </div>
+ 
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                       
+                       <p class="bold" style="font:bold;" *ngIf="job.tentative_end_date!=null">End Date</p>
+                       <div class="m-b-20" *ngIf="job.tentative_end_date!=null">
+                          {{ job.tentative_end_date | date:'MM/dd/yyyy'  }}
+                       </div> 
+ 
+                       <p class="bold" style="font:bold;">Number of Openings </p>
+                       <div class="m-b-20">
+                          {{ job.openings}}
+                       </div>
+ 
+                       <p class="bold" style="font:bold;">Experience </p>
+                       <div class="m-b-20">
+                          {{ job.experience}}
+                       </div>
+ 
+                       <p class="bold" style="font:bold;">Location</p>
+                       <div class="m-b-20">
+                          {{ job.address}}
+                       </div>
+ 
+ 
+                       <p class="bold" style="font:bold;">Category</p>
+                       <div class="m-b-20">
+                          {{ job?.category?.name}}
+                       </div>
+ 
+                    </div>
+                  </div>
+ 
+                  <p class="bold" style="font:bold;">Skills</p>
+                   <div class="m-b-20">
+                      <span 
+                      style="margin-right: 2px;"
+                      *ngFor="let skill of job.skills" class="label label-success">  {{ skill.name}}  </span>
+                   </div>
+ 
+                   <p class="bold" style="font:bold;">Description</p>
+                  
+                  <div class="m-b-20">
+                     <div [innerHTML]="job.description"></div>
+                  </div>
+                   
+                  <div *ngIf="job.additional_detail != null">
+                   <p class="bold" style="font:bold;">Additional Detail</p>
+                   <div class="m-b-20">
+                      {{ job.additional_detail}}
+                   </div>
+                   </div>
+ 
+ 
+                   <div *ngIf="job.reason_for_hire != null">
+                   <p class="bold" style="font:bold;">Reason for Hire</p>
+                   <div class="m-b-20">
+                      {{ job.reason_for_hire}}
+                   </div>
+                   </div>
+ 
+               </div>
+            </div>
+            <div role="tabpanel" class="tab-pane  m-t-20" id="submissions">
+               <div class="element-box">
+                  <table class="table table-bordered" *ngIf="!isLoading">
+                     <thead>
+                        <tr>
+                           <th>Id</th>
+                           <th>Candidate Email</th>
+                           <th>Created Date</th>
+                           <th>Candidate Name</th>
+                           <th>Gender</th>
+                           <th>Actions</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let submission of job.submissions" [attr.id]="submission.id">
+                        <td>{{ submission.id }}</td>
+                        <td>{{ submission.email }} <br> <small>Mobile: {{ submission.mobile }}</small></td>
+                        <td>{{ submission.created_at | date:'dd-MMM-y' }}</td>
+                        <td>{{ submission.first_name }} {{ submission.last_name }}</td>
+                        <td> {{ submission.gender | titlecase }} </td>
+                        <td>
+                           <a routerLink="/client/submissions/{{submission.id}}" class="fa fa-eye"
+                              style="margin-right:20px;">
+                           </a>
+                           <a  class="fa fa-trash"
+                           style="cursor: pointer; display: none" *ngIf="!submission.deleted">
+                           </a>
+                           <span *ngIf="submission.deleted">Deleting...</span>
+                        </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div role="tabpanel" class="tab-pane " id="Interviews">
+               <div class="element-box">
+                  <div class="element-box">
+                     <h6>
+                        Interviews
+                     </h6>
+                     <table class="table table-bordered mg-b-0">
+                         <thead>
+                               <tr>
+                                  <th>Id</th>
+                                  <th>Title</th>
+                                  <th>Type</th>
+                                  <th>Recommended Datetime In</th>
+                                  <th>Other Datetime In</th>
+                                  <th>Status</th>
+                                  <th>Actions</th>
+                               </tr>
+                            </thead>
+                        <tbody>
+                            <tr *ngIf="job?.interviews.length==0"><td class="text-center not-found" colspan="7">There are no interviews currently.</td></tr>
+                            <tr *ngFor="let interview of job?.interviews">
+                               <td>{{ interview.id }}</td>
+                               <td>{{ interview.title }}</td>
+                               <td>{{ interview.type }}</td>
+                               <td>{{ interview.recommended_datetime_in }}</td>
+                               <td>{{ interview.other_datetime_in }}</td>
+                               <td>{{ interview.current_status }}</td>
+                               <td>
+                                  <a routerLink="/client/interview/{{interview.id}}"  
+                                     class="btn btn-primary" style="margin-right:5px;">
+                                  <i class="fa fa-eye"></i>
+                                  </a>
+                                  <button  
+                                  [disabled]="interview.deleted"
+                                  class="btn btn-danger" 
+                                  >
+                                  <i class="fa fa-trash"></i>
+                                  <span *ngIf="interview.deleted"> Deleting...</span>
+                                  </button>
+                               </td>
+                            </tr>
+                         </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div role="tabpanel" class="tab-pane " id="Offers">
+               <div class="element-box">
+                  Offers
+               </div>
+            </div>
+            <div role="tabpanel" class="tab-pane " id="Workorders">
+               <div class="element-box">
+                  Workorders
+               </div>
+            </div>
+            <div role="tabpanel" class="tab-pane " id="Hired">
+               <div class="element-box">
+                  Hired
+               </div>
+            </div>
+            <div role="tabpanel" class="tab-pane " id="Messages">
+               <div class="element-box">
+                  Messages
+               </div>
+               <hr>
+               <div id="discussions"></div>
+            </div>
+         </div>
+ 
+       </div>
+ </div>

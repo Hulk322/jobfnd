@@ -1,0 +1,188 @@
+<app-sidebar [current_menu_item]="'settings'"></app-sidebar>
+<div class="content-area floated" #content_area>
+    <div class="main-head no-tabs">
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Settings - Custom Fields</h2>
+                <a href=""  data-target="#edit_client_modal" data-toggle="modal" class="btn-orange">Add Custom Fields</a>
+            </div>
+        </div>
+    </div>
+    <!-- <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card job-grid single-job">
+                    <div class="inner">
+                        <div class="s-details ">
+                            <div class="main-content-content eco-box-shadow">
+                                <div class="setting-right-side">
+                                    <div class="setting-right-side-content">
+                                        <table class="custom-table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Label</th>
+                                                    <th>Type</th>
+                                                    <th>Default Value</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                <tr *ngFor="let field of fields; let i = index">
+                                                    <td> {{ i+1 }} </td>
+                                                    <td> {{ field.label }} </td>
+                                                    <td> {{ field.type }} </td>
+                                                    <td> {{ field.default_value }} </td>
+                                                    <td style="text-align: center;">
+                                                        <a (click)="edit(field)" class="btn btn-primary"
+                                                            style="margin-right:5px; color:white">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                        <button (click)="delete(field.id, field)"
+                                                            [disabled]="field.deleted" class="btn btn-danger"
+                                                            [ngClass]="{ 'fa fa-spinner': field.deleted  }">
+                                                            <i [ngClass]="{ 'fa fa-trash': !field.deleted }"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="setting-left-side form-style-v2">
+                                        <h4 style="margin-top: 25px;" *ngIf="!field.id">Add New Custom Field</h4>
+                                        <h4 style="margin-top: 25px;" *ngIf="field.id">Update Custom Field</h4>
+                                        <form method="POST" role="form" class="custom-form" (ngSubmit)="onSubmit()"
+                                            ngNativeValidate>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Label</label>
+                                                <input name="label" required [(ngModel)]="field.label" type="text"
+                                                    class="form-control" id="" placeholder="Field Label">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Type</label>
+                                                <select name="type" required [(ngModel)]="field.type" type="text"
+                                                    class="form-control" id="" placeholder="Field Type">
+                                                    <option value="text">Text</option>
+                                                    <option value="date">Date</option>
+                                                    <option value="textarea">Text Area</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Default Value</label>
+                                                <input name="default_value" [(ngModel)]="field.default_value" 
+                                                 type="text"
+                                                class="form-control" placeholder="Default Value">
+                                             </div>
+
+                                            <button type="submit" *ngIf="!field.id" [disabled]="isLoading"
+                                                class="btn btn-primary pull-right">Save</button>
+                                            <button type="submit" *ngIf="field.id" [disabled]="isLoading"
+                                                class="btn btn-primary pull-right">Update</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div style=" margin:80px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            
+        <div class="row">
+
+            <div class="col-md-12">
+                
+                <table class="custom-table table-style-2 table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Label</th>
+                            <th>Type</th>
+                            <th>Default Value</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        
+                        <tr *ngFor="let field of fields">
+                            <td width="30%">
+                                <label class="title-bold">{{ field.label }}
+                                </label>
+                            </td>
+                            <td>
+                                <label class="title-bold">{{ field.type }}</label>
+                            </td>
+                            <td>
+                                <label class="title-bold">{{ field.default_value }}</label>
+                            </td>
+                            
+                            <td width="50" align="right">
+                                <div class="btn-group">
+                                  <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_horiz</i>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" (click)="edit(field)" data-target="#edit_client_modal" data-toggle="modal">Edit</a>
+                                    <a class="dropdown-item" (click)="delete(field.id, field)">Delete</a>
+                                  </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        
+        
+    </div>
+
+</div>
+
+<div class="modal smodal custom-form-group-flat" id="edit_client_modal" style="margin-top:0px;"data-keyboard="false" data-backdrop="static" #completeModal>
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header">
+                <h4 class="modal-title" *ngIf="!field.id">Add New Custom Field</h4>
+                <h4 class="modal-title" *ngIf="field.id">update Custom Field</h4>
+             <button class="close" data-dismiss="modal" (click)="dataDismiss()">&times;</button>
+             
+          </div>
+          <div class="modal-body">
+                                         <form ngNativeValidate>
+                                             <div class="form-group">
+                                                 <label for="exampleInputEmail1">Label</label>
+                                                 <input name="label" required [(ngModel)]="field.label" type="text"
+                                                     class="form-control" id="" placeholder="Field Label">
+                                             </div>
+                                             <div class="form-group">
+                                                 <label for="exampleInputPassword1">Type</label>
+                                                 <select name="type" required [(ngModel)]="field.type" type="text"
+                                                     class="form-control" id="" placeholder="Field Type">
+                                                     <option value="text">Text</option>
+                                                     <option value="date">Date</option>
+                                                     <option value="textarea">Text Area</option>
+                                                 </select>
+                                             </div>
+ 
+                                             <div class="form-group">
+                                                 <label for="exampleInputEmail1">Default Value</label>
+                                                 <input name="default_value" [(ngModel)]="field.default_value" 
+                                                  type="text"
+                                                 class="form-control" placeholder="Default Value">
+                                              </div>
+ 
+                                            
+                                         </form>
+          </div>
+          <div class="modal-footer">
+                  <button type="submit" *ngIf="!field.id" [disabled]="isLoading"
+                              class="btn btn-primary pull-right" (click)="addOrupdate()" >Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+                  <button type="submit" *ngIf="field.id" [disabled]="isLoading"
+                             class="btn btn-primary pull-right" (click)="addOrupdate()">Update<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+          </div>
+       </div>
+    </div>
+ </div>

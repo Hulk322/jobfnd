@@ -1,0 +1,584 @@
+<div class="wrap btm-padding-1 graybg">
+        <div class="shadow-header-wrap header-publicnav">
+           <app-header></app-header>
+           <app-sub-menu [current_menu_item]="'accepted-jobs'"></app-sub-menu>
+        </div>
+        <div class="inner-wrap">
+           <div class="job-list-grid">
+     
+               <div class="page-subhead">
+                     <div class="row">
+                      
+                      <div class="col-md-12">
+                        <application-tabs [application_tabs]="'accepted-jobs'"></application-tabs>
+                      </div>
+                  
+          
+                        <!-- <div class="col-md-3" *ngIf="!isLoading">
+                           <div class="btn-group custom-btn-group pull-right" role="group">
+                              <button 
+                                  (click)="view_type='grid'" type="button" class="btn btn-default btn-sm"><i class="material-icons">apps</i></button>
+                              <button 
+                              (click)="view_type='list'" type="button" class="btn btn-default btn-sm"><i class="material-icons">menu</i></button>
+                              <button type="button" class="btn btn-default btn-sm"><i class="material-icons">graphic_eq</i> <span>Filter</span></button>
+                           </div>
+                        </div> -->
+          
+                     </div>
+                  </div>
+            
+                  <div class="alert-widgets-nopadding"  *ngIf="jobs?.length>=1"> 
+                  
+
+
+                     <div class="alert-widgets style2">
+                  
+                           <div class="s-graphics">
+                  
+                              <i class="material-icons">spellcheck</i>
+                  
+                           </div>
+                  
+                           <div class="s-contents">
+                              
+                              <div class="row">
+                  
+                                 <div class="col-md-8">
+                  
+                                       <h2>Accepted Applications </h2>
+                                       <p>Here you can see the jobs applications accepted by hiring manager</p>
+                                 
+                                 </div>
+                  
+                                 <div class="col-md-4">
+                                       <div class="mini-search-i">
+                                          <input type="text" placeholder="Search your Applications">
+                                          <button><i class="material-icons">search</i></button>
+                                       </div>
+                                 </div>
+                  
+                              </div>
+                              
+                  
+                           </div>
+                  
+                     </div>
+                    
+                   
+                    
+             </div>
+
+             <div class="row" *ngIf="isLoading" style="margin-top: 0px;">
+                 <div class="col-md-4">
+                    <div class="card-grid-job">
+                       <div class="job-title">
+                          <label class="shine"></label>
+                       </div>
+                       <div class="job-info">
+                          <div class="row">
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="job-description">
+                          <label class="shine"></label>
+                          <label class="shine"></label>
+                       </div>
+                       <div class="badges">
+                          <label class="shine"></label>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                    <div class="card-grid-job">
+                       <div class="job-title">
+                          <label class="shine"></label>
+                       </div>
+                       <div class="job-info">
+                          <div class="row">
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="job-description">
+                          <label class="shine"></label>
+                          <label class="shine"></label>
+                       </div>
+                       <div class="badges">
+                          <label class="shine"></label>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                    <div class="card-grid-job">
+                       <div class="job-title">
+                          <label class="shine"></label>
+                       </div>
+                       <div class="job-info">
+                          <div class="row">
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="job-description">
+                          <label class="shine"></label>
+                          <label class="shine"></label>
+                       </div>
+                       <div class="badges">
+                          <label class="shine"></label>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                    <div class="card-grid-job">
+                       <div class="job-title">
+                          <label class="shine"></label>
+                       </div>
+                       <div class="job-info">
+                          <div class="row">
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="job-description">
+                          <label class="shine"></label>
+                          <label class="shine"></label>
+                       </div>
+                       <div class="badges">
+                          <label class="shine"></label>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                    <div class="card-grid-job">
+                       <div class="job-title">
+                          <label class="shine"></label>
+                       </div>
+                       <div class="job-info">
+                          <div class="row">
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="job-description">
+                          <label class="shine"></label>
+                          <label class="shine"></label>
+                       </div>
+                       <div class="badges">
+                          <label class="shine"></label>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                    <div class="card-grid-job">
+                       <div class="job-title">
+                          <label class="shine"></label>
+                       </div>
+                       <div class="job-info">
+                          <div class="row">
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="blckinfo">
+                                   <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                   <span><label class="shine" style="width: 80%;"></label></span>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="job-description">
+                          <label class="shine"></label>
+                          <label class="shine"></label>
+                       </div>
+                       <div class="badges">
+                          <label class="shine"></label>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+             
+               
+                  
+              <app-empty-list  *ngIf="jobs?.length<1 && !isLoading" [pageName]="'accepted-jobs'"></app-empty-list>        
+                  
+               
+               
+     
+              <app-jobs-list class="row list" *ngIf="view_type=='list' && !isLoading" [jobs]="jobs"></app-jobs-list>
+                 
+                     <div class="row grid"   *ngIf="view_type=='grid' && !isLoading" >
+                      <div class="col-md-4" style="cursor: pointer;" *ngFor="let job of jobs">
+                   <div class="card-grid-job job-grid-type2">
+                
+                
+                 
+                      <div class="job-title">
+                       
+                       <h4 (click)="goToJob(job.id)">{{ job.title }}</h4>
+                      </div>
+                      <div class="job-info">
+                         <div class="row">
+                            <div class="col-md-6">
+                               <div class="blckinfo">
+                                  <i class="material-icons">apartment</i>
+                                  <span>{{ job.client_organization.name }} </span> 
+                               </div>
+                            </div>
+                            <div class="col-md-6">
+                               <div class="blckinfo">
+                                  <i class="material-icons">room</i>
+                                  <span>{{ job.job_location!=null?job.job_location:'Not Available' }}</span>
+                               </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                               <div class="blckinfo ">
+                                  
+                                     
+                                     
+                                  <div class="icon-exp">
+                                        
+                                           <svg *ngIf="job.experience=='Entry'||job.experience==null" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="b" y1="11.126" transform="translate(94.123 512.609)"/><line class="b" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+                                   
+                         
+                                      
+                                           <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="b" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+                                    
+                
+                                       
+                                           <svg *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="a" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+                                  
+                
+                                      
+                                           <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a{fill:none;stroke:#5bcb58;stroke-linecap:round;stroke-width:3px;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="a" y1="12.916" transform="translate(99.745 510.82)"/><line class="a" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+                              
+                                           
+                                  </div>
+                                  <span>{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                               </div>
+                            </div>
+                            <div class="col-md-6">
+                               <div class="blckinfo">
+                                  <i class="material-icons">monetization_on</i>
+                                  <span> <span>${{ job.min_rate | number: '1.2-2' }} - ${{ job.max_rate | number: '1.2-2' }} / {{ job.salary_type }}</span></span>
+                               </div>
+                            </div>
+
+                           
+                         </div>
+                           
+
+             <div class="job-status">
+                    
+             
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'New Submission'"  class="job-status-btn-s sm-underreview-label"><i class="material-icons">local_library</i>{{submission_status.new_sumission}}</a>
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'New Submission'"  class="help-btns"><i class="material-icons">help_outline</i></a>
+              
+
+          
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Offer'"   class="job-status-btn-s sm-offer-label"><i class="material-icons">recent_actors</i>{{submission_status.pending_offer}}</a>
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Offer'"   class="help-btns"><i class="material-icons">help_outline</i></a>
+                
+                  <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Rejected'"   class="job-status-btn-s sm-rejected-label"><i class="material-icons">block</i>{{submission_status.submission_rejected}}</a>
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Offer'"   class="help-btns"><i class="material-icons">help_outline</i></a>
+            
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Interview'"  class="job-status-btn-s sm-interview-label"><i class="material-icons">event</i>{{submission_status.interview}}</a>
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Interview'"  class="help-btns"><i class="material-icons">help_outline</i></a>
+             
+
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Hired'"  class="job-status-btn-s sm-rejected-label"><i class="material-icons">block</i>{{submission_status.hired}}</a>
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Hired'"  class="help-btns"><i class="material-icons">help_outline</i></a>
+                
+
+           
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Accepted'"  class="job-status-btn-s "><i class="material-icons">how_to_reg</i>{{submission_status.applicaiton_accepted}}</a>
+                    <a href="" style="pointer-events: none;" *ngIf="job.submission.status == 'Accepted'"  class="help-btns"><i class="material-icons">help_outline</i></a>
+          
+
+              </div>
+
+
+                      </div>
+                      
+                
+                  
+                      <div class="card-footer-job">
+                         <div class="row"> 
+                            
+                            <div class="col-md-9">
+                               
+                               <div class="job-applid-date application-date">
+                                   <i class="material-icons">today</i> <label>Submission Date: </label>
+                                   <span>{{ job.submission.created_at | date }}</span>
+                               </div>
+                            </div>
+
+                            <div class="col-md-3">
+                               <a href="#" [routerLink]="['/candidate/applied-jobs/', job.id]" class="btn btn-default btn-sm pull-right icon-btn acc-btn" style="line-height: 1px;">
+                                   <i class="material-icons">arrow_forward</i>
+                               </a>
+
+                           </div>
+
+                         </div>
+                      </div>
+                   
+                
+                
+                   </div>
+                </div>
+        </div><!--row grid-->
+     
+              <div class="pagination">
+                    <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                    [collectionSize]="pageObj.totalElements"
+                    [(page)]="pageObj.page"
+                    (pageChange)="pageChange($event)" 
+                    [pageSize]="pageObj.pageSize"
+                    [boundaryLinks]="true">
+                    </ngb-pagination>
+                 </div>
+     
+              <div class="saved_jobs" *ngIf="false">
+                 <div class="row"  *ngIf="view_type=='list'">
+                    <div class="col-md-12" *ngFor="let job of saved_jobs" style="cursor: pointer;">
+                       <div *ngIf="job.saved==1" class="card-grid-job list-card-jobs" (click)="goToJob(job.slug)">
+                      
+                    </div>
+                 </div>
+              </div>
+              <div class="row"  *ngIf="view_type=='grid'">
+                 <div class="col-md-4" *ngFor="let job of saved_jobs" style="cursor: pointer;">
+                    <div *ngIf="job.saved==1" class="card-grid-job" (click)="goToJob(job.slug)">
+                    
+                    <div class="job-info">
+                       <div class="row">
+                          <div class="col-md-6">
+                             <div class="blckinfo">
+                                <i class="material-icons">apartment</i>
+                                <span>{{ job?.client_organization }}</span>
+                             </div>
+                          </div>
+                          <div class="col-md-6">
+                             <div class="blckinfo">
+                                <i class="material-icons">room</i>
+                                <span>{{ job.job_location!=null?job.job_location:'Not Available' }}</span>
+                             </div>
+                          </div>
+                          <div class="col-md-6">
+                             <div class="blckinfo">
+                                <input type="hidden" value="{{ job?.category?.name }}" itemprop="industry" >
+                                <input type="hidden" value="{{ job.openings }}" itemprop="totalJobOpenings" >
+                                <input type="hidden" value="{{job.star_date}}" itemprop="jobStartDate">
+                                <div class="icon-exp">
+                                   <svg *ngIf="job.experience=='Entry'||job.experience==null" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                      <defs>
+                                         <style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style>
+                                      </defs>
+                                      <g transform="translate(-87 -506.736)">
+                                         <line class="a" y2="8.434" transform="translate(88.5 515.302)"/>
+                                         <line class="b" y1="11.126" transform="translate(94.123 512.609)"/>
+                                         <line class="b" y1="12.916" transform="translate(99.745 510.82)"/>
+                                         <line class="b" y1="15.5" transform="translate(105.745 508.236)"/>
+                                      </g>
+                                   </svg>
+                                   <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                      <defs>
+                                         <style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style>
+                                      </defs>
+                                      <g transform="translate(-87 -506.736)">
+                                         <line class="a" y2="8.434" transform="translate(88.5 515.302)"/>
+                                         <line class="a" y1="11.126" transform="translate(94.123 512.609)"/>
+                                         <line class="b" y1="12.916" transform="translate(99.745 510.82)"/>
+                                         <line class="b" y1="15.5" transform="translate(105.745 508.236)"/>
+                                      </g>
+                                   </svg>
+                                   <svg *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                      <defs>
+                                         <style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style>
+                                      </defs>
+                                      <g transform="translate(-87 -506.736)">
+                                         <line class="a" y2="8.434" transform="translate(88.5 515.302)"/>
+                                         <line class="a" y1="11.126" transform="translate(94.123 512.609)"/>
+                                         <line class="a" y1="12.916" transform="translate(99.745 510.82)"/>
+                                         <line class="b" y1="15.5" transform="translate(105.745 508.236)"/>
+                                      </g>
+                                   </svg>
+                                   <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                      <defs>
+                                         <style>.a{fill:none;stroke:#5bcb58;stroke-linecap:round;stroke-width:3px;}</style>
+                                      </defs>
+                                      <g transform="translate(-87 -506.736)">
+                                         <line class="a" y2="8.434" transform="translate(88.5 515.302)"/>
+                                         <line class="a" y1="11.126" transform="translate(94.123 512.609)"/>
+                                         <line class="a" y1="12.916" transform="translate(99.745 510.82)"/>
+                                         <line class="a" y1="15.5" transform="translate(105.745 508.236)"/>
+                                      </g>
+                                   </svg>
+                                </div>
+                                <span>{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                             </div>
+                          </div>
+                          <div class="col-md-6">
+                             <div class="blckinfo">
+                                <i class="material-icons">monetization_on</i>
+                                <span>${{ job.min_rate | number: '1.2-2' }} - ${{ job.max_rate | number: '1.2-2' }} / {{ job.salary_type }}</span>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="job-description">
+                       <p [innerHtml]="job.excerpt"></p>
+                    </div>
+                    <div class="badges">
+                       <span class="badge badge-green">{{ job.job_type }}</span>
+                       <span class="badge badge-white" *ngFor="let skill of job.skills | slice:0:2">{{ skill.name | slice:0:15 }}</span>
+                       <span *ngIf="job?.skills?.length > 2" class="badge badge-more badge-white"> +2 </span>
+                    </div>
+                    <div class="card-footer-job">
+                       <div class="row">
+                          <div class="col-md-7">
+                             <div class="score-info">
+                                <div class="scorewrap">
+                                   
+                                </div>
+                                <label> job is 80% matched for your profile</label>
+                             </div>
+                          </div>
+                         
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+        
+     </div>
+     </div>
+     </div>

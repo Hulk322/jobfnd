@@ -1,0 +1,200 @@
+<app-sidebar [current_menu_item]="'background-verifications'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Background Verifications</h2>
+                
+               
+            </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs" style="display: none;">
+                <ul>
+                    <li class="active"><a href="#"><label class="blue dot"></label> All</a></li>
+                    <li><a href="#"><label class="green dot"></label> Completed</a></li>
+                    <li><a href="#"><label class="orange dot" ></label> Pending</a></li>
+                </ul>
+                
+                <div class="searchbox">
+                    <form>
+                        <button><i class="material-icons">search</i></button>
+                        <input type="search" placeholder="Search By Name, ID">
+                    </form>
+                </div>
+                
+                <div class="view-switcher">
+                    
+                    <ul>
+                        <li>
+                            <a href="#"><i class="material-icons">filter_list</i></a>
+                            <ul class="drop-wrap">
+                
+                                <div class="submission-filter-wrap">
+
+                                    <h1>
+                                        <i class="material-icons">filter_list</i> Filter
+                                        <a href="clearfilter">Clear all</a>
+                                    </h1>
+
+                                    <h2 class="drop-down-subtitle">Job</h2>
+                                    <div class="block">
+
+                                        <input type="text" class="form-control" placeholder="City">
+
+                                        <ul class="filter-chips">
+                                            <li>
+                                                <label>Content Marketing Manager</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                            <li>
+                                                <label>Vice President of Marketing</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">Vendor</h2>
+                                    <div class="block">
+
+                                        <input type="text" class="form-control" placeholder="City">
+
+                                        <ul class="filter-chips">
+                                            <li>
+                                                <label>ABC Company</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                            <li>
+                                                <label>US Tech Solutions</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">Submission Type</h2>
+                                    <div class="block">
+
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="customControlInline">
+                                            <label class="custom-control-label" for="customControlInline">Direct Submissions</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check2">
+                                            <label class="custom-control-label" for="check2">Submission from Vendor</label>
+                                        </div>
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">By Status</h2>
+                                    <div class="block">
+
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check3">
+                                            <label class="custom-control-label" for="check3">Accepted</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check4">
+                                            <label class="custom-control-label" for="check4">Rejected</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check5">
+                                            <label class="custom-control-label" for="check5">Interview Scheduled</label>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </ul>
+                        </li>
+                        <li><a href="#"><i class="material-icons">menu</i></a></li>
+                        <li><a href="#"><i class="material-icons">view_module</i></a></li>
+                    </ul>
+                    
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+        <div class="row">
+
+                <div class="col-md-12" *ngIf="background_verifications?.length<1 && !isLoading" style="text-align: center;">
+                    <div class="errormsgscreen">
+                    <img src="assets/admin/images/graphics/bg-verification.svg" style="margin-top: 13%;">
+                    <h3>Nothing Found</h3>
+                     </div>
+            
+            <div class="col-md-12">
+                
+                <table class="custom-table" *ngIf="background_verifications?.length>0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Submission ID</th>
+                        <th>Offer ID</th>
+                        <th>Social Security Trace</th>
+                        <th>Federal Exclusion list</th>
+                        <th>State Criminal</th>
+                        <th>Reference Check</th>
+                        <th>Education Verifaction</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let background_verification of background_verifications">
+                        <td>{{ background_verification.id }}</td>
+                        <td>{{ background_verification.submission_id }}</td>
+                        <td><a
+                            routerLink="/client/offer/{{background_verification.offer_id}}">{{ background_verification.offer_id }}</a>
+                        </td>
+                        <td *ngIf="background_verification.social_security_trace==1">
+                          <i class="fa  fa-check-circle"></i>
+                        </td>
+                        <td *ngIf="background_verification.social_security_trace!=1">
+                          <i class="fa  fa-close"></i></td>
+          
+                        <td *ngIf="background_verification.fel==1">
+                          <i class="fa  fa-check-circle"></i> </td>
+                        <td *ngIf="background_verification.fel!=1">
+                          <i class="fa  fa-close"></i> </td>
+          
+                        <td *ngIf="background_verification.state_criminal==1">
+                          <i class="fa  fa-check-circle"></i> </td>
+                        <td *ngIf="background_verification.state_criminal!=1">
+                          <i class="fa  fa-close"></i> </td>
+          
+                        <td *ngIf="background_verification.reference_check==1">
+                          <i class="fa  fa-check-circle"></i> </td>
+                        <td *ngIf="background_verification.reference_check!=1">
+                          <i class="fa  fa-close"></i> </td>
+          
+                        <td *ngIf="background_verification.edu_varifaction==1">
+                          <i class="fa  fa-check-circle"></i> </td>
+                        <td *ngIf="background_verification.edu_varifaction!=1">
+                          <i class="fa  fa-close"></i> </td>
+          
+          
+                      </tr>
+                    </tbody>
+                  </table>
+            
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+        </div>
+        
+    </div>
+</div>

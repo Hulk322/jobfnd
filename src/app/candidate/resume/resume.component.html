@@ -1,0 +1,1101 @@
+<div class="wrap btm-padding-1 graybg">
+   <div class="shadow-header-wrap header-publicnav">
+      <app-header></app-header>
+      <app-sub-menu [current_menu_item]="'profile'"></app-sub-menu>
+   </div>
+   <div class="inner-wrap profile-steps">
+      
+      <div class="flex-box">
+         <div class="sidebar---content" *ngIf="!first_time_loading">
+            <div class="sorting-list">
+
+               <div [ngClass]="{'checkbox':true, 
+               'selected': resume_uploaded==false,
+                'active': resume_uploaded==true }">
+                  <label>
+                  <input type="checkbox" 
+                     disabled 
+                     name="optionscheckboxs"  id="optionscheckboxs1" 
+                      value="option1" 
+                      
+                                  
+                       checked>
+                  <span class="label-text"><i>01</i> Resume Upload</span>
+                  </label>
+               </div>
+
+
+               <div [ngClass]="{'checkbox':true, 
+                                 'selected':current_step=='basic_info',
+                                  'active': last_step=='basic_info' || last_step=='about_me' || last_step=='work_history' || last_step=='education' || last_step=='skills'}"
+                                  (click)="checkBasicInfo()">
+                  <label>
+                  <input type="checkbox" 
+                  name="optionscheckboxs" 
+                   
+                  id="optionscheckboxs2" 
+                  [disabled]="true"
+                  [checked]="resume_uploaded==true && is_resume_parsed==true"
+                  
+                  value="option2">
+                  <span class="label-text"><i>02</i>Basic info</span>
+                  </label>
+               </div>
+
+
+               <div [ngClass]="{'checkbox':true, 
+               'selected':current_step=='about_me',
+                'active': last_step=='about_me' || last_step=='work_history' || last_step=='education' || last_step=='skills'}"
+                (click)="checkAboutMe()">
+                  <label>
+                  <input type="checkbox" name="optionscheckboxs"  
+                  id="optionscheckboxs3" 
+                  [disabled]="true"
+                  [checked]="last_step=='about_me' || last_step=='work_history' || last_step=='education' || last_step=='skills'" 
+                   value="option3">
+                  <span class="label-text"><i>03</i> About Me</span>
+                  </label>
+               </div>
+
+
+               <div [ngClass]="{'checkbox':true, 
+               'selected':current_step=='work_history',
+                'active': last_step=='work_history' || last_step=='education' || last_step=='skills'}"
+                (click)="checkWorkHistory()">
+                  <label>
+                  <input type="checkbox" 
+                     [disabled]="true"
+                     [checked]="last_step=='work_history' || last_step=='education' || last_step=='skills'" 
+                     name="optionscheckboxs" id="optionscheckboxs2" value="option2">
+                  <span class="label-text"><i>04</i> Work history</span>
+                  </label>
+               </div>
+
+               <div [ngClass]="{'checkbox':true, 
+               'selected':current_step=='education',
+                'active': last_step=='education' || last_step=='work_history' || last_step=='skills'}"
+                (click)="checkEducation()">
+                  <label>
+                  <input type="checkbox" 
+                  
+                  name="optionscheckboxs" 
+                   [disabled]="true"
+                  [checked]="last_step=='education' || last_step=='skills'" 
+                  
+                  id="optionscheckboxs2" value="option2">
+                  <span class="label-text"><i>05</i> Education</span>
+                  </label>
+               </div>
+
+
+               <div [ngClass]="{'checkbox':true, 
+               'selected':current_step=='skills',
+                'active': last_step=='skills'}"
+                (click)="checkSkills()" >
+                  <label>
+                  <input type="checkbox" 
+                  
+                  disabled 
+                  [checked]="current_step=='finished'"
+                  name="optionscheckboxs" 
+                  id="optionscheckboxs2" 
+                  value="option2">
+                  <span class="label-text"><i>06</i> Skills</span>
+                  </label>
+               </div>
+            </div>
+         </div>
+         <div class="main__content" [ngStyle]="{'display': first_time_loading==false?'block':'none'}" >
+
+               <div class="resume-upload basic-info custom-form-group-flat " *ngIf="resume_uploaded==false || is_resume_parsed==false"style="padding-bottom: 0px !important;">    
+                                <div  class="row">
+
+                        <div  class="col-md-6">
+                           <div class="sm-profile-left">
+   
+                              <div class="inner-s">
+   
+                                 <img src="{{ profile_picture }}">
+                                 <h3>Welcome  {{ full_name | titlecase }} to Talentzhire</h3>
+                                 <p>Uploading a resume makes to profile completion easy!</p>
+                                 
+                                 <ul>
+
+                                    <li><i class="material-icons">done_all</i> Make your resume public to be visisble to Hiring Managers and Employers</li>
+                                    <li><i class="material-icons">done_all</i> Speed up the application process with Quick Apply. You can apply to jobs with just one click!</li>
+                                    <li><i class="material-icons">done_all</i> See similar job titles and Skills to help you make your next move</li>
+
+                                 </ul>
+
+                              </div>
+   
+                           </div>
+                        </div>
+                    
+                     <div  class="col-md-6">
+                         <h1  style="font-weight: 300; margin-bottom:20px;">Upload Resume</h1>
+                  
+                         <div  class="fileupload-resumewrap dropzone-container">
+                             <label  for="file"><i *ngIf="!isLoading" class="material-icons uploadresume-ic"> cloud_upload </i>
+                              <span *ngIf="isLoading" class="uploading-file">
+                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg>
+                              </span>
+                              
+                                 <div  class="form-row form-group">
+                                     <input 
+                                        required 
+                                        type="file" 
+                                        style="width:95%; display: none; "  
+                                        id="file" name="resume" 
+                                        ref="file" 
+                                        [disabled]="isLoading || ( resume_uploaded==true && is_resume_parsed==false )"
+                                        class="form-element form-control"
+                                        (change)="handleFileInput($event.target.files)">
+                                     <div ><span  class="filename"><i  class="icons_folder"></i> {{fileName}}</span></div>
+                                 </div>
+                                 <button type="button" 
+                                 [disabled]="isLoading || ( resume_uploaded==true && is_resume_parsed==false )"
+                                 class="btn btn-primary btn-md browse-resume">Browse Resume</button> 
+                                 <p *ngIf="resume_uploaded==true && is_resume_parsed==false" >Your resume is being parsed in background. Please wait...</p>
+                             </label>
+                         </div>
+                         
+                         <!-- <button type="button"  
+                            style="display: block; float: right; margin-top: 20px;"
+                            class="btn btn-primary btn-md" 
+                            (click)="uploadFileToActivity()"
+                            [disabled]="isLoading"
+                            >Upload Resume
+                            <svg *ngIf="isLoading" aria-hidden="true" style="width: 14px;" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg>
+                         </button>  -->
+                         <button *ngIf="is_resume_parsed==true" (click)="skipResumeStep()" class="btn btn btn-md skip-btn" type="button">Skip
+                           
+                           </button>
+                     </div>
+
+                     
+                     
+                 </div>
+                  </div>
+            
+            <div class="basic-info custom-form-group-flat " *ngIf="current_step=='basic_info'">
+               <h1 class="title-border">Basic info</h1>
+               <div class="avatarlist" *ngIf="form_data.profile.meta.profile_picture==null && isLoading==false">
+                  <label for="FirstName">Choose your profile avatar</label>
+                  <ul *ngIf="isLoading==false">
+                     <li (click)="addClass(id=1)" [ngClass]="{'active': id === 1 }">
+                     <a><img src="assets/images/avatar1.jpg"></a>
+                     </li>
+                     <li (click)="addClass(id=6)" [ngClass]="{'active': id === 6 }">
+                     <a><img src="assets/images/avatar6.jpg"></a>
+                     </li>
+                     <li (click)="addClass(id=12)" [ngClass]="{'active': id === 12 }">
+                     <a><img src="assets/images/avatar12.jpg"></a>
+                     </li>
+                     <li (click)="addClass(id=8)" [ngClass]="{'active': id === 8 }">
+                     <a><img src="assets/images/avatar8.jpg"></a>
+                     </li>
+                     <li (click)="addClass(id=9)" [ngClass]="{'active': id === 9 }">
+                     <a><img src="assets/images/avatar9.jpg"></a>
+                     </li>
+                     <li (click)="addClass(id=11)" [ngClass]="{'active': id === 11 }">
+                     <a><img src="assets/images/avatar11.jpg"></a>
+                     </li>
+                     <li (click)="addClass(id=3)" [ngClass]="{'active': id === 3 }">
+                     <a><img src="assets/images/avatar3.jpg"></a>
+                     </li>
+                     <li (click)="addClass2(id=-100)" [ngClass]="{'active': id === -100 }" >
+                     <a *ngIf="custom_avator==true"><img src="{{ imgURL2 }}"></a>
+                     </li>
+                     <li style="cursor: pointer;" class="add-new-avatar" onclick="document.getElementById('profile_picture_first_time').click();" >
+                        <a style="cursor: pointer;"> + </a>
+                        <input name="profile_picture_first_time" 
+                           style="display: none;"
+                           type="file" 
+                           (change)="handleFileUploadFirstTime($event.target.files)" 
+                           id="profile_picture_first_time" ref="file" 
+                           class="form-element form-control">
+                     </li>
+                  </ul>
+               </div>
+               <div class="change-avatar" *ngIf="form_data.profile.meta.profile_picture!=null && isLoading==false">
+                  <img src="{{ imgURL }}" style="float: left;">
+                  <div class="avatarlist" style="float: left;
+                  width: 100px;">
+                  <ul *ngIf="isLoading==false">
+                        
+                        <li style="cursor: pointer;" class="add-new-avatar" onclick="document.getElementById('profile_picture_edit_time').click();" >
+                           <a style="cursor: pointer;"> + </a>
+                           <input name="profile_picture_edit_time" 
+                              style="display: none;"
+                              type="file" 
+                              (change)="handleFileUpload($event.target.files)" 
+                              id="profile_picture_edit_time" ref="file" 
+                              class="form-element form-control">
+                        </li>
+                     </ul>
+                  </div>
+
+                  <input name="profile_picture"
+                     style="margin-top: 8px; display: none;"
+                     type="file" 
+                     (change)="handleFileUpload($event.target.files)" 
+                     id="profile_picture" ref="file" 
+                     class="form-element form-control">
+               </div>
+               <form autocomplete="off" style="clear: both;" #basicInfoForm="ngForm" class="custom-form-group-flat">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;"> 
+                  <div class="row">
+                     <div class="col-4">
+                        <div class="form-group">
+                           <label for="FirstName" 
+                              [class.label-has-error]="firstNameControl.invalid" >First Name <span class="color-red">*</span></label>
+                           <input type="text" 
+                           [class.has-error]="firstNameControl.invalid"
+                           class="form-control" 
+                           name="first_name" 
+                           required 
+                           #firstNameControl="ngModel"
+                           [(ngModel)]="form_data.profile.first_name">
+                           <span class="help-block" *ngIf="firstNameControl.invalid">
+                           First Name is required
+                           </span>
+                        </div>
+                     </div>
+                      <div class="col-4">
+                        <div class="form-group">
+                           <label for="MiddleName" 
+                              [class.label-has-error]="middleNameControl.invalid" >Middle Name</label>
+                           <input type="text" 
+                           [class.has-error]="middleNameControl.invalid"
+                           class="form-control" 
+                           name="middle_name" 
+                           #middleNameControl="ngModel"
+                           [(ngModel)]="form_data.profile.middle_name">
+                           <span class="help-block" *ngIf="middleNameControl.invalid">
+                           Middle Name is required
+                           </span>
+                        </div>
+                     </div>
+                     <div class="col-4">
+                        <div class="form-group">
+                           <label for="LastName" 
+                              [class.label-has-error]="lastNameControl.invalid">Last Name <span class="color-red">*</span></label>
+                           <input type="text" 
+                           [class.has-error]="lastNameControl.invalid"
+                           class="form-control" 
+                           name="last_name" 
+                           required 
+                           #lastNameControl="ngModel"
+                           [(ngModel)]="form_data.profile.last_name">
+                           <span class="help-block" *ngIf="lastNameControl.invalid">
+                           Last Name is required
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="row">
+                     <div class="col-4">
+                         <div class="form-group">
+                           <label for="MobileNumber" 
+                              [class.label-has-error]="MobileNumberControl.invalid" >Mobile Number <span class="color-red">*</span></label>
+                           <input type="tel" id="tel" 
+                           phoneMask [preValue]="form_data.profile.meta.mobile"
+                           [class.has-error]="MobileNumberControl.invalid"
+                           class="form-control" 
+                           name="phone"
+                           #MobileNumberControl="ngModel" maxlength="14"
+                           [(ngModel)]="form_data.profile.meta.mobile">
+                           <span class="help-block" *ngIf="MobileNumberControl.invalid">
+                           Mobile Number is required
+                           </span>
+                        </div>
+                     </div>
+                     <div class="col-4">
+                         <div class="form-group">
+                           <label for="Location" 
+                              [class.label-has-error]="LocationControl.invalid" >Location <span class="color-red">*</span></label>
+                              <AutocompleteComponent name="address" [placeholder]="placeholder"
+                                       [autocompleteInput]="form_data.profile.meta.location" (setAddress)="getAddress($event)"
+                                       adressType="geocode">
+                                       </AutocompleteComponent>
+                           <input type="text" style="display: none;"
+                           [class.has-error]="LocationControl.invalid"
+                           class="form-control" 
+                           name="location"
+                           #LocationControl="ngModel"
+                           [(ngModel)]="form_data.profile.meta.location">
+                           <span class="help-block" *ngIf="LocationControl.invalid">
+                           Location Number is required
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+
+                  <p class="pb-25" style="padding-bottom:0px">Gender</p>
+                  <div class="select-gender">
+                     <div class="radio">
+                        <label class="male">
+                        <input type="radio"   [(ngModel)]="form_data.resume.gender" 
+                        value="Male"
+                        name="gender">
+                        <span class="label-text"> Male</span>
+                        </label>
+                     </div>
+                     <div class="radio">
+                        <label class="female">
+                        <input type="radio" 
+                        value="Female"   [(ngModel)]="form_data.resume.gender"
+                        name="gender" >
+                        <span class="label-text female"> Female</span>
+                        </label>
+                     </div>
+                     <div class="radio">
+                        <label class="other">
+                        <input type="radio" Not_Specified
+                        value="Other"   [(ngModel)]="form_data.resume.gender"
+                        name="gender" >
+                        <span class="label-text other"> Not Specified</span>
+                        </label>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-6">
+                        <div class="form-group">
+                           <label for="dateofbirth" 
+                              [class.label-has-error]="dobControl.invalid">Date of birth <span class="required"></span></label>
+                           <input type="text"
+                           class="form-control"
+                           [(ngModel)]="form_data.resume.dob" 
+                           [maxDate]="today"
+                           #dobControl="ngModel"
+                           name="dob"
+                           [bsConfig]="{ containerClass: 'theme-blue', 
+                           dateInputFormat: 'MM/DD/YYYY' }"
+                           bsDatepicker>
+                           <span class="help-block" *ngIf="dobControl.invalid">
+                           Date of birth is not valid
+                           </span>
+                        </div>
+                     </div>
+                     <div class="col-6">
+                        <div class="form-group">
+                           <label for="resumeTitle">Resume Title <span class="required"></span></label>
+                           <input type="text" 
+                           class="form-control" 
+                           name="title" 
+                           #titleControl="ngModel"
+                           [(ngModel)]="form_data.resume.title">
+                           <span class="help-block" *ngIf="titleControl.invalid">
+                           Resume Title is required
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <!-- <div style="color: red">
+                     <p style="float: right;
+                        margin-bottom: 10px;">
+                        * (Asterik) means  that Field is required.
+                     </p>
+                  </div> -->
+                  <div style="clear: both">
+                     <button 
+                     [disabled]="isLoading || basicInfoForm.invalid"
+                     [ngStyle]="{'cursor':isLoading || basicInfoForm.invalid ? 'no-drop' : 'pointer' }"
+                     (click)="saveBasicInfo()" 
+                     class="btn-step btn btn-blue pull-right ">Save & Continue 
+                     <img src="assets/images/right-arrow.svg"></button>
+                  </div>
+               </form>
+            </div>
+            <div class="matrix about-me basic-info custom-form-group-flat" *ngIf="current_step=='about_me'">
+               <h1 class="stitle1">About me</h1>
+               <div class="card about-me_text no-border">
+                  <editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew"
+                  [init]="{plugins: 'link',  height : '475px'}" 
+                  name="about_me" [(ngModel)]="form_data.resume.about_me">
+                  </editor>
+               </div>
+               <a href="javascript:void(0)" (click)="current_step='basic_info'" class="btn btn-white pull-left"><img src="assets/images/lefft-arrow.svg"> Prev</a>
+               <button  [disabled]="isLoading"
+               (click)="saveAboutMe()" class="btn btn-blue pull-right btn-step">Save & Continue 
+               <img src="assets/images/right-arrow.svg"></button>
+            </div>
+            <div class="matrix client-work-history" *ngIf="current_step=='work_history'">
+               <h1 class="stitle1">Work history</h1>
+               <a href="javascript:void(0)" data-target="#work_history" 
+                  data-toggle="modal" 
+                  (click)="resetWorkHistory()" class="pull-right add-new pointer add-new-position"><i class="material-icons">add</i> Add New</a>
+               <div class="work-history" *ngFor="let work_history of form_data.resume.employments; let first = first;">
+                  
+                  <h4>{{ work_history.title }} <span class="company-name">@{{ work_history.employer }}</span></h4>
+                  <p> <read-more 
+                     [text]="work_history.description" [maxLength]="110"></read-more>
+                  </p>
+                  <div class="work-history-footer icon-fix clearfix">
+                     <span class="pull-left"><i class="material-icons">calendar_today</i> {{ work_history.start_date | date:'yyyy' }} -    <span *ngIf="isValidDate(work_history.end_date)">{{ work_history.end_date | date:'yyyy' }}</span>
+                     <span *ngIf="!isValidDate(work_history.end_date)">Present</span></span>
+                     <span class="pull-right">
+                     <a  style="cursor:pointer" 
+                        data-target="#work_history" data-toggle="modal" 
+                        (click)="editWorkHistory(work_history)"><i class="material-icons">edit</i></a>
+                     <a *ngIf="!work_history.deleted" class="pointer"
+                     (click)="deleteWorkHistory(work_history.id, work_history)"><i class="material-icons">delete</i></a>
+                     <span *ngIf="work_history.deleted">...</span>
+                     </span>
+                  </div>
+               </div>
+               <a href="javascript:void(0)" (click)="current_step='about_me'" class="btn btn-white pull-left"><img src="assets/images/lefft-arrow.svg"> Prev</a>
+               <button [disabled]="isLoading || form_data.resume.employments.length < 1 " 
+               (click)="nextStep('work_history', 'education')" class=" btn btn-blue pull-right">Continue 
+               <img src="assets/images/right-arrow.svg"></button>
+            </div>
+
+            <div class="matrix education client-work-history"  *ngIf="current_step=='education'">
+               <h1 class="stitle1">Education</h1>
+               <a href="javascript:void(0)" class="pull-right add-new add-new-position"  data-target="#education" data-toggle="modal" 
+                  (click)="resetEducation()"><i class="material-icons">add</i> Add New</a>
+               <div class="work-history" *ngFor="let education of form_data.resume.educations">
+                  
+                  <h4>{{ education.degree_type }} <span class="company-name">@{{ education.institute }}</span></h4>
+                  <p class="education">{{ education.degree_direction }} 
+                  </p>
+                  <div class="work-history-footer icon-fix clearfix">
+                     <span class="pull-left"><i class="material-icons">calendar_today</i> {{ education.start_date | date:'yyyy' }} - Present</span>
+                     <span class="pull-right">
+                     <a style="cursor:pointer" 
+                        data-target="#education" data-toggle="modal" (click)="editEducation(education)"><i class="material-icons">edit</i></a>
+                     <a *ngIf="!education.deleted"
+                     (click)="deleteEducation(education.id, education)"
+                     style="cursor:pointer"><i class="material-icons">delete</i></a>
+                     </span>
+                  </div>
+               </div>
+               <a href="javascript:void(0)" (click)="current_step='work_history'" class="btn btn-white pull-left"><img src="assets/images/lefft-arrow.svg"> Prev</a>
+               
+               <button [disabled]="isLoading || form_data.resume.educations.length < 1"
+               (click)="nextStep('education', 'skills')"
+               class="btn-step btn btn-blue pull-right">Continue 
+               <img src="assets/images/right-arrow.svg"></button>
+            </div>
+            <div class="matrix basic-info custom-form-group-flat" *ngIf="current_step=='skills'">
+               <h1 class="stitle1">Skills</h1>
+               <div class="skills-tag">
+                  <tag-input [(ngModel)]='form_data.resume.skills' 
+                    (onAdd)="saveSkills(false)" 
+                  (onRemove)="saveSkills(false)" 
+                  [placeholder]="skill_add_placeholder" >
+                  </tag-input>
+               </div>
+               <h1 class="stitle1" style="padding-top: 15px;">Additional Skills</h1>
+               <div class="skills-tag">
+                  <tag-input [(ngModel)]='form_data.resume.additional_skills' 
+                    (onAdd)="saveAdditionalSkills(false)" 
+                  (onRemove)="saveAdditionalSkills(false)" 
+                  [placeholder]="skill_add_placeholder" >
+                  </tag-input>
+               </div>
+               <a href="javascript:void(0)" (click)="current_step='education'" class="mt-4  btn btn-white pull-left"><img src="assets/images/lefft-arrow.svg"> Prev</a>
+               <button [disabled]="isLoading"
+               (click)="saveSkills()" 
+               class="mt-4 btn-step btn btn-blue pull-right">Publish Your Profile 
+               <img src="assets/images/right-arrow.svg"></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- modal starts her -->
+   <!-- basic_info modal-->
+   <div class="modal smodal custom-form-group-flat" id="basic_info" style="margin-top:100px;">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               
+               <h4 class="modal-title">Update Basic Info</h4>
+            </div>
+            <button class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">First Name</label>
+                           <input type="text" 
+                           class="form-control" 
+                           name="first_name" 
+                           [(ngModel)]="form_data.profile.first_name"
+                           required>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Last Name</label>
+                           <input type="text" 
+                           class="form-control" 
+                           name="last_name" 
+                           [(ngModel)]="form_data.profile.last_name"
+                           required>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Resume Title</label>
+                     <input type="text" 
+                     class="form-control" 
+                     name="title" 
+                     required
+                     [(ngModel)]="form_data.resume.title">
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Gender</label>
+                           <select 
+                           required
+                           class="form-control"
+                           [(ngModel)]="form_data.resume.gender"
+                           name="gender">
+                           <option value="Male">Male</option>
+                           <option value="Female">Female</option>
+                           <option value="Other">Other</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Date of Birth</label>
+                           <input type="text"
+                           required
+                           class="form-control"
+                           [(ngModel)]="form_data.resume.dob"
+                           name="dob"
+                           [bsConfig]="{ containerClass: 'theme-blue', 
+                           dateInputFormat: 'MM/DD/YYYY' }"
+                           bsDatepicker>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Profile Picture</label>
+                     <input name="profile_picture" 
+                        type="file" 
+                        (change)="handleFileUpload($event.target.files)" 
+                        id="profile_picture" ref="file" 
+                        class="form-element form-control">
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="submit" class="btn btn-primary" (click)="saveBasicInfo()" 
+                  data-dismiss="modal">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- contact_info modal-->
+   <div class="modal smodal custom-form-group-flat" id="contact_info" style="margin-top:100px;">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title">Contact Info</h4>
+            </div>
+            <button class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="">Email</label>
+                     <input type="text" 
+                     class="form-control" 
+                     name="email" 
+                     required
+                     [(ngModel)]="form_data.resume.email">
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Mobile</label>
+                           <input type="text" 
+                           class="form-control" 
+                           name="mobile" 
+                           [(ngModel)]="form_data.profile.meta.mobile"
+                           required>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Home Phone</label>
+                           <input type="text" 
+                           class="form-control" 
+                           name="home_phone" 
+                           [(ngModel)]="form_data.resume.home_phone"
+                           required>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Address</label>
+                     <input type="text" 
+                     class="form-control" 
+                     name="full_address" 
+                     required
+                     [(ngModel)]="form_data.resume.full_address">
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="submit" class="btn btn-primary" data-dismiss="modal" 
+                  (click)="saveContactInfo()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- about me modal -->
+   <div class="modal smodal custom-form-group-flat" id="about_me" style="margin-top:100px;">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               
+               <h4 class="modal-title">About Me</h4>
+            </div>
+            <button class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-body">
+               <form>
+                  <div class="form-group">
+                     <textarea class="form-control" id="about_me_input" name="about_me" [(ngModel)]="form_data.resume.about_me"></textarea>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" data-dismiss="modal" (click)="saveAboutMe()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- work_history modal-->
+   <div class="modal smodal custom-form-group-flat" id="work_history">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+                  <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="work_history.id==''">Add Work History</h4>
+               <h4 class="modal-title" *ngIf="work_history.id!=''">Edit Work History</h4>
+               
+            </div>
+            
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Title</label>
+                     <input type="text" class="form-control" 
+                     name="title" 
+                     [(ngModel)]="work_history.title"
+                     required>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Employer</label>
+                     <input type="text" 
+                     class="form-control" 
+                     name="employer" 
+                     required
+                     [(ngModel)]="work_history.employer">
+                  </div>
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="experience">Start Date</label>
+                           <input type="text"
+                           required
+                           class="form-control"
+                           [(ngModel)]="work_history.start_date"
+                           name="start_date"
+                           [bsConfig]="{ containerClass: 'theme-blue', 
+                           dateInputFormat: 'MM/DD/YYYY' }"
+                           bsDatepicker>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="experience">End Date</label>
+                           <input type="text"
+                           required
+                           class="form-control"
+                           [(ngModel)]="work_history.end_date"
+                           name="end_date"
+                           [bsConfig]="{ containerClass: 'theme-blue', 
+                           dateInputFormat: 'MM/DD/YYYY' }"
+                           bsDatepicker>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="row">
+                           <div class="col-md-4">
+                              <div class="form-group">
+                                 <label for="experience">Present</label>
+                                 <input type="checkbox" style="width:13px" class="form-control" (click)="toggleSelection($event)" > 
+                              </div>
+                           </div>
+                           <div class="col-md-8">
+                              <div class="form-group">
+                                 <label for="experience">Order</label>
+                                 <input type="number"
+                                 required
+                                 class="form-control"
+                                 [(ngModel)]="work_history.sort_order"
+                                 name="sort_order"
+                                 >
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Description</label>
+                     <textarea
+                     class="form-control" 
+                     name="description" 
+                     id="work_history_description"
+                     required
+                     [(ngModel)]="work_history.description"></textarea>
+                  </div>
+                  <div class="row">
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button 
+                  type="submit" 
+                  class="btn btn-primary" 
+                  data-dismiss="modal" 
+                  (click)="addWorkHistory()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- experience modal -->
+   <div class="container">
+      <div class="row">
+         <div class="col-xs-12">
+            <div class="modal smodal custom-form-group-flat" id="experience" style="margin-top:100px;">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        
+                        <h4 class="modal-title" *ngIf="other_detail.id==''">Add Experience</h4>
+                        <h4 class="modal-title" *ngIf="other_detail.id!=''">Edit Experience</h4>
+                     </div>
+                     <button class="close" data-dismiss="modal">&times;</button>
+                     <div class="modal-body">
+                        <form autocomplete="off">
+                           <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                           <div class="form-group">
+                              <label for="experience">Experience</label>
+                              <input type="number" class="form-control" name="experience" 
+                              [(ngModel)]="other_detail.experience">
+                           </div>
+                           <div class="form-group">
+                              <label for="experience">Industry</label>
+                              <input type="text" class="form-control" name="industry" [(ngModel)]="other_detail.industry">
+                           </div>
+                        </form>
+                     </div>
+                     <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" (click)="addExperience()">Save</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- references modal -->
+   <div class="modal smodal custom-form-group-flat" id="references" >
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               
+               <h4 class="modal-title" *ngIf="reference.id==''">Add Reference</h4>
+               <h4 class="modal-title" *ngIf="reference.id!=''">Edit Reference</h4>
+            </div>
+            <button class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="">Name</label>
+                     <input type="text" class="form-control" 
+                     name="name" [(ngModel)]="reference.name">
+                  </div>
+                  <div class="form-group">
+                     <label for="">Title</label>
+                     <input type="text" class="form-control"
+                     name="title" [(ngModel)]="reference.title">
+                  </div>
+                  <div class="form-group">
+                     <label for="">Employer</label>
+                     <input type="text" 
+                     class="form-control"
+                     name="employer" [(ngModel)]="reference.employer">
+                  </div>
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="">Phone</label>
+                           <input type="text" 
+                           class="form-control"
+                           name="phone" 
+                           [(ngModel)]="reference.phone">
+                        </div>
+                     </div>
+                     <div class="col-md-8">
+                        <div class="form-group">
+                           <label for="">Email</label>
+                           <input type="text" 
+                           class="form-control"
+                           name="email" 
+                           [(ngModel)]="reference.email">
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" data-dismiss="modal" 
+                  (click)="addReference()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- education modal-->
+   <div class="modal smodal custom-form-group-flat" id="education" >
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+
+                  <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="education.id==''">Add Education</h4>
+               <h4 class="modal-title" *ngIf="education.id!=''">Edit Education</h4>
+               
+            </div>
+            
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Degree Type</label>
+                     <input type="text" class="form-control" 
+                     name="degree_type" 
+                     [(ngModel)]="education.degree_type">
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Degree Direction</label>
+                     <input type="text" class="form-control" 
+                     name="degree_direction" 
+                     [(ngModel)]="education.degree_direction">
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Institute</label>
+                     <input type="text" class="form-control" 
+                     name="institute" 
+                     [(ngModel)]="education.institute">
+                  </div>
+                  <div class="form-group">
+                     <label for="">Start Date</label>
+                     <input type="text"
+                     required
+                     class="form-control"
+                     [(ngModel)]="education.start_date"
+                     name="start_date"
+                     [bsConfig]="{ containerClass: 'theme-blue', 
+                     dateInputFormat: 'MM/DD/YYYY' }"
+                     bsDatepicker>
+                  </div>
+                  <div class="form-group">
+                     <label for="">End Date</label>
+                     <input type="text"
+                     required
+                     class="form-control"
+                     [(ngModel)]="education.end_date"
+                     name="end_date"
+                     [bsConfig]="{ containerClass: 'theme-blue', 
+                     dateInputFormat: 'MM/DD/YYYY' }"
+                     bsDatepicker>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" data-dismiss="modal" (click)="addEducation()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- salary modal -->
+   <div class="modal smodal custom-form-group-flat" id="salary" style="margin-top:100px;">
+      <div class="modal-dialog modal-sm">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Salary</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Salary Amount</label>
+                     <input type="text" class="form-control" 
+                     name="salary_amount" 
+                     [(ngModel)]="form_data.resume.salary_amount">
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Salary Type</label>
+                     <select class="form-control" name="salary_type" 
+                     [(ngModel)]="form_data.resume.salary_type">
+                     <option value="Hourly">Hourly</option>
+                     <option value="Monthly">Monthly</option>
+                     <option value="Annually">Annually</option>
+                     </select>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" data-dismiss="modal" (click)="saveSalary()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- willing to relocate -->
+   <div class="modal smodal custom-form-group-flat" id="willing_to_relocate" style="margin-top:100px;">
+      <div class="modal-dialog modal-sm">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Willing To Relocate</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <select class="form-control" name="willing_to_relocate" 
+                     [(ngModel)]="form_data.resume.willing_to_relocate">
+                     <option value="1">Yes</option>
+                     <option value="0">No</option>
+                     </select>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" data-dismiss="modal" (click)="saveWillingToWork()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- social media modal -->
+   <div class="modal smodal custom-form-group-flat" id="social_media" style="margin-top:100px;">
+      <div class="modal-dialog modal-sm">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="social.id==''">Add Social Media</h4>
+               <h4 class="modal-title" *ngIf="social.id!=''">Edit Social Media</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Type/Title</label>
+                     <select 
+                     class="form-control" 
+                     name="title" 
+                     [(ngModel)]="social.title"
+                     required>
+                     <option 
+                        value="{{ social }}" 
+                        *ngFor="let social of socialMedia" >{{ social | titlecase }}</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">URL</label>
+                     <input 
+                     type="url" 
+                     class="form-control" 
+                     name="url" 
+                     [(ngModel)]="social.url"
+                     required>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" data-dismiss="modal" (click)="addSocial()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- skills modal -->
+   <div class="modal smodal custom-form-group-flat" id="skills" style="margin-top:100px;">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Skills</h4>
+            </div>
+            <div class="modal-body">
+               <form>
+                  <div class="form-group">
+                     <tag-input [(ngModel)]='form_data.resume.skills' name="skills"  
+                      (onAdd)="saveSkills()" 
+                     (onRemove)="saveSkills()" 
+                     [placeholder]="skill_add_placeholder" >
+                     </tag-input>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" data-dismiss="modal" (click)="saveSkills()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- documents modal-->
+   <div class="modal" id="documents" style="margin-top:100px;">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="document.id==''">Add Document</h4>
+               <h4 class="modal-title" *ngIf="document.id!=''">Edit Document</h4>
+            </div>
+            <div class="modal-body">
+               <form #documentForm autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Title</label>
+                     <input type="text" 
+                     class="form-control" 
+                     name="title" 
+                     [(ngModel)]="document.title">
+                  </div>
+                  <div class="form-group">
+                     <label for="">Document</label>
+                     <input 
+                     name="document" 
+                     type="file" 
+                     #documentFile 
+                     (change)="handleDocumentUpload($event.target.files)" 
+                     id="document" 
+                     ref="file" 
+                     class="form-element form-control">
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" data-dismiss="modal" (click)="addDocument()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+

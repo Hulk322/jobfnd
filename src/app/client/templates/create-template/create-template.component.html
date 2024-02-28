@@ -1,0 +1,358 @@
+<app-sidebar [current_menu_item]="'templates'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Create New Template</h2>
+                    <a routerLink="/client/templates" class="btn-secondary">
+                     <i class="material-icons">arrow_back</i> Back to Templates Listing</a>
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+<div class="main-content-content form-style-v2">
+   <div class="element-box">
+      <form #f="ngForm" class="custom-form" autocomplete="off" (ngSubmit)="onSubmit(f)" name="create-job" ngNativeValidate>
+         <input autocomplete="false" name="hidden" type="text" style="display:none;">
+         
+         <div class="content-right">
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="form-group">
+                     <label for="">Job Title <span class="asterik">*</span></label>
+                     <input type="text" name="title" class="form-control" [(ngModel)]="job.title">
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                  <div class="form-group">
+                     <label for="">Job Type <span class="asterik">*</span></label>
+                     <select name="job_type" id="job_type" class="form-control select2" [(ngModel)]="job.job_type">
+                     <option value="{{ job_type }}" *ngFor="let job_type of job_types">{{ job_type }}</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <div class="form-group">
+                     <label for="">Category <span class="asterik">*</span></label>
+                     <select name="category_id" id="input" class="form-control" [(ngModel)]="job.category_id">
+                     <option value="">Select</option>
+                     <option value="{{ category.id }}" *ngFor="let category of categories">{{ category.name }}</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <div class="form-group autocomplete-style">
+                     <label for="">Location</label>
+                     <AutocompleteComponent [autocompleteInput]="job.address" (setAddress)="getAddress($event)" adressType="geocode">
+                     </AutocompleteComponent>
+                  </div>
+               </div>
+            </div>
+            <h4 class="bold">Skills & Description</h4>
+            <div class="form-group">
+               <label for="">Description <span class="asterik">*</span></label>
+               <editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew" [init]="{plugins: 'link'}"
+               (focusout)="focusOutFunction()" name="description" [(ngModel)]="job.description"></editor>
+               <div class="m-t-10" style="margin-top:10px;" style="display:none">
+                  <a style="cursor:pointer" (click)="addDescription()">Add Additonal Information</a>
+               </div>
+            </div>
+            <div class="row">
+               <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                  <label for="">Skills <span class="asterik">*</span></label>
+                  <ng-select2 [data]="skills" [(ngModel)]="job.skills" [options]="options" [width]="950" name="skills">
+                  </ng-select2>
+               </div>
+            </div>
+            <div class="form-group" style="display:none">
+               <label for="">Other Skills <span class="asterik">*</span></label>
+               <ng-select2 [data]="other_skills" [(ngModel)]="job.other_skills" [options]="options" [width]="1100"
+               name="other_skills"></ng-select2>
+            </div>
+            <div class="row">
+               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <div class="form-group">
+                     <label for="">Number of Openings <span class="asterik">*</span></label>
+                     <input type="text" name="openings" class="form-control" [(ngModel)]="job.openings">
+                  </div>
+               </div>
+               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <div class="form-group">
+                     <label for="">Experience <span class="asterik">*</span></label>
+                     <select name="experience" [(ngModel)]="job.experience" class="form-control select2">
+                     <option value="">Select</option>
+                     <option value="{{ experience }}" *ngFor="let experience of experiences">
+                        {{ experience | titlecase }}
+                     </option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <div class="form-group">
+                     <label>Description document</label>
+                     <div class="input-group">
+                        <input type="text" class="form-control" value="{{uploaded_file_name}}"  readonly="">
+                        <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                        Browse… <input (change)="handleFileUpload($event.target.files)"  type="file" style="display: none;" multiple="">
+                        </span>
+                        </label>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <h4>Other Details</h4>
+            <div class="row">
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" *ngIf="job.job_type=='Direct Hire'">
+                  <div class="form-group">
+                     <label for="">Salary Amount <span class="asterik">*</span></label>
+                     <input type="text" name="salary" class="form-control" [(ngModel)]="job.salary">
+                  </div>
+               </div>
+               <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" *ngIf="job.job_type=='Temp Hire'">
+                  <div class="form-group">
+                     <label for="">Bill Rate (MIN) <span class="asterik">*</span></label>
+                     <input type="text" name="min_rate" class="form-control" [(ngModel)]="job.min_rate">
+                  </div>
+               </div>
+               <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" *ngIf="job.job_type=='Temp Hire'">
+                  <div class="form-group">
+                     <label for="">Bill Rate (MAX) <span class="asterik">*</span></label>
+                     <input type="text" name="max_rate" class="form-control" [(ngModel)]="job.max_rate">
+                  </div>
+               </div>
+               <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                  <div class="form-group">
+                     <label for="">Currency <span class="asterik">*</span></label>
+                     <select name="currency" [(ngModel)]="job.currency" class="form-control select2" tabindex="-1">
+                     <option value="">Select</option>
+                     <option value="{{ currency }}" *ngFor="let currency of currencies">{{ currency }}</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                  <div class="form-group">
+                     <label for="">Salary Type <span class="asterik">*</span></label>
+                     <select name="pay_type" [(ngModel)]="job.pay_type" class="form-control select2" tabindex="-1">
+                     <option value="">Select</option>
+                     <option value="{{ pay_type }}" *ngFor="let pay_type of pay_types">{{ pay_type }}</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" *ngIf="job.job_type=='Direct Hire'">
+                  <div class="form-group">
+                     <label for="">Start Date of Job</label>
+                     <input type="text" placeholder="MM/DD/YYYY" class="form-control" [(ngModel)]="job.start_date"
+                     name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                     dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                  </div>
+               </div>
+               <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" *ngIf="job.job_type=='Temp Hire'">
+                  <div class="form-group">
+                     <label for="">Start Date of Job</label>
+                     <input type="text" placeholder="MM/DD/YYYY" class="form-control" [(ngModel)]="job.start_date"
+                     name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                     dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                  </div>
+               </div>
+               <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" *ngIf="job.job_type=='Temp Hire'">
+                  <div class="form-group">
+                     <label for="">End Date of Job</label>
+                     <input type="text" placeholder="MM/DD/YYYY" class="form-control" [(ngModel)]="job.tentative_end_date"
+                     name="tentative_end_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                     dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" *ngIf="departments.length">
+                  <div class="form-group">
+                     <label for="">Department </label>
+                     <select name="department_id" [(ngModel)]="job.department_id" class="form-control select2"
+                     tabindex="-1">
+                     <option value="">Select</option>
+                     <option value="{{ department.id }}" *ngFor="let department of departments">
+                        {{ department.name | titlecase }} ({{ department.code }})
+                     </option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" *ngIf="cost_center_codes.length">
+                  <div class="form-group">
+                     <label for="">Cost Center </label>
+                     <select name="costcenter_id" [(ngModel)]="job.costcenter_id" class="form-control select2"
+                     tabindex="-1">
+                     <option value="">Select</option>
+                     <option value="{{ cost_center_code.id }}" *ngFor="let cost_center_code of cost_center_codes">
+                        {{ cost_center_code.name | titlecase }} ({{ cost_center_code.cost_code }})
+                     </option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" *ngIf="billing_codes.length">
+                  <label for="">Billing Code</label>
+                  <select name="billing_code_id" [(ngModel)]="job.billing_code_id" class="form-control select2"
+                  tabindex="-1">
+                  <option value="">Select</option>
+                  <option value="{{ billing_code.id }}" *ngFor="let billing_code of billing_codes">
+                     {{ billing_code.name | titlecase }} ({{ billing_code.code }})
+                  </option>
+                  </select>
+               </div>
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" *ngIf="hiring_managers.length">
+                  <div class="form-group">
+                     <label for="">Hiring Manager <span class="asterik">*</span></label>
+                     <select name="hiring_manager" [(ngModel)]="job.hiring_manager" class="form-control select2"
+                     tabindex="-1">
+                     <option value="">Select</option>
+                     <option value="{{ hiring_manager.id }}" *ngFor="let hiring_manager of hiring_managers">
+                        {{ hiring_manager.first_name | titlecase }} {{ hiring_manager.last_name }}
+                     </option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" *ngIf="programs.length">
+                  <div class="form-group">
+                     <label for="">Select Program <span class="asterik">*</span></label>
+                     <select name="program_id" [(ngModel)]="job.program_id" class="form-control select2" tabindex="-1">
+                     <option value="">Select</option>
+                     <option value="{{ program.id }}" *ngFor="let program of programs">{{ program.name | titlecase }}
+                     </option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <label for="">Approval Request</label>
+                  <select name="workflow_id" [(ngModel)]="job.workflow_id" id="input" class="form-control select2"
+                  tabindex="-1">
+                  <option value="">Select</option>
+                  <option value="1">WorkFlow 1</option>
+                  <option value="2">WorkFlow 2</option>
+                  <option value="3">WorkFlow 3</option>
+                  </select>
+               </div>
+            </div>
+            <div class="m-t-20" *ngIf="job.job_type=='Full Time'" style="margin-bottom: 20px">
+               <h4>Benefits</h4>
+                <section class="s-form-row check-box">
+                   <div class="s-radio"  *ngFor="let benefit of benefits; let i=index" style="float: left;" >
+                       
+                       <input  type="checkbox" id="benefits-{{i}}" name="benefits-{{i}}" [(ngModel)]="benefit.checked" [value]="benefit.id">
+                       <label for="benefits-{{i}}">
+                           <span>{{ benefit.title }}</span>
+                       </label>
+
+                   </div>
+               </section>
+            </div>
+            <h4>Notes</h4>
+            <div class="form-group">
+               <label for="">Additional Detail</label>
+               <textarea name="additional_detail" id="input" class="form-control" [(ngModel)]="job.additional_detail"
+               rows="3"></textarea>
+            </div>
+            <div class="form-group" style="display: none">
+               <label for="">Reason for Hire</label>
+               <textarea name="reason_for_hire" id="input" class="form-control" [(ngModel)]="job.reason_for_hire"
+               rows="3"></textarea>
+            </div>
+         </div>
+
+         <div class="card" style="padding-bottom: 0px !important; " style="padding-left: 0; padding-top: 0;  ">
+            <div class="inner" style="padding-bottom: 25px;">
+               <div class="s-details heavy-padding"
+                  style="padding-top: 0px !important; 
+                         padding-bottom: 0px !important; 
+                         padding-left: 0px !important;
+                         padding-right: 0px !important;">
+                  
+                  
+                  <section class="s-form-row check-box">
+                     
+                     <div class="s-radio"  style="float: left;" >
+                         <input  type="checkbox" id="Supplier" value="1" [checked]=true name="publish_to_supplier"
+                           [(ngModel)]="job.publish_to_supplier">
+                         <label for="Supplier">
+                             <span>Publish to Supplier</span>
+                         </label>
+                     </div>
+                     <div class="s-radio"  style="float: left;" >
+                         <input  type="checkbox" id="Portals" name="publish_to_portals" [checked]=true value="1"
+                           [(ngModel)]="job.publish_to_portals">
+                         <label for="Portals">
+                             <span>Publish to Portals</span>
+                         </label>
+                     </div>
+                  </section>
+
+
+
+                  <div class="form-action-buttons">
+                     <button class="btn btn-lg btn-primary"
+                        [disabled]="isLoading"><span *ngIf="!isLoading">Create Template</span><span *ngIf="isLoading">Submitting...</span></button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         </form>
+   </div>
+</div>
+
+</div>
+</div></div></div>
+
+<div class="col-md-3" style="display: none;">
+                    
+                    
+      <div class="row">
+          
+          <div class="btn-group col-md-12">
+            <button [disabled]="isLoading" type="submit" class="btn btn-primary">
+               <span *ngIf="!isLoading">Create Template</span><span *ngIf="isLoading">Submitting...</span></button>
+          </div>
+          
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  
+  </div>
+
+
+</div></div>
+
+
+</div>
+
+
+      
+   

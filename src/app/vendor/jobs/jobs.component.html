@@ -1,0 +1,320 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+    <div class="main-head tabs-active" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Jobs</h2>
+                
+            </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs">
+                
+
+                <div class="searchbox">
+                    <form>
+                        <button><i class="material-icons">search</i></button>
+                        <input type="search" name="search_keyword" placeholder="Search by ID, Title" 
+                        (keyup)="searchJobs($event)" [(ngModel)]="search_keyword"  >
+                    </form>
+                </div>
+
+                <div class="view-switcher">
+
+                    <ul>
+                        <li>
+                            <a href="#"><i class="material-icons">filter_list</i></a>
+                            <ul class="drop-wrap" style="display: none;">
+
+                                <div class="submission-filter-wrap">
+
+                                    <h1>
+                                        <i class="material-icons">filter_list</i> Filter
+                                        <a href="clearfilter">Clear all</a>
+                                    </h1>
+
+                                    <h2 class="drop-down-subtitle">Job</h2>
+                                    <div class="block">
+
+                                        <input type="text" class="form-control" placeholder="City">
+
+                                        <ul class="filter-chips">
+                                            <li>
+                                                <label>Content Marketing Manager</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                            <li>
+                                                <label>Vice President of Marketing</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">Vendor</h2>
+                                    <div class="block">
+
+                                        <input type="text" class="form-control" placeholder="City">
+
+                                        <ul class="filter-chips">
+                                            <li>
+                                                <label>ABC Company</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                            <li>
+                                                <label>US Tech Solutions</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">Submission Type</h2>
+                                    <div class="block">
+
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input"
+                                                id="customControlInline">
+                                            <label class="custom-control-label" for="customControlInline">Direct
+                                                Submissions</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check2">
+                                            <label class="custom-control-label" for="check2">Submission from
+                                                Vendor</label>
+                                        </div>
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">By Status</h2>
+                                    <div class="block">
+
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check3">
+                                            <label class="custom-control-label" for="check3">Accepted</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check4">
+                                            <label class="custom-control-label" for="check4">Rejected</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check5">
+                                            <label class="custom-control-label" for="check5">Interview Scheduled</label>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </ul>
+                        </li>
+                        <li><a href="#"><i class="material-icons">menu</i></a></li>
+                        <li><a href="#"><i class="material-icons">view_module</i></a></li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+        <div class="row" *ngIf="isLoading">
+            <div class="col-md-4" *ngFor="let number of [0,1,2,3,4,5]">
+
+                <div class="card job-grid">
+
+
+
+
+                    <div class="inner">
+
+                        <div class="s-details">
+
+                            <div class="job-head-list">
+                                <a class="card-title-lg">
+                                    <h2>
+                                        <div class="shine"></div>
+                                    </h2>
+                                </a>
+                            </div>
+
+                            <div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                            </div>
+
+                            <div class="job-description">
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="job-additionalinfo">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="shine mini"></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="job-statisticsv1">
+
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+
+
+
+
+
+            <div style="cursor: pointer;" 
+            (click)="goToView( job.id )"
+             class="col-md-4" *ngFor="let job of jobs | orderBy:'id':true">
+
+                <div class="card job-grid">
+
+                    
+
+
+                    <div class="inner">
+
+                        <div class="s-details">
+
+                            <div class="job-head-list">
+                                <a [routerLink]="['/client/job/', job.id]" class="card-title-lg">
+                                    <h2>{{ job.title }}</h2>
+                                </a>
+                                <label>{{ job.address }}</label>
+                            </div>
+
+                            <div>
+                                <label class="badge large red"
+                                    *ngIf="job.job_type=='Temp Hire'">{{ job.job_type }}</label>
+                                <label class="badge large green"
+                                    *ngIf="job.job_type=='Full Time'">{{ job.job_type }}</label>
+                                <label class="badge large gray">Marketing</label>
+                            </div>
+
+                            <div class="job-description" (click)="goToView( job.id )">
+                                <label>Description</label>
+                                <span>{{ job.excerpt }}...</span>
+                            </div>
+
+                        </div>
+
+                        <div class="job-additionalinfo">
+                            <ul>
+                                <li><i class="material-icons">monetization_on</i> <span>
+                                        <span class="salary"
+                                            *ngIf="job.job_type=='Full Time'">{{ job.currency?job.currency:'USD' }}
+                                            {{ job.salary  | number: '1.2-2' }}</span>
+                                        <span class="bill_rate"
+                                            *ngIf="job.job_type=='Temp Hire'">{{ job.currency?job.currency:'USD' }}
+                                            {{ job.min_rate  | number: '1.2-2' }} -
+                                            {{ job.currency?job.currency:'USD' }}
+                                            {{ job.max_rate  | number: '1.2-2' }}</span>
+                                    </span></li>
+                                <li>
+                                    <label class="experience-icon">
+                                        <i class="active"></i>
+                                        <i class="active"></i>
+                                        <i class="active"></i>
+                                        <i></i>
+                                    </label>
+                                    <span>{{ job.experience }}</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="job-statisticsv1">
+
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="job-stat-info green">
+                                        <label>{{ job?.user_submissions?.length ? job?.user_submissions?.length : 0 }}</label>
+                                        <label>Submissions</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="job-stat-info blue">
+                                        <label>{{ job.user_interviews?.length ? job.user_interviews?.length : 0 }}</label>
+                                        <label>Interview</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="job-stat-info orange">
+                                        <label>{{ job.user_offers?.length ? job.user_offers?.length : 0 }}</label>
+                                        <label>Offers</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            
+        </div>
+
+        <div class="row">
+            <div class="colo-md-12" style="padding-left: 15px;">
+                    <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                    [collectionSize]="pageObj.totalElements"
+                    (pageChange)="pageChange($event)" 
+                    [pageSize]="pageObj.pageSize"
+                    [boundaryLinks]="true">
+                    </ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

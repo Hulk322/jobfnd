@@ -1,0 +1,29 @@
+button.buttonDisabled{
+    background: grey;
+    border-color: grey;
+}
+.sedit{
+color: #007bff !important;
+}
+.fa-eye, .fa-eye-slash {
+	position: absolute;
+    top: 38px;
+    right: 15px;
+}
+
+.has-error{
+    border:1px solid red;
+}
+
+.has-success{
+    border:1px solid green;
+}
+
+.hide {
+    display: none;
+}
+.formBtn:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: auto;
+}

@@ -1,0 +1,37 @@
+<div class="wrap">
+   <app-header></app-header>
+   <div class="container clearfix">
+      <div class="public-job-wraper">
+         <div class="page-content-outer">
+            <div class="page-content">
+               <div class="job-grid clearfix" style="margin-bottom: 35px;">
+                  <div class="row" style="margin:20px;">
+                     <div class="col-sm-12 col-xxxl-12">
+                        <div class="element-wrapper">
+                           <h3 class="element-header" style="margin-bottom: 20px">
+                              Apply
+                           </h3>
+                           <h4 style="margin-bottom: 15px">Confirm Email</h4>
+                           <div class="element-box">
+                              <form autocomplete="off" #step1Form=ngForm (ngSubmit)="onSubmit()" ngNativeValidate> 
+                              <app-errors></app-errors>
+                              <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                              <submission-step1-contact-information-portal [submission]="submission"></submission-step1-contact-information-portal>
+                              <div class="form-divider"></div>
+                              <div class="form-row">
+                                 <button [disabled]="isLoading" style="margin-top:20px" type="submit" class="btn btn-success"><span *ngIf="isLoading">Processing</span><span *ngIf="!isLoading">Continue</span>
+                                 </button>
+                              </div>
+                              </form>
+                           </div>
+                        </div>
+                        <!-- Page content end -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <app-footer></app-footer>
+</div>

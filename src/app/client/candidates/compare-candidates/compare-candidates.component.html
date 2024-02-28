@@ -1,0 +1,62 @@
+<h2>Comparison Table</h2>  
+<table style="background-color: white;">
+  <tr>
+    <th style="width:20%">Features</th>   
+    <th *ngFor="let id of compare_ids">Candidate #{{ id }}</th>
+  </tr>
+  <tr>
+    <td style="width:20%">Score</td>
+    <td *ngFor="let item of comparison_data | keyvalue">
+      <ngb-progressbar type="success" textType="white" [value]="item?.value?.WeightedScore" [showValue]="true"></ngb-progressbar>
+    </td>
+  </tr>
+  <tr>
+    <td style="width:20%">Worked In Same Organization</td>
+    <td *ngFor="let item of comparison_data | keyvalue">
+      <span *ngIf="item.value.WorkedInSameOrg == false" class="badge bg-warning">No</span>
+      <span *ngIf="item.value.WorkedInSameOrg == true" class="badge bg-success">Yes</span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width:20%">MatchedSkills</td>
+    <td  *ngFor="let item of comparison_data | keyvalue"> 
+      <span *ngFor=" let skill of item.value.MatchedSkills " style="text-align: right; color: #ffff;" class="badge bg-info">{{ skill.Name }}</span> &nbsp;&nbsp;
+    </td>
+    
+  </tr>
+  <tr>
+    <td style="width:20%">AllSkills</td>
+    <td  *ngFor="let item of comparison_data | keyvalue"> 
+      <span *ngFor=" let skill of item.value.AllSkills "  style="text-align: right; color: #ffff;"  class="badge bg-secondary">{{ skill }}</span>
+       </td>
+    
+  </tr>
+  <tr>
+    <td style="width:20%">Experience</td>
+    <td *ngFor="let item of comparison_data | keyvalue">
+      <span *ngFor=" let experience of item.value.Experience " style="text-align: right; color: #ffff;" class="badge bg-primary">{{ experience.Title }}</span>
+      </td>
+  </tr>
+  <tr>
+    <td style="width:20%">Education</td>
+    <td *ngFor="let item of comparison_data | keyvalue"><span> 
+      <span *ngFor=" let education of item.value.EducationDetail ">{{ education.Name }}</span>
+       </span></td>
+  </tr>
+
+  <tr>
+    <td style="width:20%">Industries</td>
+    <td *ngFor="let item of comparison_data | keyvalue">
+      <span *ngFor=" let industries of item.value.Industries " class="badge bg-light text-dark">{{ industries }} </span>
+      </td>
+  </tr>
+  
+  <tr>
+    <td style="width:20%">Location</td>
+    <td *ngFor="let item of comparison_data | keyvalue">
+      <span *ngFor=" let location of item.value.CandidateLocation " style="text-align: right; color: #ffff;" class="badge bg-primary">{{ location.Region }}  <br></span>
+       </td>
+  </tr>
+
+  
+</table>

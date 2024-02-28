@@ -1,0 +1,115 @@
+.dark .content-area
+{
+    background-color: rgb(10, 25, 47) !important;
+    color: rgb(136, 146, 176)!important;
+}
+.dark .job-grid, .dark .custom-table
+{
+    box-shadow: rgba(2, 12, 27, 0.7) 0px 10px 30px -15px;
+    background-color: rgb(23, 42, 69);
+    border: 0px;
+}
+.dark .card-title-lg h2, .dark .title-bold
+{
+    color: rgb(204, 214, 246);
+}
+.dark .job-grid .job-head-list label, .dark .job-grid .job-description span, .dark .job-grid .job-additionalinfo ul li, .dark .job-stat-info.green, .dark .job-stat-info.blue, .dark .job-stat-info.orange
+{
+    color: rgb(136, 146, 176)!important;
+}
+.dark .job-grid .job-additionalinfo
+{
+    border-top: 1px solid #241e1e;
+    border-bottom: none;
+    background: rgb(23, 42, 69);
+}
+.dark .job-grid .job-statisticsv1
+{
+    background: rgb(30, 50, 79);
+}
+.dark .main-head
+{
+    background-color: rgb(10, 25, 47) !important;
+/*    box-shadow: rgba(2, 12, 27, 0.7) 0px 10px 30px -10px;*/
+}
+.dark .searchbox input
+{
+    background: none;
+    color: #fff;
+}
+.dark .view-switcher ul li a
+{
+    color: #ffd6d6;
+}
+.dark .notificationwrap a
+{
+    color: #d7d4d4;
+}
+.dark .loginuserinfo span
+{
+    color: #d7d4d4;
+}
+.dark .searchbox
+{
+    border-bottom: 3px solid #2f2a45;
+}
+.dark .btn-secondary
+{
+    color: #81848f !important;
+    background: #1f1b3a !important;
+    border: 1px solid #000000 !important;
+}
+.dark .badge.large
+{
+    background: none !important;
+}
+.dark .badge.green
+{
+    border:1px solid #41e541;
+    color:  #41e541;
+}
+.dark .badge.red
+{
+    border:1px solid #E28F47 ;
+    color:  #E28F47 ;
+}
+.dark .badge.gray
+{
+    border:1px solid #979797 ;
+    color:  #979797 ;
+}
+.dark .btn-orange {
+    background: #332759 !important;
+    border: 1px solid #6c45b6 !important;
+    
+}
+.dark .sidebar__inner
+{
+/*        background: #1a2457;*/
+}
+.dark .navigation ul li a.active
+{
+/*    background: #191532;*/
+}
+.dark .navigation ul li a
+{
+/*        color: #7a778b;*/
+}
+.dark .text-avatar
+{
+   background: #353555; 
+}
+.dark .skillswrap ul li
+{
+    color: #817c91;
+    border: 1px solid #181719;
+}
+.dark .custom-table td 
+{
+    border-color:  #1e1d1d;
+}
+.dark .loginuserinfo
+{
+    background: none;
+    border: 0px;
+}

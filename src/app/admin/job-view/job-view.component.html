@@ -1,0 +1,175 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Job Details</h2>
+              	<a routerLink="/admin/jobs" class="btn-secondary">
+              	<i class="material-icons">arrow_back</i> Back</a>
+            </div>
+            <app-header-right></app-header-right>
+            <div class="easytabs" style="display: none;">
+               <div class="searchbox">
+                  <form>
+                     <button><i class="material-icons">search</i></button>
+                     <input type="search" style="width: 250px;" name="search_keyword" placeholder="Search by Title">
+                  </form>
+               </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style=" margin:100px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+    <div class="row job_details">
+       <div class="col-md-9">
+          <div class="card job-grid single-job" style="min-height: 800px;">
+             <div class="btn-group job-grid-actions" style="display: none;">
+                <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">share</i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                   <a class="dropdown-item" >Copy Direct Job Link</a>
+                   <a class="dropdown-item" >LInked In</a>
+                </div>
+             </div>
+             <div class="inner">
+                <div class="s-details ">
+                   <div class="job-head-list">
+                      <a class="card-title-lg">
+                         <h2>{{ job?.title}}</h2>
+                      </a>
+                      <label>{{ job?.address}}</label>
+                   </div>
+                   <div>
+                   <label class="badge large red"
+                       *ngIf="job.job_type=='Temp Hire'">{{ job.job_type }}</label>
+                   <label class="badge large green"
+                       *ngIf="job.job_type=='Full Time'">{{ job.job_type }}</label>
+                      <label class="badge large gray">{{ job?.category?.name }}</label>
+                      <label class="badge large gray" style="float: right;"><i class="material-icons">access_time</i>  <span>{{ job.posted }}</span></label>
+                   </div>
+                   <div class="job-description">
+                      <h3>Description</h3>
+                      <p [innerHTML]="job.description">
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="col-md-3">
+          <div class="row">
+<!--              <div class="btn-group col-md-12" style="display: none;">
+                <button class="btn btn-primary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions 
+                </button>
+                <div class="dropdown-menu">
+                   <a class="dropdown-item" routerLink="/client/jobs/edit/{{job.id}}">Edit</a>
+                   <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#job_delete_model">Delete</a>
+                   <div class="dropdown-divider"></div>
+                   <a class="dropdown-item" 
+                   *ngIf="!isLoading" routerLink="/client/discover-candidates/{{job.id}}">Discover Candidates</a>
+                   <a class="dropdown-item" >Copy Direct URL</a>
+                </div>
+             </div> -->
+          </div>
+          <div class="card job-grid" style="margin-top: 15px;">
+             <div class="card job-grid billrate-widget no-bottom-margin"  style="margin-top: 0px;">
+                <h3 *ngIf="job.job_type == 'Temp Hire'"><i class="material-icons">trending_up</i> Bill Rate</h3>
+                <h3 *ngIf="job.job_type == 'Full Time'"> Bill Rate </h3>
+                <div class="inner">
+                <div class="row" *ngIf="job.job_type == 'Temp Hire'">
+                   <div class="col-md-6">
+                      <h2>${{ job.min_rate  | number: '1.2-2' }}</h2>
+                      <span>Minumum</span>
+                   </div>
+                   <div class="col-md-6">
+                      <h2>${{ job.max_rate  | number: '1.2-2' }}</h2>
+                      <span>Maximum</span>
+                   </div>
+                </div>
+                <div class="row" *ngIf="job.job_type == 'Full Time'">
+                   <div class="col-md-12">
+                      <h2>${{ job.salary}}</h2>
+                   </div>
+                </div>
+
+                </div>
+             </div>
+             <div class="inner">
+                <div class="s-details ">
+                   <div class="job-head-list">
+                      <a class="card-title-sm ">
+                         <h2>Additional Details</h2>
+                      </a>
+                   </div>
+                   <div>
+                      <table class="table-job-info job-table-responsive">
+                         <tr>
+                            <td><i class="material-icons">offline_bolt</i>Salary Type</td>
+                            <td>{{ job.salary_type  }}</td>
+                         </tr>
+                         <tr>
+                            <td><i class="material-icons">money</i>Currency</td>
+                            <td>{{ job.currency!=null?job.currency:'USD' }}</td>
+                         </tr>
+                         <tr>
+                            <td><i class="material-icons">calendar_today</i>Start Date</td>
+                            <td>{{ job.start_date | date:'MM/dd/yyyy'  }}</td>
+                         </tr>
+                         <tr *ngIf="job.job_type=='Temp Hire'">
+                            <td><i class="material-icons">event</i>End Date   </td>
+                            <td>{{ job.tentative_end_date | date:'MM/dd/yyyy'  }}</td>
+                         </tr>
+                         <tr>
+                            <td><i class="material-icons">check_circle_outline</i>Openings</td>
+                            <td>{{ job.openings}}</td>
+                         </tr>
+                         <tr>
+                            <td><i class="material-icons">equalizer</i>Experience</td>
+                            <td>{{ job.experience}}</td>
+                         </tr>
+                         <tr>
+                            <td><i class="material-icons">gps_fixed</i>Location</td>
+                            <td>{{ job.address }}</td>
+                         </tr>
+                         <tr>
+                            <td><i class="material-icons">category</i>Category</td>
+                            <td>{{ job?.category?.name | titlecase }}</td>
+                         </tr>
+                         <tr>
+                            <td><i class="material-icons">waves</i> Skills</td>
+                         </tr>
+                         <tr>
+                            <td colspan="2">
+                               <div class="skillswrap">
+                                  <ul>
+                                     <li *ngFor="let skill of job.skills | slice:0:defaultSkillsCount">{{ skill.name | slice:0:45 }}</li>
+                                  </ul>
+                               </div>
+                            </td>
+                         </tr>
+                         <tr style="padding-bottom: 0px;
+                         cursor: pointer;
+                         text-decoration: underline;">
+                            <td colspan="2" style="padding-top:0px;">
+                                <span class="more" *ngIf="job?.skills?.length > 10" (click)="toggleSkillsCount()">{{showMoreText}}</span>
+                            </td>
+                         </tr>
+                      </table>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+
+    </div>
+
+</div>
+
+

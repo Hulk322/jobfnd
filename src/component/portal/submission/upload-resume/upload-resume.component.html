@@ -1,0 +1,45 @@
+<div class="wrap">
+
+  <app-header></app-header>
+
+  <div class="content">
+      <app-errors></app-errors>
+    <div class="resume-upload-page">
+       
+      <h1>Create your professional profile</h1>
+      <p>Upload your resume or connect with any professional networks</p>
+      <div class="custom-file resume-upload dropzone-container">
+        <input type="file" class="custom-file-input" name="resume" 
+        ref="file" 
+        id="customFile"
+        (change)="handleFileInput($event.target.files)">
+        <label class="custom-file-label" for="customFile">
+          <i class="icon-file"></i>
+          Drop your resume here
+          <i class="or">or</i>
+        </label>
+
+        <div style="display: none">
+            <span class="filename btn btn-primary btn-browse"> <i class="icons_folder"></i> {{fileName}}</span>
+          </div>
+
+        <button type="button"  
+        class="btn btn-success m-t-20" 
+        (click)="uploadFileToActivity()"
+        [disabled]="isLoading"
+        >Upload
+        <svg *ngIf="isLoading" aria-hidden="true" style="width: 14px;" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg>
+    </button> 
+      </div>
+      <div class="other-account-links">
+        <a href="#" class="btn btn-zinc">Connect with Linkedin <i class="icon-linkden"></i></a>
+        <a href="#" class="btn btn-purple">Connect with Monster <i class="icon-monster"></i></a>
+      </div>
+      <p class="edit-profile" style="display: none"><i class="icon-edit"></i> Complete your profile manually</p>
+    </div>
+
+  </div>
+
+  <app-footer></app-footer>
+
+</div>

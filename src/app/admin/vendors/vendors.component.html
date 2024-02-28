@@ -1,0 +1,176 @@
+<app-sidebar [current_menu_item]="'vendors'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Vendors</h2>
+              
+            </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs">
+               
+
+               <div class="searchbox">
+                   <form>
+                       <button><i class="material-icons">search</i></button>
+                       <input type="search" style="width: 250px;" name="search_keyword" placeholder="Search by Name, Email" 
+                       (keyup)="getVendors()" [(ngModel)]="search_keyword"  >
+                   </form>
+               </div>
+
+               
+
+           </div>
+            
+        </div>
+
+    </div>
+
+     <div style=" margin:120px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+              
+              
+        <div class="row justify-content-md-center">
+            
+            
+            <div class="col-md-12">
+                
+                <table class="custom-table table-style-2">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Last Login</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        
+                        <tr *ngFor="let vendor of vendors">
+                          <td>
+                             <div class="text-avatar">{{ vendor?.first_name | slice:0:1 }}{{ vendor?.last_name | slice:0:1 }}</div>
+                             <label class="title-bold">{{ vendor.first_name | titlecase }} {{ vendor.last_name | titlecase }}</label>
+                         </td>
+                                   
+                                   <td>
+                                      <span class="team-meber-email"><i class="material-icons">email</i>{{ vendor.email }}</span>
+                                   </td>
+
+                                   <td>
+                                   <span class="badge badge-success"  *ngIf="vendor.banned==0"> Active </span>
+                                      <span class="badge badge-danger"  *ngIf="vendor.banned==1"> Inactive </span>
+                                   </td>
+                                   <td>
+                                      <span *ngIf="vendor.last_login">{{ vendor.last_login | date:'short'  }}</span>
+                                      <span class="badge badge-danger" *ngIf="!vendor.last_login">Never Logged In</span>
+                                   </td>
+                                   <td style="text-align: center;">
+                                      <div class="btn-group">
+                                         <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                           <i class="material-icons">more_horiz</i>
+                                         </button>
+                                         <div class="dropdown-menu dropdown-menu-right">
+                                           <a  data-target="#edit_vendor_modal" data-toggle="modal"
+                                        (click)="editVendor(vendor)" class="dropdown-item">Edit</a>
+                                           <a class="dropdown-item" style="cursor: pointer;" (click)="deleteVendor(vendor.id, vendor)">Delete</a>
+                                         </div>
+                                       </div>
+                                   </td>
+                                </tr>                         
+                         </tbody>
+                </table>
+            </div>
+        </div>
+           <div class="row">
+            <div class="col-md-12" style="margin-top: 20px;">
+                  <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                  [collectionSize]="pageObj.totalElements"
+                  [(page)]="pageObj.page"
+                  [maxSize]="5"
+                  (pageChange)="pageChange($event)" 
+                  [pageSize]="pageObj.pageSize"
+                  [boundaryLinks]="true">
+                  </ngb-pagination>
+               </div>
+        </div>
+    </div> 
+
+</div>
+
+<!-- references modal -->
+<div class="modal smodal custom-form-group-flat" id="edit_vendor_modal" style="margin-top:100px;">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+               <h4 class="modal-title">Edit Vendor</h4>
+            <button class="close" data-dismiss="modal">&times;</button>
+            
+         </div>
+         <div class="modal-body">
+            <form autocomplete="off">
+               <input autocomplete="false" name="hidden" type="text" style="display:none;">
+               
+               <div class="form-group">
+                  <label for="">First Name</label>
+                  <input type="text" 
+                        class="form-control" 
+                        name="first_name" 
+                        [(ngModel)]="vendor.first_name">
+               </div>
+
+               <div class="form-group">
+                  <label for="">Last Name</label>
+                  <input type="text" 
+                        class="form-control" 
+                        name="last_name" 
+                        [(ngModel)]="vendor.last_name">
+               </div>
+
+               <div class="form-group setup-password-field">
+                  <label for="">Password</label>
+                  <input type="password" 
+                        class="form-control" 
+                        #showpassword
+                        name="password" 
+                        [(ngModel)]="vendor.password">
+                        <i     #eye_show_password 
+                                                      (click)="showPassword(this)" 
+                                                      id="show-password"  
+                                                      class="fa fa-eye"></i>
+               </div>
+
+              
+                  
+                     <div class="form-group" style="margin-top: 15px;">
+                        <label for="">Confirm Password</label>
+                        <input type="password" 
+                               class="form-control" 
+                               name="password_confirmation" 
+                               [(ngModel)]="vendor.password_confirmation">
+                     </div>
+                  
+
+                  
+                     <div class="form-group">
+                        
+                        <input type="checkbox" 
+                               class="" 
+                               name="banned" 
+                               [(ngModel)]="vendor.banned">
+                               <label for="" style="margin-left:10px">Banned</label>
+                     </div>
+                  
+               
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" (click)="updateVendor()">Update</button>
+         </div>
+      </div>
+   </div>
+</div>

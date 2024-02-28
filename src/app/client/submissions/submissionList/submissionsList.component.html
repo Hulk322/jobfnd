@@ -1,0 +1,192 @@
+<div class="col-md-12" style="padding: 0;"  *ngFor="let submission of submissionsData" >
+    <div class="card submission-list">
+        <div class="inner">
+            <div class="s-details">
+                <div class="submission-head-list">
+                    <div class="text-avatar">
+                        {{ submission.candidate?.first_name | slice:0:1 }}{{ submission.candidate?.last_name | slice:0:1}}
+                    </div>
+                    <div class="title-place">
+                        <a [routerLink]="['/client/submissions/', submission.id]" class="card-title-lg">
+                            <h2>{{ submission.candidate?.first_name }} {{ submission.candidate?.last_name }}</h2>
+                        </a>
+                        <div class="sub-additionalinfo">
+                            <ul>
+                                <li>
+                                    <i class="material-icons">place</i> <span>{{(submission?.location?.length>0?submission.location:'Any location') | slice:0:21}}</span>
+                                </li>
+                                <li>
+                                    <i class="material-icons">work</i> <span>{{ submission?.job?.title| slice:0:20 }}...</span>
+                                </li>
+                                <li *ngIf="submission.estimated_joning_date"><i class="material-icons">event</i> Est. Start Date :{{submission.estimated_joning_date | date:'MM/dd/yyyy' }}</li>
+                                <li *ngIf="!submission.estimated_joning_date"><i class="material-icons">event</i> Est. Start Date : Not defined</li>
+                            </ul>
+                            <span class="from_discover_similar" style="float: right;" *ngIf="submission.from_discover_similar==true">
+                                <img src="assets/client/s.svg" style="width: 27px;">
+                            </span>
+                            <span class="private_pool" style="float: right;" *ngIf="submission.from_discover_similar==false">
+                                <img src="assets/client/p.svg" style="width: 27px;">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div [ngClass]="{'bookmark-btn': true,
+                                          'active' : submission.is_client_fav==1 }" style="margin-right: 12px;">
+                                          <a 
+                                          (click)="toggleFavorite(submission.id, submission)" >
+                            <i class="material-icons" *ngIf="submission.is_client_fav!=1">star_border</i>
+                            <i class="material-icons" *ngIf="submission.is_client_fav==1">star</i>
+                            </a>
+                        </div>
+
+                <div class="clearfix"></div>
+                <label *ngIf="submission.status!='Rejected'" class="submission-status green">
+                    <i class="material-icons">lens</i> {{ submission.status }}
+                </label>
+                <label *ngIf="submission.status=='Rejected'" class="submission-status red">
+                    <i class="material-icons">lens</i> {{ submission.status }}
+                </label>
+                <ul class="requirements">
+                    <li *ngFor="let skill of submission.skills | slice:0:2;  let i=index"
+                        ><i class="material-icons">check</i> {{skill.name  | slice:0:15 }}</li>
+                        <li *ngIf="submission?.skills?.length > 2">+{{ submission?.skills?.length-2 }}</li>
+                    <li  *ngIf="submission?.skills?.length < 1"><i class="material-icons">check</i> No Skills</li>
+                </ul>
+                <div class="job-statisticsv1 submissions">
+                    <div class="btn-group dropup">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+                        Actions
+                      </button>
+                        
+                        <div class="dropdown-menu">
+                            <a (click)="acceptSubmission(submission.id)" 
+                             class="dropdown-item" 
+                             *ngIf="submission.status!='Accepted'" href="javascript:void(0)"  >Accept</a>
+                            <a (click)="rejectSubmission(submission.id)" 
+                            *ngIf="submission.status!='Rejected'" class="dropdown-item" href="javascript:void(0)">Reject</a>
+
+                            <a (click)="withdrawSubmission(submission.id)" 
+                            
+                            *ngIf="submission.status != 'Withdrawn' && submission.from_discover_similar == true" class="dropdown-item" href="javascript:void(0)">Withdraw</a>
+
+                            <hr>
+                            <a class="dropdown-item" style="cursor: pointer;" href="javascript:void(0)" (click)="togglesidebar(submission, $event)" >Schedule Interview</a>
+                            <a *ngIf="submission.status!='Rejected'" class="dropdown-item" [routerLink]="['/client/create-offer/', submission.id]">Create Offer</a>
+                            <hr *ngIf="submission.resumeFullUrl!=null">
+                            <a target="_blank" *ngIf="submission.resumeFullUrl!=null" class="dropdown-item" href="{{ submission.resumeFullUrl }}">Download Resume</a>
+                      </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-interview-modal 
+[current_submission]='current_submission' 
+[locations] = 'locations'
+[sidebar_open]='sidebar_open'></app-interview-modal>
+
+<div [ngClass]="{'modal smodal fade submission-score-modal':true, 
+                    'show': show_modal==true }" 
+  id="submissionscore" tabindex="-1" role="dialog" 
+  [ngStyle]="{'display': show_modal==true?'block':'none' }" >
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+        <h4 class="modal-title" id="exampleModalLongTitle">Submission Score Details #{{ current_submission?.id }}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-7">
+                  <div class="row">
+                      <div class="col text-center">
+                        <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="130" height="130" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+                            <circle class="circle-chart__circle" stroke="#A6D058" stroke-width="2" attr.stroke-dasharray="{{current_submission?.sovern_score==null?0:current_submission?.sovern_score}}, 100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.915494" r="15.91549431"></circle>
+                
+                            <g class="circle-chart__info">
+                                <text class="circle-chart__percent" x="16.91549431" fill="#A6D058" y="17" alignment-baseline="central" text-anchor="middle" font-size="10">{{ current_submission?.sovern_score==null?0:current_submission?.sovern_score }}%</text>
+                            </g>
+                        </svg>
+                        <p class="mt-2">Weighted score</p>
+                      </div>
+                      <div class="col text-center">
+                        <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="130" height="130" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+                            <circle class="circle-chart__circle" stroke="#EF8166" stroke-width="2" attr.stroke-dasharray="{{current_submission?.openingio_score==null?0:current_submission?.openingio_score}}, 100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.915494" r="15.91549431"></circle>
+                
+                            <g class="circle-chart__info">
+                                <text class="circle-chart__percent" x="16.91549431" fill="#EF8166" y="17" alignment-baseline="central" text-anchor="middle" font-size="10">{{ current_submission?.openingio_score==null?0:current_submission?.openingio_score }}%</text>
+                            </g>
+                        </svg>
+                        <p class="mt-2">Reverse Compatibility Score</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col text-center powered">
+                          <p class="mt-2">Powered By <img src="../assets/images/sovern-logo.jpg" alt=""></p>
+                      </div>
+                      <div class="col text-center powered">
+                          <p class="mt-2">Powered By <img src="../assets/images/opening-logo.jpg" alt=""></p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-5 text-center">
+                      <img src="../assets/images/diagram-score-calculation.svg" class="diagrap-score" alt="">
+              </div>
+          </div>
+          <div class="row">
+              <div class="col">
+                  <div class="row">
+                      <div class="col">
+                          <h5 class="mt-4 mb-4">Unweighted Category Scores</h5>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col">
+                        <h6>Skills</h6>
+                      </div>
+                      <div class="col text-right">
+                        <p class="total-value">73.64</p>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col">
+                          <ul>
+                              <li>Coding</li>
+                              <li>Model View Controller</li>
+                              <li>Ms SQL server</li>
+                              <li>Ms ASP</li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <h6>Industries</h6>
+                    </div>
+                    <div class="col text-right">
+                      <p class="total-value">95</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <ul class="mb-0">
+                            <li>Programming</li>
+                            <li>Information Technology</li>
+                        </ul>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" 
+        (click)="show_modal=false" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+   </div>

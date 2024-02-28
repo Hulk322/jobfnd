@@ -1,0 +1,204 @@
+<app-sidebar [current_menu_item]="'on-boarding'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Create On-Board</h2>
+                
+            </div>
+            <app-header-right></app-header-right>
+            
+        </div>
+
+    </div>
+
+    <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+        
+
+        <div class="row"  style="margin: 20px 0px">
+            <div class="main-content-content form-style-v2 col-md-9">
+   
+                  <form #createOfferForm=ngForm autocomplete="off" (submit)="onSubmit()" ngNativeValidate>
+                     <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                     <app-errors></app-errors>
+                     <div class="card m-t-20">
+                        <h4>Candidate Information</h4>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                          <div><a routerLink="/client/job/{{submission?.job?.id}}"><span class="sub-title">Job - {{ submission?.job?.title }}</span></a></div>
+                          <div style="margin-bottom: 15px"><a routerLink="/client/submissions/{{submission_id}}"><span class="sub-title">Submission #{{ submission_id }} ({{ submission?.email }})</span></a></div>
+                          </div>
+                          </div>
+                        </div>
+                     </div>
+            
+                     <div class="card m-t-20">
+                      <h4>On-Boarding Details</h4>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="title">Candidate Type</label>
+                              <select [(ngModel)]="onboard.type" 
+                               name="type" class="form-control">
+                               <option value="Full Time">Full Time</option>
+                               <option value="Part Time">Part Time</option>
+                               </select>
+                           </div>
+                        </div>
+            
+                        <div class="col-md-6">
+                          <div class="form-group">
+                             <label for="title">Official Email</label>
+                             <input [(ngModel)]="onboard.official_email" 
+                              name="candidate_type" class="form-control" type="text">
+                          </div>
+                       </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                          <div class="form-group">
+                            <label for="">Start Date</label>
+                            <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                            [(ngModel)]="onboard.start_date" name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                            dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                          </div>
+                        </div>
+            
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                              <label for="">End Date</label>
+                              <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                              [(ngModel)]="onboard.end_date" name="end_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                              dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                            </div>
+                          </div>
+                     </div>
+                     
+                     
+                    </div>
+            
+                    <div class="card m-t-20">
+                        <h4>Candidate Portal Details</h4>
+                       <div class="row">
+                          <div class="col-md-6">
+                             <div class="form-group">
+                                <label for="title">Login Email</label>
+                                <input [(ngModel)]="onboard.login_email" 
+                                 name="login_email" class="form-control" type="text">
+                                 
+                                
+                             </div>
+                          </div>
+              
+                          <div class="col-md-6">
+                            <div class="form-group">
+                               <label for="title">Password</label>
+                               <input [(ngModel)]="onboard.password" 
+                                name="password" class="form-control" type="password">
+                            </div>
+                         </div>
+                       </div>
+                       
+                       
+                       
+                      </div>
+            
+                      <div class="card m-t-20">
+                          <h4>Additional Information</h4>
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <div class="form-group">
+                                     <label for="title">Site</label>
+                                     <select [(ngModel)]="onboard.site" 
+                                       name="site" class="form-control">
+                                  <option>On Site</option>
+                                  </select>
+                                      
+                                     
+                                  </div>
+                               </div>
+                          </div>
+                         <div class="row">
+                            
+                
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                 <label for="title">System Access</label>
+                                 <select [(ngModel)]="onboard.system_access" 
+                                 name="system_access" class="form-control">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                            </select>
+                              </div>
+                           </div>
+            
+                           <div class="col-md-3">
+                              <div class="form-group">
+                                 <label for="title">Badge Access</label>
+                                 <select [(ngModel)]="onboard.badge_access" 
+                                 name="badge_access" class="form-control">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                            </select>
+                              </div>
+                           </div>
+            
+                           <div class="col-md-3">
+                              <div class="form-group">
+                                 <label for="title">Gender</label>
+                                 <select [(ngModel)]="onboard.gender" 
+                                 name="gender" class="form-control">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                            </select>
+                              </div>
+                           </div>
+            
+                           <div class="col-md-3">
+                              <div class="form-group">
+                                 <label for="title">Building Floor</label>
+                                 <input type="text" [(ngModel)]="onboard.building_floor" 
+                                 name="building_floor" class="form-control">
+                           
+                              </div>
+                           </div>
+                         </div>
+            
+                         <div class="row">
+                            <div class="col-md-12">
+                           <div class="form-group">
+                           <label>Additional Comments</label>
+                           <editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew"
+                              [init]="{plugins: 'link',  height : '380px'}" 
+                              name="comments" [(ngModel)]="onboard.comments">
+                              </editor>
+                            </div>
+                            </div>
+                         </div>
+                         
+                         
+                         <div class="form-divider"></div>
+                     <div class="form-row ">
+                        <button type="submit" class="btn btn-primary" [disabled]="isLoading"><span
+                              *ngIf="!isLoading">On Board</span><span *ngIf="isLoading">On Boarding...</span></button>
+                     </div>
+                         
+                        </div>
+            
+                  </form>
+               
+            </div>
+            
+        </div>
+
+
+        
+</div>
+
+</div>

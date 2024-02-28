@@ -1,0 +1,158 @@
+<app-sidebar [current_menu_item]="'offers'"></app-sidebar>
+
+<div class="content-area">
+
+  <div class="main-head tabs-active">
+
+    <div class="childfix">
+      <div class="head-left">
+        <h2 class="page-title">Offers</h2>
+        
+
+      </div>
+      <app-header-right></app-header-right>
+
+      <div class="easytabs">
+        <ul style="display: none;">
+          <li class="active"><a ><label class="blue dot"></label> All Offers</a></li>
+          <li><a ><label class="green dot"></label> Recent</a></li>
+          <li><a ><label class="orange dot"></label> Cancelled</a></li>
+        </ul>
+
+        <div class="searchbox">
+          <form>
+            <button><i class="material-icons">search</i></button>
+            <input type="search"  
+            name="search_keyword" 
+            [(ngModel)]="search_keyword" (keyup)="getOffersByKeyword()" 
+             placeholder="Search Offers">
+          </form>
+        </div>
+
+        <div class="view-switcher">
+
+          <ul>
+            <li>
+              <a><i class="material-icons">filter_list</i></a>
+              <ul class="drop-wrap">
+
+                <div class="submission-filter-wrap">
+
+                  <h1>
+                    <i class="material-icons">filter_list</i> Filter
+                    <a style="cursor: pointer;">Clear all</a>
+                  </h1>
+
+                  
+
+                  
+
+                  <h2 class="drop-down-subtitle">Filter By Status</h2>
+                  
+
+                  <h2 class="drop-down-subtitle">Sort By</h2>
+                  
+
+
+
+                </div>
+              </ul>
+            </li>
+            <li><a style="cursor: pointer;"><i class="material-icons">menu</i></a></li>
+            <li><a style="cursor: pointer;"><i class="material-icons">view_module</i></a></li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+    <div class="row">
+
+      <div class="col-md-12">
+
+        <div class="main-content-content">
+
+          <div class="talent-pool">
+
+            <div class="talent-pool_content form-style-v2">
+
+
+
+
+              <div class="">
+
+
+
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Job ID</th>
+                      <th>Candidate Name</th>
+                      <th>Type</th>
+                      <th>Salary / Bill Rate</th>
+                      <th>Vendor Markup / Bill Rate Overtime</th>
+                      <th>Created At</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let offer of offers">
+                      <td>{{ offer.id }}</td>
+                      <td><a routerLink="/client/job/{{ offer.job_id }}">{{ offer.job_id }}</a></td>
+                      <td>{{ offer?.submission?.first_name | titlecase }} {{ offer?.submission?.last_name | titlecase }}
+                      </td>
+                      <td>{{ offer.type }}</td>
+                      <td>${{ (offer.type=='Direct Hire'?offer.salary:offer.bill_rate) | number: '1.2-2' }} </td>
+                      <td>
+                        %{{ (offer.type=='Direct Hire'?offer.vendor_markup:offer.bill_rate_overtime) | number: '1.2-2' }}
+                      </td>
+                      <td>{{ offer.created_at | date:'MM/dd/yyyy' }}</td>
+                      <td>
+                        <div [ngClass]="{ 'interviews__label':true, 'btn btn-success': offer.current_status=='Vendor Accepted'
+                         , 'btn btn-danger': offer.current_status=='Vendor Rejected', 
+                         'new': offer.current_status=='New'}">
+                          {{ offer.current_status }}</div>
+                      </td>
+                      <td>
+                        <a routerLink="/client/offer/{{offer.id}}" class="btn btn-primary action"
+                          style="margin-right:5px;">
+                          <i class="fa fa-eye"></i>
+                        </a>
+
+                        <button (click)="deleteOffer(offer.id, offer)" [disabled]="offer.deleted"
+                          class="btn btn-danger action">
+                          <i class="fa fa-trash"></i>
+                          <span *ngIf="offer.deleted"> Deleting...</span>
+                        </button>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+
+
+            </div> <!-- talent-pool_content -->
+
+            
+
+
+          </div> <!-- talent-pool -->
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

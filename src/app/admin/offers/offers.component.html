@@ -1,0 +1,111 @@
+<app-sidebar [current_menu_item]="'offers'"></app-sidebar>
+<div class="content-area" #content_area>
+   <div class="main-head no-tabs" #main_head>
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Offers</h2>
+         </div>
+         <app-header-right></app-header-right>
+         <div class="easytabs">
+            <div class="searchbox">
+               <form>
+                  <button><i class="material-icons">search</i></button>
+                  <input type="search" style="width: 250px;" name="search_keyword" placeholder="Search by Title" 
+                  (keyup)="getOffers()" [(ngModel)]="search_keyword"  >
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="col-md-12" *ngIf="offers?.length<1 && !isLoading" style="text-align: center;">
+         <img src="assets/images/no-job.svg" style="margin-top: 13%;">
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+            <div class="main-content-content">
+               <div class="talent-pool">
+                  <div class="talent-pool_content form-style-v2">
+                     <div class="">
+                        <table class="custom-table" *ngIf="offers?.length>0">
+                           <thead>
+                              <tr>
+                                 <th></th>
+                                 <th>BillRate</th>
+                                 <th>BillRate OT</th>
+                                 <th>Created At</th>
+                                 <th>Status</th>
+                                 <th></th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr *ngFor="let offer of offers">
+                                 <td>
+                                    <div class="text-avatar">{{ offer?.submission?.first_name | slice:0:1 }}{{ offer?.submission?.last_name | slice:0:1 }}</div>
+                                    <div>
+                                       <label class="title-bold">{{ offer?.submission?.first_name }} {{offer?.submission?.last_name}}</label>
+                                       <label [ngClass]="{'badge large':true, 
+                                          'green': offer.type=='Full Time',
+                                          'red': offer.type=='Temp Hire'}">
+                                       {{ offer.type }}
+                                       </label>
+                                       <label class="badge large gray">
+                                       <i class="material-icons">work</i>
+                                       {{ offer?.job?.title }}
+                                       </label>
+                                    </div>
+                                 </td>
+                                 <td class="rate-column">
+                                    <label>${{ (offer.type=='Full Time'?offer.salary:offer.bill_rate) | number: '1.2-2' }}</label>
+                                 </td>
+                                 <td class="rate-column">
+                                    <label>{{ (offer.type=='Full Time'?offer.vendor_markup:offer.bill_rate_overtime) | number: '1.2-2' }}%</label>
+                                 </td>
+                                 <td class="rate-column">
+                                    <label>{{ offer.created_at | date:'MM/dd/yyyy' }}</label>
+                                 </td>
+                                 <td class="rate-column">
+                                    <label [ngClass]="{
+                                       'status plaine':true,
+                                       'orange':  offer.current_status=='New',
+                                       'red': offer.current_status=='Vendor Rejected',
+                                       'green': offer.current_status=='Vendor Accepted',
+                                       'blue': offer.current_status=='Pending Approval'
+                                       }">{{ offer.current_status }}</label>
+                                 </td>
+                                 <td width="50">
+                                    <div class="btn-group">
+                                       <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                       <i class="material-icons">more_vert</i>
+                                       </button>
+                                       <div class="dropdown-menu dropdown-menu-right">
+                                          <a class="dropdown-item" (click)="viewOffer(offer.id)">View</a>
+                                          
+                                       </div>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-12" style="margin-top: 20px;">
+                <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                [collectionSize]="pageObj.totalElements"
+                [maxSize]="5"
+                [(page)]="pageObj.page"
+                (pageChange)="pageChange($event)" 
+                [pageSize]="pageObj.pageSize"
+                [boundaryLinks]="true">
+                </ngb-pagination>
+             </div>
+      </div>
+   </div>
+</div>

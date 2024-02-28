@@ -1,0 +1,89 @@
+<app-sidebar [current_menu_item]="'packages'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Create Package</h2>
+                    <a routerLink="/admin/packages" class="btn-secondary">
+                       <i class="material-icons">arrow_back</i>Back to Packages Listing</a>
+                </div>
+  
+            </div>
+            
+        </div>
+
+<div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+<div class="row">
+   <div class="col-md-9">
+      <div class="card job-grid single-job">
+         <div class="inner">
+            <div class="s-details ">
+               <div class="main-content-content form-style-v2">
+                  <div class="element-box">
+                     <form #updateProfileForm=ngForm class="custom-form" (submit)="onSubmit()" ngNativeValidate>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="">Package Name</label>
+                              <input type="text" class="form-control" name="name" [(ngModel)]="package.name">
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="">Type</label>
+                              <select name="type" [(ngModel)]="package.type" class="form-control">
+                                 <option value="">Select</option>
+                                 <option value="monthly">Monthly</option>
+                                 <option value="yearly">Yearly</option>
+                              </select>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="">Price</label>
+                              <input type="text" class="form-control" name="price" [(ngModel)]="package.price">
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="">Job Limit</label>
+                              <input type="number"  min="1" class="form-control" name="job_limit" [(ngModel)]="package.job_limit">
+
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="form-group">
+                              <label for="">Description</label>
+                        <editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew"
+                                    [init]="{plugins: 'link',  height : '380px'}"
+                                    name="description" [(ngModel)]="package.description"></editor>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-divider"></div>
+                     <div class="form-row ">
+                        <button 
+                           type="submit" 
+                           class="btn btn-primary">Add Package
+                        </button>
+                     </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+
+
+
+</div>

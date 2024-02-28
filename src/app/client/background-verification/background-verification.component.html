@@ -1,0 +1,120 @@
+<app-sidebar [current_menu_item]="'background-verifications'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Create Backgound Verification</h2>
+                
+            </div>
+            <app-header-right></app-header-right>
+            
+        </div>
+
+    </div>
+
+    <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+        
+
+        <div class="row"  style="margin: 20px 0px">
+          <div class="main-content-content form-style-v2 col-md-9">
+
+            <form #createOfferForm=ngForm autocomplete="off" (submit)="onSubmit()" ngNativeValidate>
+              <input autocomplete="false" name="hidden" type="text" style="display:none;">
+              
+          
+          
+          
+          
+              <div class="card m-t-20">
+          
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label for="title">Social Security Trace <span style="color:red;">*</span></label>
+          
+                      
+                      <select [(ngModel)]="bg_check.social_security_trace" name="social_security_trace" class="form-control">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+                  </div>
+          
+          
+                </div>
+          
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label for="title">Federal Exclusion list <span style="color:red;">*</span></label>
+                      <select [(ngModel)]="bg_check.fel" name="fel" class="form-control">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label for="title">State Criminal <span style="color:red;">*</span></label>
+                      <select [(ngModel)]="bg_check.state_criminal" name="state_criminal" class="form-control">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label for="title">Reference Check <span style="color:red;">*</span></label>
+                        <select [(ngModel)]="bg_check.reference_check" name="reference_check" class="form-control">
+                          <option value="1">Yes</option>
+                          <option value="0">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+          
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label for="title">Education Verifaction <span style="color:red;">*</span></label>
+                      <select [(ngModel)]="bg_check.edu_varifaction" name="edu_varifaction" class="form-control">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+          
+                
+          
+                <div class="form-divider"></div>
+                <div class="form-row ">
+                  <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                    <span *ngIf="!isLoading">Save</span><span *ngIf="isLoading">Saving...</span></button>
+                </div>
+          
+              </div>
+          
+          
+          
+            </form>
+          
+          </div>
+            
+        </div>
+
+
+        
+</div>
+
+</div>

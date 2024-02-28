@@ -1,0 +1,140 @@
+.statistics-card {
+    border-radius: 5px;
+    padding: 0px 20px;
+    border: 0px;
+    background: #fff;
+    color: #0F5ACF;
+    padding-bottom: 11px;
+    box-shadow: 0px 5px 25px -17px #00000033;
+    border: 1px solid #ede9e9;
+    margin-right: 50px;
+    cursor: pointer;
+}
+
+.col-md-auto h4 {
+    text-align: center;
+}
+
+.fc-title {
+    color: white !important;
+}
+
+.temp {
+color: #E28F47 !important;
+}
+
+.full {
+    color: #41e541 !important;
+}
+.c3-axis .tick line {
+   color: red !important;
+}
+
+.dashborad-header .fc .fc-button-group button {
+    text-transform: capitalize !important;
+}
+.fc-button {
+    text-transform: capitalize !important;
+}
+.dashboard-item-1 {
+    background-color: #6ccac9;
+}
+.dashboard-item-2 {
+    background-color: #ff6c60;
+}
+.dashboard-item-3 {
+    background-color: #f8d347;
+}
+.dashboard-item-4 {
+    background-color: #57c8f2;
+}
+.dashboard-style .dashboard-item-1 .item-summary,
+.dashboard-style .dashboard-item-2 .item-summary,
+.dashboard-style .dashboard-item-3 .item-summary,
+.dashboard-style .dashboard-item-4 .item-summary {
+    margin-left: 0;
+}
+
+.dashboard-item-1 .item-summary,
+.dashboard-item-2 .item-summary
+.dashboard-item-3 .item-summary
+.dashboard-item-4 .item-summary {
+    margin-left: 20%;
+}
+.dashboard-style .dashboard-item-1 .item-summary p,
+.dashboard-style .dashboard-item-2 .item-summary p,
+.dashboard-style .dashboard-item-3 .item-summary p,
+.dashboard-style .dashboard-item-4 .item-summary p {
+    color: #fff;
+    text-transform: inherit;
+}
+.dashboard-item-1 .item-summary p,
+.dashboard-item-2 .item-summary p,
+.dashboard-item-3 .item-summary p,
+.dashboard-item-4 .item-summary p {
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.13px;
+    color: #909090;
+    text-transform: uppercase;
+}
+.dashboard-style .dashboard-item-1 .item-summary p span ,
+.dashboard-style .dashboard-item-2 .item-summary p span ,
+.dashboard-style .dashboard-item-3 .item-summary p span ,
+.dashboard-style .dashboard-item-4 .item-summary p span {
+    font-size: 19px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+.dashboard-item-1 .item-summary p span,
+.dashboard-item-2 .item-summary p span,
+.dashboard-item-3 .item-summary p span,
+.dashboard-item-4 .item-summary p span {
+    display: block;
+    color: #050202;
+    font-weight: 500;
+}
+.dashboard-style .dashboard-item-1 .dashboard-icon,
+.dashboard-style .dashboard-item-2 .dashboard-icon,
+.dashboard-style .dashboard-item-3 .dashboard-icon,
+.dashboard-style .dashboard-item-4 .dashboard-icon {
+    left: auto;
+    right: 6%;
+    top: 20px;
+    transform: inherit;
+    background: #F3F5F7;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 40px;
+    height: 40px;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0px 5px 10px rgb(0 0 0 / 28%);
+}
+.dashboard-item-1 .dashboard-icon,
+.dashboard-item-2 .dashboard-icon,
+.dashboard-item-3 .dashboard-icon,
+.dashboard-item-4 .dashboard-icon {
+    position: absolute;
+    top: 50%;
+    left: 9%;
+    transform: translateY(-50%);
+}
+.dashboard-style .dashboard-item-1 .dashboard-icon .color-1 {
+    color: #6ccac9;
+}
+.dashboard-style .dashboard-item-2 .dashboard-icon .color-2 {
+    color: #ff6c60;
+}
+.dashboard-style .dashboard-item-3 .dashboard-icon .color-3 {
+    color: #f8d347;
+}
+.dashboard-style .dashboard-item-4 .dashboard-icon .color-4 {
+    color: #57c8f2;
+}
+.dashboard-style .dashboard-item-1 .dashboard-icon i,
+.dashboard-style .dashboard-item-2 .dashboard-icon i,
+.dashboard-style .dashboard-item-3 .dashboard-icon i,
+.dashboard-style .dashboard-item-4 .dashboard-icon i {
+    line-height: 40px;
+}

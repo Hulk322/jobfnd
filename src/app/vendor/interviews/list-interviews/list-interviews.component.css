@@ -1,0 +1,12 @@
+.not-found{
+    padding-top: 20px;
+}
+
+.btn{
+    padding: 5px 10px !important;
+}
+
+.interviews__label.completed {
+    border: 1px solid green;
+    color: green;
+}

@@ -1,0 +1,153 @@
+<app-sidebar></app-sidebar>
+
+<div class="content-area" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Upload Talent</h2>
+                    
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+
+                              <div class="main-content-content form-style-v2">
+                                  <div class="card">
+                                      <p>Upload multiple talents/candidates</p>
+                                      <div class="m-t-20">
+                                        <app-errors></app-errors>
+                                      </div>
+
+                                       
+                                      
+                                        <div class="dropzone-container" [ngStyle]="{'background-color': parcing_done===true ? 'white':'#f3f3f3'}">
+                                            <div *ngIf="parcing_done==false">
+                                            <div class="left">
+                                              <label for="file">
+                                                
+                                              <img src="assets/images/icons/dropzon-upload.svg" alt="">
+                                              <h4>Drag and Drop your Talents Resumes here</h4>
+                                              <p class="text-center text-gray">Or</p>
+                                              
+                                      
+                                              <div class="form-row form-group">
+                                      
+                                                <input 
+                                                  required 
+                                                  type="file" 
+                                                  style="width:95%; display: none; "  
+                                                  id="file" 
+                                                  name="resume" 
+                                                  ref="file" 
+                                                  class="form-element form-control"
+                                                  multiple 
+                                                  (change)="fileAdded($event)">
+                                      
+                                                  <div>
+                                                    <span class="filename btn btn-primary btn-browse"> <i class="icons_folder"></i> {{fileName}}</span>
+                                                  </div>
+                                                  
+                                                  <button type="button"  
+                                                      class="btn btn-success m-t-20" 
+                                                      (click)="uploadFileToActivity()"
+                                                      [disabled]="isLoading"
+                                                      >Upload
+                                                      <svg *ngIf="isLoading" aria-hidden="true" style="width: 14px;" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg>
+                                                  </button> 
+                                                  
+                                                  <div *ngIf="isLoading" class="m-t-20 bold">
+                                                    Processing {{ current_file++1 }} of {{ selectedFiles.length }}
+                                                  </div>
+                                      
+                                              </div>
+                                      
+                                              </label>
+                                            </div>
+                                            <div class="right m-t-50">
+                                                <h4 *ngIf="selectedFiles.length">Selected Files</h4>
+                                              <div *ngFor="let file of selectedFiles">
+                                                  {{ file.name }}
+                                                </div>
+                                            </div>
+                                      
+                                        </div>
+
+                                        <div *ngIf="parcing_done==true && parsed_resumes.length==0" style="background-color: white">
+                                            <div class="alert alert-info">
+                                                Nothing could be parced.
+                                            </div>
+                                            
+                                          </div>
+
+                                        
+                                        <div *ngIf="parcing_done==true && parsed_resumes.length>0" style="background-color: white">
+                                            <div class="alert alert-success">
+                                                Successfully parsed {{ parsed_resumes.length }} resume(s).
+                                            </div>
+                                            <table class="table table-normalize">
+                                              <thead>
+                                                <tr>
+                                                  <th>Id</th>
+                                                  
+                                                  <th>Candidate Email</th>
+                                                  <th>Candidate Name</th>
+                                                  <th>Created Date</th>
+                                                  
+                                                  
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                              <tr *ngFor="let submission of parsed_resumes">
+                                          
+                                              <td>{{ submission.id }}</td>
+                                              <td>{{ submission.email }}</td>
+                                              <td>{{ submission.first_name }} {{ submission.last_name }}</td>
+                                              <td>{{ submission.created_at | date:'dd-MMM-y' }}</td>
+                                              
+                                              
+                                              </tr>
+                                              </tbody>
+                                              </table>
+                                          </div>
+                                        
+                                        
+                                      </div>
+
+                                      
+                                  </div>
+                              </div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div>
+
+
+
+</div>
+        
+        
+    
+
+        
+    

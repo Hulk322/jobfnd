@@ -1,0 +1,31 @@
+[
+    {
+        "name":"CapitalOne",
+        "color": "red",
+        "logo":"assets/clientLogos/Capital_One_logo.svg"
+      },
+      {
+        "name":"delta",
+        "color": "black",
+        "logo":"assets/clientLogos/logo-delta.png",
+        "banner":"assets/clientLogos/delta-team.jpg"
+      },
+      {
+        "name":"Laravel",
+        "color": "white",
+        "logo":"assets/images/logo.svg",
+        "banner":"assets/images/banner5.jpg"
+      },
+      {
+        "name":"career",
+        "color": "white",
+        "logo":"assets/images/logo.svg",
+        "banner":"assets/images/banner5.jpg"
+      },
+      {
+        "name":"thermofisher",
+        "color": "white",
+        "logo":"assets/images/logo.svg",
+        "banner":"assets/images/banner5.jpg"
+      }
+]

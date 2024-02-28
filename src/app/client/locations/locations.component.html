@@ -1,0 +1,134 @@
+<app-sidebar [current_menu_item]="'settings'"></app-sidebar>
+<div class="content-area floated" #content_area>
+   <div class="main-head no-tabs">
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Settings - Locations</h2>
+            <a href="" data-target="#edit_client_modal" data-toggle="modal" class="btn-orange"><i class="material-icons">person_add</i>Add Location</a>
+         </div>
+      </div>
+   </div>
+   
+   <div style=" margin:80px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="row justify-content-md-center">
+         <div class="col-md-12">
+            <table class="custom-table table-style-2 table table-striped">
+               <thead>
+                  <tr>
+                     <th>Name</th>
+                     <th>Location</th>
+                     <th></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let location of locations">
+                     <td width="50%">
+                        <label class="title-bold">{{ location.name | titlecase }}
+                        </label>
+                     </td>
+                     <td>
+                        <span class="team-meber-email"><i class="material-icons">confirmation_number</i>{{ location.location }}</span>
+                     </td>
+                     <td width="50" align="right">
+                        <div class="btn-group">
+                           <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <i class="material-icons">more_horiz</i>
+                           </button>
+                           <div class="dropdown-menu dropdown-menu-right">
+                              <a data-target="#edit_client_modal" data-toggle="modal" class="dropdown-item" (click)="edit(location)">Edit</a>
+                              <a class="dropdown-item" (click)=" delete(location.id, location)">Delete</a>
+                           </div>
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="modal smodal custom-form-group-flat" id="edit_client_modal" style="margin-top:0px;"data-keyboard="false" data-backdrop="static" #completeModal>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title" style="float: left;" *ngIf="!location.id">Add Location</h4>
+            <h4 class="modal-title" style="float: left;" *ngIf="location.id">Edit Location</h4>
+            <button class="close" data-dismiss="modal" (click)="dataDismiss()">&times;</button>
+         </div>
+         <div class="modal-body">
+            <form #locationForm=ngForm  ngNativeValidate>
+               <div class="form-group">
+                  <label for="exampleInputEmail1">Name (for example Head Office)</label>
+                  <input name="name" required [(ngModel)]="location.name" 
+                  type="text" class="form-control" id=""
+                  placeholder="for example Head Office" #name="ngModel">
+                  <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                  style="color: red;">
+                  Name field is required
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="exampleInputPassword1">Location</label>
+                  <AutocompleteComponent name="address" 
+                   [placeholder]="placeholder"
+                                          [autocompleteInput]="location.location" 
+                                           (setAddress)="getAddress($event)" 
+                                           (valueChange)="onValueChange($event)"
+                                          adressType="geocode">
+                                       </AutocompleteComponent>
+               </div>
+               <div class="form-group">
+                  <label for="exampleInputEmail1">Country</label>
+                  <input name="country" required [(ngModel)]="location.country" 
+                  type="text" class="form-control" id=""
+                  placeholder="" #country="ngModel">
+                  <div *ngIf="country.invalid && (country.dirty || country.touched)"
+                  style="color: red;">
+                  Country field is required
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="exampleInputEmail1">State</label>
+                  <input name="state" required [(ngModel)]="location.state" 
+                  type="text" class="form-control" id=""
+                  placeholder="" #state="ngModel">
+                  <div *ngIf="state.invalid && (state.dirty || state.touched)"
+                  style="color: red;">
+                  State field is required
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-8">
+               <div class="form-group">
+                  <label for="exampleInputEmail1">City</label>
+                  <input name="city" required [(ngModel)]="location.city" 
+                  type="text" class="form-control" id=""
+                  placeholder="" #city="ngModel">
+                  <div *ngIf="city.invalid && (city.dirty || city.touched)"
+                  style="color: red;">
+                  City field is required
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="form-group">
+                  <label for="exampleInputEmail1">Zip</label>
+                  <input name="zip" required [(ngModel)]="location.zip" 
+                  type="text" class="form-control" id=""
+                  placeholder="" #zip="ngModel">
+                  <div *ngIf="zip.invalid && (zip.dirty || zip.touched)"
+                  style="color: red;">
+                  Zip field is required
+                  </div>
+               </div>
+            </div>
+            </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="submit" *ngIf="!location.id" [disabled]="(isLoading || !locationForm.form.valid)" (click)="addOrupdate()" class="btn btn-primary pull-right">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            <button type="submit" class="btn btn-primary pull-right" *ngIf="location.id" [disabled]="(isLoading || !locationForm.form.valid)" (click)="addOrupdate()" >Update<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         </div>
+      </div>
+   </div>
+</div>

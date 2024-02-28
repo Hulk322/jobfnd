@@ -1,0 +1,22 @@
+.btn-danger{
+    color:white !important;
+}
+
+.label-success{
+    padding: 10px;
+    font-size: 13px;
+    font-weight: normal;
+    display: inline-block;
+    margin: 2px;
+}
+
+.heading a {
+    margin-right: 5px !important;
+}
+
+.business-logo{
+    width: 50px;
+}
+.more:hover{
+	cursor: pointer;
+}

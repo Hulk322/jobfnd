@@ -1,0 +1,539 @@
+<app-sidebar [current_menu_item]="'Create Offer'"></app-sidebar>
+<div class="content-area floated" #content_area>
+   <div class="main-head no-tabs">
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Create Offer</h2>
+         </div>
+         <app-header-right></app-header-right>
+      </div>
+   </div>
+   <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+       
+       <div class="row">
+           
+           
+           <div class="col-md-9">
+               
+               <div class="card job-grid single-job new-offer-wrap">
+                   
+                   
+                   <form #createOfferForm=ngForm autocomplete="off" (submit)="onSubmit()" ngNativeValidate>
+                   <div class="inner">
+                       
+                       
+                       <div class="s-details ">
+                           
+
+                           <div class="row">
+
+                               <div class="col-md-12">
+                                   <section class="s-form-row">
+                                       <label class="form-label">Assignment Title</label>
+                                       <input [(ngModel)]="offer.title" name="title" class="form-control" type="text">
+                                   </section>
+                               </div>
+                               
+                            </div>
+
+                            <div class="row">
+
+                               <div class="col-md-4">
+                                   <section class="s-form-row no-icon">
+                                       <label class="form-label">Employee Type <span class="red">*</span></label>
+
+                                       
+                                        <ng-select2 
+                                         [data]="types" 
+                                         [(ngModel)]="offer.type" 
+                                         [value]="offer.type"
+                                         name="type" 
+                                          placeholder="Choose" 
+                                          (valueChanged)="changeSalaryType()"
+                                           ></ng-select2>
+                                     
+
+                                       
+                                   </section>
+                               </div>
+
+                               <div class="col-md-4">
+                                   <section class="s-form-row no-icon">
+                                       <label class="form-label">Payment Type <span class="red">*</span></label>
+
+                                       <ng-select2 
+                                       [data]="pay_types" 
+                                       [(ngModel)]="offer.payment_type" 
+                                       name="payment_type" 
+                                        placeholder="Choose" 
+                                        (valueChanged)="calculateRate()"
+                                        [value]="offer.payment_type"
+                                         ></ng-select2>
+
+                                       
+                                   </section>
+                               </div>
+
+                               
+                               <div class="col-md-4">
+                                   <section class="s-form-row no-icon">
+                                       <label class="form-label">Currency</label>
+
+                                       <ng-select2 
+                                       
+                                        [data]="currencies" 
+                                        [(ngModel)]="offer.currency" 
+                                        
+                                        [value]="offer.currency"
+                                         
+                                        name="currency" 
+                                         placeholder="Choose" 
+                                          ></ng-select2>
+
+                                       <select style="display: none;" name="currency" [(ngModel)]="offer.currency">
+                                         <option *ngFor="let currency of currencies" value="{{currency.id}}">{{currency.slug}}</option>
+                                       </select>
+                                   </section>
+                               </div>
+   
+                           </div>
+
+                           <div class="row"   *ngIf="offer.type=='Temp Hire'">
+
+                              <div class="col-md-4" >
+                                 <section class="s-form-row icon-left">
+                                    <label class="form-label">Start Date <span class="red">*</span></label>
+                                    <i class="material-icons">calendar_today</i>
+                                    <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                                       [(ngModel)]="offer.start_date" name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                    dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                 </section>
+                              </div>
+
+                              <div class="col-md-4">
+                                 <section class="s-form-row icon-left">
+                                    <label class="form-label">End Date <span class="red">*</span></label>
+                                    <i class="material-icons">calendar_today</i>
+                                    <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                                       [(ngModel)]="offer.end_date" name="end_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                    dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                 </section>
+                              </div>
+
+                              <div class="col-md-4">
+                                <section class="s-form-row no-icon">
+                                    <label class="form-label">Exemption Type <span class="red">*</span></label>
+
+                                    <ng-select2 
+                                    [data]="ExemptionTypes" 
+                                    [(ngModel)]="offer.is_exempted" 
+                                    name="is_exempted" 
+                                     placeholder="Choose" 
+                                     [value]="offer.is_exempted"
+                                      ></ng-select2>
+
+                                    
+                                </section>
+                            </div>
+
+                           </div>
+                           <div class="row" *ngIf="offer.type=='Full Time'">
+
+                              <div class="col-md-4">
+                                 <section class="s-form-row  icon-left">
+                                    <label class="form-label">End Date</label>
+                                    <i class="material-icons">calendar_today</i>
+                                    <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                                       [(ngModel)]="offer.end_date" name="end_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                    dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                 </section>
+                              </div>
+
+                              <div class="col-md-4">
+                                <section class="s-form-row no-icon">
+                                    <label class="form-label">Exemption Type <span class="red">*</span></label>
+
+                                    <ng-select2 
+                                    [data]="ExemptionTypes" 
+                                    [(ngModel)]="offer.is_exempted" 
+                                    name="is_exempted" 
+                                     placeholder="Choose" 
+                                     [value]="offer.is_exempted"
+                                      ></ng-select2>
+
+                                    
+                                </section>
+                            </div>
+
+                           </div>
+
+                           <h1 class="sheadform">Rates</h1>
+
+                           <div class="offer-page-statistics">
+                               <div class="row">
+
+                                   <div class="col-md-4"> 
+                                       
+                                       <div class="statistics-grid blue">
+                                           <h2>${{ submission?.job?.max_rate ? submission?.job?.max_rate : '0' }}</h2>
+                                           <label>Job Posted Rate</label>
+                                           <i class="material-icons">next_week</i>
+                                       </div>
+
+                                   </div>
+
+                                   <div class="col-md-4">
+                                       
+                                       <div class="statistics-grid orange">
+                                           <h2>${{ submission?.answers[4]?.answer ? submission?.answers[4]?.answer : '0'}}</h2>
+                                           <label>Candidate Asked Pay Rate</label>
+                                           <i class="material-icons">person</i>
+                                       </div>
+
+                                   </div>
+
+                                   <div class="col-md-4">
+                                       
+                                       <div class="statistics-grid green">
+                                           <h2>${{ submission?.job?.max_rate ? submission?.job?.max_rate : '0' }}</h2>
+                                           <label>Recommended Bill Rate</label>
+                                           <i class="material-icons">beenhere</i>
+                                       </div>
+
+                                   </div>
+
+                               </div>
+                               
+                           </div>
+                          
+                           <div class="row" style="margin-top: 13px;">
+                            <div class="col-md-6">
+                             <section class="s-form-row radio-box">
+                                 <label class="form-label">Rate Negotiable</label>
+                                 <div class="s-radio" style="float: left;">
+                                    <input 
+                                    name="rate_negotiable" [(ngModel)]="offer.rate_negotiable" 
+                                    
+                                    
+                                    type="radio"
+                                       value="1" id="rate_negotiable_1">
+                                    <label for="rate_negotiable_1">
+                                       <span>Yes</span>
+                                    </label>
+                                 </div>
+
+                                 <div class="s-radio" style="float: left;">
+                                    <input 
+                                    name="rate_negotiable" [(ngModel)]="offer.rate_negotiable" 
+                                    selected
+                                    
+                                    type="radio"
+                                       value="0" id="rate_negotiable_0">
+                                    <label for="rate_negotiable_0">
+                                       <span>No</span>
+                                    </label>
+                                 </div>
+                              </section>
+                            </div>
+                        </div>
+  
+                           <div class="row">
+
+                               <div class="col-md-6">
+                                   
+                                   <div class="card-billrate-payrate">
+
+                                       <h5 class="title">Client Bill Rates {{offer.payment_type}} </h5>
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                          <section class="s-form-row custom">
+                                              <label class="form-label">Regular Rate <span class="red">*</span></label>
+                                              <input type="text" placeholder="$ 0.00"  name="client_regular_rate"
+                                          [(ngModel)]="offer.client_regular_rate"  (keyup)="calculateRate()" >
+                                          </section>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                          <section class="s-form-row custom readonly">
+                                              <label class="form-label">Client Budget</label>
+                                              <input type="text" placeholder="$ 0.00"  name="client_budget"
+                                          [(ngModel)]="offer.client_budget" currencyMask readonly>
+                                          </section>
+                                        </div> 
+                                      </div>
+
+   
+                                       <div class="row">
+                                           <div class="col-md-6 payrate-statics">
+                                               <label>Over Time Rate</label>
+                                               <span>${{offer.client_overtime_rate | number:'2.2' }}</span>
+                                           </div>
+
+                                           <div class="col-md-6 payrate-statics">
+                                               <label>Double Time Rate</label>
+                                               <span>${{ offer.client_doubletime_rate | number:'2.2' }}</span>
+                                           </div>
+                                       </div>
+
+                                   </div>
+
+                               </div>
+
+                               <div class="col-md-6">
+                                   
+                                   <div class="card-billrate-payrate">
+
+                                       <h5 class="title">Candidate Pay Rates {{offer.payment_type}}</h5>
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                            <section class="s-form-row custom">
+                                                <label class="form-label">Regular Rate <span class="red">*</span></label>
+                                                <input type="text" placeholder="$ 0.00" name="candidate_regular_rate"
+                                            [(ngModel)]="offer.candidate_regular_rate" (keyup)="calculateRate()">
+                                            </section>
+                                          </div>
+                                          <div class="col-md-6">
+                                            <section class="s-form-row custom readonly">
+                                                <label class="form-label">Candiate Pay</label>
+                                                <input type="text" placeholder="$ 0.00" name="candidate_budget"
+                                            [(ngModel)]="offer.candidate_budget" currencyMask readonly>
+                                            </section>
+                                          </div>
+                                        </div>
+
+                                       <div class="row">
+                                           <div class="col-md-6 payrate-statics">
+                                               <label>Over Time Rate</label>
+                                               <span>${{ offer.candidate_overtime_rate | number:'2.2'}}</span>
+                                           </div>
+
+                                           <div class="col-md-6 payrate-statics">
+                                               <label>Double Time Rate</label>
+                                               <span>${{ offer.candidate_doubletime_rate | number:'2.2' }}</span>
+                                           </div>
+                                       </div>
+
+                                   </div>
+
+                               </div>
+
+                           </div>
+
+                           <h1 class="sheadform">Other Details</h1>
+
+                           <div class="row">
+
+                               <div class="col-md-6">
+                                   <section class="s-form-row no-icon">
+                                       <label class="form-label">Manager <span class="red">*</span></label>
+
+                                       <ng-select2 
+                                       [data]="teamMembers" 
+                                       [(ngModel)]="offer.manager_id" 
+                                       [value]="offer.manager_id"
+                                       name="manager_id" 
+                                        placeholder="Choose" 
+                                         ></ng-select2>
+
+                                       
+                                   </section>
+                               </div>
+
+                               <div class="col-md-6">
+                                   <section class="s-form-row no-icon">
+                                       <label class="form-label">Location <span class="red">*</span></label>
+                                       <ng-select2 
+                                           [data]="locations" 
+                                           [(ngModel)]="offer.location" 
+                                           [value]="offer.location"
+                                           name="location" 
+                                            placeholder="Choose Location" 
+                                             ></ng-select2>
+                                   </section>
+                               </div>
+
+
+                               <div class="col-md-12" *ngIf="offer.type=='Full Time'">
+                                  <section class="s-form-row check-box">
+                                     <label class="form-label">Benefits</label>
+
+                                     <div class="s-radio"  *ngFor="let benefit of benefits; let i=index" style="float: left;" >
+                                         
+                                         <input  type="checkbox" id="benefits-{{i}}" name="benefits-{{i}}" [(ngModel)]="benefit.checked" [value]="benefit.id">
+                                         <label for="benefits-{{i}}">
+                                             <span>{{ benefit.title }}</span>
+                                         </label>
+
+                                     </div>
+                                 </section>
+                               </div>
+
+                               <div class="col-md-12">
+                                   <section class="s-form-row">
+                                       <label class="form-label">Additional notes</label>
+                                       <textarea name="notes" row="10" class="form-control notes" [(ngModel)]="offer.notes"></textarea>
+                                   </section>
+                               </div>
+
+                               <div class="col-md-12">
+                                   <section class="s-form-row">
+                                       <input type="submit" class="btn-create-offer" name="createoffer" value="Create offer"  [disabled]="isLoading">
+                                   </section>
+                               </div>
+
+                               
+
+                           </div>
+
+                       </div>
+
+                       
+                   
+                   </div>
+                   </form>
+               </div>
+           
+           </div>
+           
+           
+           <div class="col-md-3">
+               
+               
+               
+               <div class="card job-grid">
+                   
+                   
+                   
+                   
+                   <div class="inner">
+                       
+                       <div class="s-details">
+                           
+                           <div class="bookmark-btn absolute active">
+                                   
+                           </div> 
+                           
+                           <div class="job-head-list" 
+                           style="cursor: pointer;"
+                           routerLink="/client/submissions/{{ submission_id }}">
+                               <div class="text-avatar">
+                                   {{ offer?.submission?.candidate_name | slice:0:2}}
+                               </div>
+                               <a  style="cursor: pointer;" class="card-title-lg"><h2>{{ offer?.submission?.candidate_name}}</h2></a>
+                               <label>{{(submission?.location?.length>0?submission.location:'Any location') | slice:0:21}}</label>
+                           </div>
+                           
+                           <div>
+                               <label class="badge large gray">
+                                   <i class="material-icons">work</i>
+                                  {{ submission?.job?.title| slice:0:15 }}...
+
+                               </label>
+                           </div>
+                           
+                           
+                       </div>
+                       
+                       <div class="job-additionalinfo" style="margin-top:0px;">
+                           <ul>
+                               <li class="estimated-date"><i class="material-icons">event</i>  <span>Submission Date: {{ offer.submission.estimated_joning_date | date: 'MM/dd/yyyy' }}</span>
+                               <span *ngIf="!offer.submission.estimated_joning_date">N/A</span>
+                               </li>
+                               
+                           </ul>
+                       </div>
+                       <div style="clear: both;"></div>
+                       <div class="inner">
+
+                           <div class="s-details">
+
+                               <div class="job-head-list">
+                                   <a  class="card-title-sm "><h2>Additional Details</h2></a>
+                               </div>
+                               
+                               <div>
+                                  <table class="table-job-info job-table-responsive">
+<!--                                   <tr *ngIf="offer?.submission.salary_type!=null">
+                                      <td><i class="material-icons">offline_bolt</i>Salary Type</td>
+                                      <td>{{ offer?.submission.salary_type }}</td>
+                                  </tr>  
+                                      
+                                      <tr>
+                                          <td><i class="material-icons">calendar_today</i>Start Date</td>
+                                          <td>{{ offer.submission.estimated_joning_date | date: 'MM/dd/yyyy' }}</td>
+                                      </tr>  -->
+                                     
+                                      <tr>
+                                          <td><i class="material-icons">gps_fixed</i>Location</td>
+                                          <td>{{(offer.submission?.location?.length>0?offer.submission.location:'Any location') | slice:0:21}}</td>
+                                      </tr>
+                                      <tr>
+                                          <td><i class="material-icons">email</i>Email</td>
+                                          <td>{{ offer?.submission?.candidate_email }}</td>
+                                      </tr>
+                                      <tr>
+                                          <td><i class="material-icons">smartphone</i>Mobile</td>
+                                          <td>{{ offer?.submission?.home_phone | ngxPhoneMask }}</td>
+                                      </tr>
+                                      <tr>
+                                          <td><i class="material-icons">local_phone</i>Home Phone</td>
+                                          <td>{{ offer?.submission?.mobile | ngxPhoneMask }}</td>
+                                      </tr>
+                                      
+<!--                                       <tr>
+                                          <td><i class="material-icons">emoji_flags</i>Submission Type</td>
+                                          <td>{{ offer?.submission?.type | titlecase }}</td>
+                                      </tr> -->
+                                      
+                                      
+                                      <tr>
+                                       <td><i class="material-icons">waves</i> Skills</td>
+                                       
+                                      </tr>
+                                      <tr>
+                                       <td colspan="2" style="padding-bottom:0px;">
+                                           <div class="skillswrap">
+                                               <ul>
+                                                   <li *ngFor="let skill of offer.submission.skills | slice:0:defaultSkillsCount">{{ skill.name | slice:0:45 }}</li>
+                                                   
+                                                   
+                                               </ul>
+                                           </div>
+                                       </td>
+                                      </tr>
+                                      <tr style="padding-bottom: 0px;
+                                      cursor: pointer;
+                                      text-decoration: underline;">
+                                         <td colspan="2" style="padding-top:0px;">
+                                              <span class="more" *ngIf="offer.submission.skills.length>10" (click)="toggleSkillsCount()">{{showMoreText}}</span>
+                                         </td>
+                                      </tr>
+                                  </table>
+                               </div>
+
+                           </div>
+
+                       </div>
+                       
+                       
+                   
+                   </div>
+               </div>
+               
+               
+               
+               
+               
+               
+            
+               
+               
+           
+           </div>
+           
+           
+       </div>
+       
+   </div>
+   <!-- templates modal-->
+</div>

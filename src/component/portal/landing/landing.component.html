@@ -1,0 +1,54 @@
+<div class="wrap">
+   <div class="content">
+      <div class="header">
+         <div class="logo">
+            <img src="assets/images/logo.svg">
+         </div>
+         <nav class="navbar navbar-expand-lg navbar-lighta">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" routerLink="/jobs">Search Job</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link"routerLink="/login">Login</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" routerLink="/signup">Create Account</a>
+                  </li>
+                  <li class="nav-item active">
+                     <a class="nav-link" routerLink="/signup">Post Job</a>
+                  </li>
+               </ul>
+            </div>
+         </nav>
+      </div>
+      <div class="login--2-page">
+         <div class="flex-box pt-9 mb-5">
+            <div class="find-career">
+               <h1 class="pt-9">Find Your  <span class="text-light-blue">Career.</span></h1>
+               <p class="pb-4">Join over 2 Million others in the future of work,<br> The easiest way to get your new job.</p>
+               <form>
+                  <div class="search_icon form-group">
+                     <input class="form-control" type="text" placeholder="Job title, Keywords or company name" name="job" autocomplete="off" [(ngModel)]="filters.what" 
+                     [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <div class="location" style="margin-bottom: 10px;">
+                     <AutocompleteComponent [placeholder]="placeholder" [autocompleteInput]="filters.where" (setAddress)="getAddress($event)" adressType="geocode">
+                     </AutocompleteComponent>
+                     <i class="fa fa-map-marker text-light-blue pull-right"></i>
+                  </div>
+                  <button class="btn btn-royal pull-right" type="submit" (click)="search()">SEARCH</button>
+               </form>
+            </div>
+            <div class="logo-image">
+               <img src="assets/images/homepage-img.png">
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<app-footer></app-footer>

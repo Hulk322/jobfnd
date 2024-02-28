@@ -1,0 +1,112 @@
+<app-sidebar></app-sidebar>
+
+<div class="content-area" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Upload Resume</h2>
+                    
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+
+                              <div class="main-content-content form-style-v2">
+                                  <div class="card">
+                                      
+                                      <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="element-box">
+                                               <div class="form-row-group with-icons">
+                                                  <app-errors></app-errors>
+                                                  <div class="form-row form-group">
+                                                     
+                                                     <label for="">
+                                                       <input type="radio" 
+                                                          (change)="handleChange($event)" 
+                                                          id="submission_type" name="submission_type"
+                                                          checked="checked" class="" value="existing"> Select existing candidate from pool
+                                                     </label>
+
+                                                     <div *ngIf="submission_type=='existing'">
+                                                        <div class="form-row form-group">
+                                                           <select name="candidate_id" 
+                                                           id="candidate_id" class="form-control" 
+                                                           [(ngModel)]="candidate_id">
+                                                           <option value="{{ candidate.id }}" *ngFor="let candidate of candidates">{{ candidate.email }} ( {{ candidate.first_name | titlecase }} {{ candidate.last_name | titlecase }} )</option>
+                                                           </select>
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                                  
+                                                  <label for="">
+                                                    <input type="radio" id="submission_type" 
+                                                       name="submission_type" (change)="handleChange($event)" 
+                                                       class="" value="new"> Upload Resume
+                                                  </label>
+
+                                                  <div *ngIf="submission_type=='new'" style="m-t-20">
+                                                     <div class="form-row form-group">
+
+                                                      <div class="input-group">
+                                                          <input type="text" class="form-control" value="{{uploaded_file_name}}" readonly>
+                                                          <label class="input-group-btn">
+                                                              <span class="btn btn-primary">
+                                                                  Browse&hellip; <input name="resume" type="file" ref="file" 
+                                                                   (change)="handleFileInput($event.target.files)" id="file"
+                                                                    class="form-element form-control"style="display: none;">
+                                                              </span>
+                                                          </label>
+                                                      </div>
+                                                     </div>
+                                                  </div>
+                                               </div>
+                                               <div class="form-divider"></div>
+                                               
+                                               <div class="form-row m-t-20">
+                                                  <button [disabled] ="isLoading" class="btn btn-success btn-fat" 
+                                                  (click)="uploadFileToActivity()">
+                                                  <span *ngIf="isLoading">Uplaoding...</span><span *ngIf="!isLoading">Continue</span></button>
+                                               </div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      
+
+                                  </div>
+                              </div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div>
+
+
+
+</div>
+        
+        
+    
+
+        
+    

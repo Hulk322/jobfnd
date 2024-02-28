@@ -1,0 +1,17 @@
+.custom-btn-group button {
+    border:none;
+    color: #000;
+}
+.search-mini input {
+    /* width: 326px; */
+}
+.search-mini button {
+    position: absolute;
+}
+@media (max-width: 1199px) { 
+      /* .search-mini button {
+        position: absolute;
+        right: 22%;
+      } */
+    }
+    

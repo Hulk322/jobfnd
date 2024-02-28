@@ -1,0 +1,52 @@
+.modal-header .close{
+    margin-left: 0px;
+}
+a{
+	cursor: pointer !important;
+}
+
+.profile_score{
+    /* border: 8px solid lightgray;
+    border-radius: 50%;
+    height: 72px;
+    width: 72px; */
+    text-align: center;
+}
+
+.profile-score-circle, .profile-score-background {
+  transform: scale(1.8);
+  transform-origin: left top; 
+  cursor: auto; 
+}
+
+.profile-score-chart text {
+  font-weight: 600;
+  font-size: 12px; 
+}
+
+.profile-score-chart {
+  margin: auto;
+  display: block;
+  cursor: pointer;
+  width: 70px;
+  height: 70px; 
+}
+
+@keyframes circle-chart-fill {
+  to {
+    stroke-dasharray: 0 100; 
+  }
+}
+  
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+  .formBtn:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: auto;
+}

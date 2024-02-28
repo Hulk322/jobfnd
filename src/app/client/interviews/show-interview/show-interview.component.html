@@ -1,0 +1,194 @@
+<app-sidebar [current_menu_item]="'interviews'"></app-sidebar>
+<div class="content-area floated" #content_area>
+   <div class="main-head no-tabs" #main_head>
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Interview Details</h2>
+            <a routerLink="/client/interviews" class="btn-secondary">
+            <i class="material-icons">arrow_back</i> Back to Interviews Listing</a>
+         </div>
+         <app-header-right></app-header-right>
+      </div>
+   </div>
+   <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="row">
+         <div class="col-md-9">
+            <div class="card job-grid single-job">
+               <div class="inner">
+                  <div class="card-tabs">
+                     <ul>
+                        <li class="active">
+                           <a>
+                           <i class="material-icons">event_available</i>Interview
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="s-details interview-details-wrap">
+                     <div class="row">
+                        <div class="col-md-8">
+                           <div class="interview-title">
+                              {{ interview?.title }}
+                           </div>
+                           <div class="interview-location">
+                              <i class="material-icons">place</i>
+                              {{ interview?.location!=null?interview?.location:'Location not available' }}
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="interview-type-s">
+                              <label *ngIf="interview.type=='face-to-face' || interview.type=='Face to face' "><i class="material-icons">face</i>{{ interview.type }}</label>
+                              <label *ngIf="interview.type=='video' || interview.type=='Video'"><i class="material-icons">videocam</i>{{ interview.type }}</label>
+                              <label *ngIf="interview.type=='Phone'"><i class="material-icons">phone</i>{{ interview.type }}</label>
+                              <label *ngIf="interview.type=='Skype'"><i class="material-icons">chat</i>{{ interview.type }}</label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="interview-note">
+                        <b>Additional Notes - </b>
+                        {{ interview.notes }}
+                     </div>
+                     <div class="interview-slots">
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th><i class="material-icons">event</i> Date</th>
+                                 <th><i class="material-icons">call_received</i>Time In</th>
+                                 <th><i class="material-icons">call_made</i>Time Out</th>
+                                 <th>Status</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr *ngFor="let date of interview.dates">
+                                 <td>{{ date.date | date: 'MM/dd/yyyy' }}</td>
+                                 <td>{{ date.time_in | date: 'hh:mm a' }}</td>
+                                 <td>{{ date.time_out | date: 'hh:mm a' }}</td>
+                                 <td *ngIf="date.is_selected==0"><i class="material-icons">hourglass_empty</i></td>
+                                 <td *ngIf="date.is_selected==1"><i class="material-icons">check_circle</i></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div class="card job-grid">
+               <div class="inner">
+                  <div class="s-details">
+                     <div class="bookmark-btn absolute active">
+                        
+                     </div>
+                     <div class="job-head-list" >
+                        <div class="text-avatar">
+                           <img style="    width: 100px;
+                              border-radius: 50%;" class="media-object" src="{{ interview?.candidate?.meta?.profilePictureFullUrl }}" alt="">
+                        </div>
+                        <a class="card-title-lg">
+                           <h2>{{ interview?.submission?.first_name }} {{ interview?.submission?.last_name }}</h2>
+                        </a>
+                        <label> {{ interview?.location!=null?interview?.location:'Location not available' }}</label>
+                     </div>
+                     <div>
+                        <label class="badge large gray">
+                        <i class="material-icons">work</i>
+                        {{ interview?.job?.title }}
+                        </label>
+                     </div>
+                  </div>
+                  <div class="job-additionalinfo" style="margin-top:0px;">
+                     <ul>
+                        <li class="estimated-date"><i class="material-icons">event</i>  <span>Submission Date: {{interview?.submission?.created_at | date: 'MM/dd/yyyy'}}</span></li>
+                     </ul>
+                  </div>
+                  <div class="job-statisticsv1 submissions">
+                     <div class="btn-group dropup">
+                        <button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu">
+                           
+                           <a class="dropdown-item" routerLink="/client/create-offer/{{interview?.submission?.id}}">Create Offer</a>
+                        </div>
+                     </div>
+                     <div class="submission-status approved">
+                        <i class="material-icons">how_to_reg</i> <label>{{interview.current_status}}</label>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card job-grid" style="margin-top: 15px;">
+               <div class="card job-grid billrate-widget no-bottom-margin"  style="margin-top: 0px;">
+                  <h3>Expected Pay Rate</h3>
+                  <div class="inner">
+                     <div class="row">
+                        <div class="col-md-12">
+                           <h2>${{ interview?.submission.pay_rate | number: '1.2-2' }}</h2>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="inner">
+                  <div class="s-details ">
+                     <div class="job-head-list">
+                        <a href="#" class="card-title-sm ">
+                           <h2>Additional Details</h2>
+                        </a>
+                     </div>
+                     <div>
+                        <table class="table-job-info job-table-responsive">
+                           <tr>
+                              <td *ngIf="interview.submission.salary_type!=null"><i class="material-icons">offline_bolt</i>Salary Type</td>
+                              <td>{{ interview?.submission.salary_type }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">calendar_today</i>Start Date</td>
+                              <td>{{ interview?.submission.estimated_joning_date | date: 'MM/dd/yyyy' }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">gps_fixed</i>Location</td>
+                              <td>{{ interview?.submission.location }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">smartphone</i>Mobile</td>
+                              <td>{{ interview?.submission.mobile | ngxPhoneMask }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">local_phone</i>Home Phone</td>
+                              <td>{{ interview?.submission.home_phone | ngxPhoneMask }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">emoji_flags</i>Submission Type</td>
+                              <td>{{ interview?.submission.type | titlecase }}</td>
+                           </tr>
+                           <tr>
+                              <td><i class="material-icons">waves</i> Skills</td>
+                           </tr>
+                           <tr>
+                              <td colspan="2">
+                                 <div class="skillswrap">
+                                  <ul>
+                                    <li *ngFor="let skill of interview?.submission?.skills | slice:0:defaultSkillsCount">{{ skill.name | slice:0:45 }}</li>
+                                    
+                                    
+                                </ul>
+                                 </div>
+                              </td>
+                           </tr>
+                           <tr style="padding-bottom: 0px;
+                           cursor: pointer;
+                           text-decoration: underline;">
+                              <td colspan="2" style="padding-top:0px;">
+                                   <span class="more" *ngIf="interview?.submission.skills.length>10" (click)="toggleSkillsCount()">{{showMoreText}}</span>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,36 @@
+         <div class="logo" *ngIf="!clientName">
+            <a routerLink="/">
+               <img class="d-none d-lg-block" src="assets/images/login/login-logo.png" style="width: 140px;height: 40px;">
+               <img class="d-lg-none" src="assets/images/login/logo.png" style="width: 140px;height: 40px;">
+            <!-- LOGO -->
+            </a>
+         </div>
+         <div class="logo" *ngIf="clientName == 'delta'">
+            <a routerLink="/">
+            <img src="assets/clientLogos/logo-delta.png" style="width: 149px !important; margin-bottom: 0px;
+            margin-top: 15px !important;">
+            </a>
+         </div>
+       <div class="logo" *ngIf="clientName == 'career'">
+         <a routerLink="/">
+               <img src="assets/images/header-carrer-logo.svg">
+          </a>
+      </div>
+  <div class="logo" *ngIf="clientName == 'thermofisher'">
+     <a routerLink="/">
+        <img src="assets/images/kpmg-logo2.png" alt="" style="margin-top: -15px; height: 90px;">
+     </a>
+  </div>
+
+  <!-- microsoft -->
+  <div class="logo" *ngIf="clientName == 'microsoft'">
+   <a routerLink="/">
+   <img src="assets/images/microsoft.png"  style="width: 180px;">
+   </a>
+</div>
+
+  <div class="logo" *ngIf="clientName == 'honeywell'">
+   <a routerLink="/">
+   <img src="assets/images/dxclogo.png"  style="width: 180px;">
+   </a>
+</div>

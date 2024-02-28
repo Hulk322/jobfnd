@@ -1,0 +1,193 @@
+<app-sidebar [current_menu_item]="'settings'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Settings - Timesheet Codes</h2>
+                    <a href=""  data-target="#edit_client_modal" data-toggle="modal" class="btn-orange">Add Timesheet</a>
+                </div>
+                
+
+                
+            </div>
+            
+        </div>
+
+      <!-- <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+                              <div class="main-content-content eco-box-shadow">
+
+
+                                 <div class="setting-right-side">
+                                    
+                                    <div class="setting-right-side-content">
+                                       <table class="custom-table">
+                                          <tbody>
+                                             <tr>
+                                                <th>#</th>
+                                                <th>Sheet Name</th>
+                                                <th>Actions</th>
+                                             </tr>
+                                             <tr *ngFor="let sheet of sheets; let i = index">
+                                                <td> {{ i+1 }} </td>
+                                                <td>{{ sheet.name | titlecase }} ( {{ sheet.code }} )</td>
+                                                <td style="text-align: center;">
+                                                   <a (click)="edit(sheet)" class="btn btn-primary" style="margin-right:5px; color: white;">
+                                                      <i class="fa fa-pencil"></i>
+                                                   </a>
+                                                   <button (click)="delete(sheet.id, sheet)" [disabled]="sheet.deleted"
+                                                      class="btn btn-danger" [ngClass]="{ 'fa fa-spinner': sheet.deleted  }">
+                                                      <i [ngClass]="{ 'fa fa-trash': !sheet.deleted }"></i>
+                              
+                                                   </button>
+                                                </td>
+                                             </tr>
+                              
+                              
+                              
+                              
+                              
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="setting-left-side form-style-v2">
+                                       <h4 style="margin-top: 25px;" *ngIf="!sheet.id">Add Timesheet Code</h4>
+                                       <h4 style="margin-top: 25px;" *ngIf="sheet.id">Update Timesheet Code</h4>
+                                       <form method="POST" role="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+                              
+                                          <div class="form-group">
+                                             <label for="">Sheet Name</label>
+                                             <input name="name" required [(ngModel)]="sheet.name" type="text" class="form-control" id=""
+                                                placeholder="">
+                                          </div>
+                              
+                              
+                                          <div class="form-group">
+                                             <label for="">Sheet Code</label>
+                                             <input name="code" required [(ngModel)]="sheet.code" type="text" class="form-control" id=""
+                                                placeholder="">
+                                          </div>
+                              
+                              
+                                          <button type="submit" *ngIf="!sheet.id" [disabled]="isLoading"
+                                             class="btn btn-primary pull-right">Save</button>
+                                          <button type="submit" *ngIf="sheet.id" [disabled]="isLoading"
+                                             class="btn btn-primary pull-right">Update</button>
+                                       </form>
+                                    </div>
+                                 </div>
+                              
+                              
+                              
+                              </div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div> -->
+
+<div style=" margin:80px auto 30px auto; font-size: 13px;  min-height: 100vh; ">      
+   <div class="row">
+
+   <div class="col-md-12" *ngIf="sheets?.length<1 && !isLoading" style="text-align: center;">
+           <img src="assets/images/no-job.svg" style="margin-top: 13%;">
+           <h3>No data found</h3>
+        </div>
+   
+       <div class="col-md-12">
+           
+           <table class="custom-table table-style-2 table table-striped" *ngIf="sheets?.length>0">
+               <thead>
+                   <tr>
+                       <th>Sheet Name</th>
+                       <th>Sheet Code</th>
+                       <th></th>
+                   </tr>
+               </thead>
+               <tbody>
+
+                   
+                   <tr *ngFor="let sheet of sheets">
+                       <td width="30%">
+                           <label class="title-bold">{{ sheet.name | titlecase }}
+                           </label>
+                       </td>
+                       <td>
+                           <label class="title-bold">{{ sheet.code }}</label>
+                       </td>
+                       
+                       <td width="50" align="right">
+                           <div class="btn-group">
+                             <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               <i class="material-icons">more_horiz</i>
+                             </button>
+                             <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" (click)="edit(sheet)" data-target="#edit_client_modal" data-toggle="modal">Edit</a>
+                               <a class="dropdown-item" (click)="delete(sheet.id, sheet)">Delete</a>
+                             </div>
+                           </div>
+                       </td>
+                   </tr>
+               </tbody>
+           </table>
+       </div>
+
+   </div>
+   
+   
+</div>
+
+</div>
+
+
+<div class="modal smodal custom-form-group-flat" id="edit_client_modal" style="margin-top:0px;"
+data-keyboard="false" data-backdrop="static" #completeModal>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+               <h4 class="modal-title"*ngIf="!sheet.id">Add Timesheet</h4>
+			   <h4 class="modal-title" *ngIf="sheet.id">update Timesheet</h4>
+            <button class="close" data-dismiss="modal" (click)="dataDismiss()">&times;</button>
+            
+         </div>
+         <div class="modal-body">
+                      <form  ngNativeValidate>
+                              
+                                          <div class="form-group">
+                                             <label for="">Sheet Name</label>
+                                             <input name="name" required [(ngModel)]="sheet.name" type="text" class="form-control" id=""
+                                                placeholder="">
+                                          </div>
+                              
+                              
+                                          <div class="form-group">
+                                             <label for="">Sheet Code</label>
+                                             <input name="code" required [(ngModel)]="sheet.code" type="text" class="form-control" id=""
+                                                placeholder="">
+                                          </div>
+                                       </form>
+         </div>
+         <div class="modal-footer">
+                <button type="submit" *ngIf="!sheet.id" [disabled]="isLoading"
+                                    class="btn btn-primary pull-right" (click)="addOrupdate()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+                 <button type="submit" *ngIf="sheet.id" [disabled]="isLoading"
+                                    class="btn btn-primary pull-right" (click)="addOrupdate()">Update<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         </div>
+      </div>
+   </div>
+</div>

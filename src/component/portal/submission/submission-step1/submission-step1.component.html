@@ -1,0 +1,125 @@
+<div class="row" style="margin:20px;">
+
+  <div class="col-sm-12 col-xxxl-12">
+   <div class="element-wrapper">
+      <h6 class="element-header">
+                    Submission Step 1
+      </h6>
+     
+          <div class="element-box">
+              
+                  <form autocomplete="off" #step1Form=ngForm (ngSubmit)="onSubmit()" ngNativeValidate> 
+
+                        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+
+                    <div class="row">
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+                          <label class="section-title" style="font-weight:bold;">Basic Information</label>  
+                      </div>
+                  </div>
+                          <div class="row">
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                  <div class="form-row form-group">
+                                      <label>First Name</label>
+                                      <input required [(ngModel)]="submission.first_name"
+                                      name="first_name" type="text"  class="form-element form-control"
+                                             placeholder="">
+                                             {{ submission.first_name }}
+                                  </div>
+                              </div>
+
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                  <div class="form-row no-padding form-group">
+                                      <label>Middle Name</label>
+                                      <input [(ngModel)]="submission.middle_name" 
+                                      name="middle_name" type="text"  class="form-element form-control"
+                                             placeholder="Middle Name">
+                                  </div>
+                              </div>
+                          
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                              <div class="form-row no-padding form-group">
+                                  <label>Last Name</label>
+                                  <input required [(ngModel)]="submission.last_name" 
+                                  name="last_name" type="text"  class="form-element form-control"
+                                         placeholder="">
+                              </div>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                  <div class="form-row form-group">
+                                      <label>Date of Birth</label>
+                                      <input type="text"
+							required
+	placeholder="YYYY-MM-DD"
+	class="form-control"
+	[(ngModel)]="submission.dob"
+	name="dob"
+	[bsConfig]="{ containerClass: 'theme-blue', 
+						 dateInputFormat: 'YYYY-MM-DD' }"
+    bsDatepicker>
+    
+                                      
+                                  </div>
+                              </div>
+
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                  <div class="form-row no-padding form-group">
+                                      <label>Gender</label>
+                                      <select required [(ngModel)]="submission.gender" 
+                                      name="gender" class="form-element form-control"
+                                                 >
+                                                 <option value="male">Male</option>
+                                                 <option value="female">Female</option>
+                                                 <option value="other">Other</option>
+                                                 </select>
+
+                                  </div>
+                              </div>
+                          
+                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                  <div class="form-row no-padding form-group">
+                                      <label>Willing to Relocated</label>
+                                      <select required [(ngModel)]="submission.willing_to_relocated" 
+                                      name="willing_to_relocated" class="form-element form-control"
+                                          >
+                                          <option value="yes">Yes</option>
+                                          <option value="no">No</option>
+                                          </select>
+
+                                  </div>
+                              </div>
+                          </div>
+
+                          <submission-step1-contact-information-portal [submission]="submission"></submission-step1-contact-information-portal>
+                          <app-work-history-portal [employments]="submission.employments"></app-work-history-portal>
+                          <app-education-history-portal [educations]="submission.educations"></app-education-history-portal>
+                          <app-skills-portal [skills]="submission.skills"></app-skills-portal>
+
+                  <div class="form-divider"></div>
+
+                  <div class="form-row">
+                      <button *ngIf="!isLoading" style="margin-top:20px" type="submit" class="btn btn-success">Next Step</button>
+                      <span *ngIf="isLoading" style="padding-left:5px;"> Processing...</span>
+                  </div>
+
+              </form>
+
+              
+          </div>
+          </div>
+      
+      <!-- Page content end -->
+  </div>
+</div>
+
+<!--Page loader DOM Elements. Requared all pages-->
+<div class="sweet-loader" :class="isLoading ? 'show' : ''">
+  <div class="box">
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+      <div class="circle3"></div>
+  </div>
+</div>

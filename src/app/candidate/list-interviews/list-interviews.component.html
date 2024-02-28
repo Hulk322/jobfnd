@@ -1,0 +1,599 @@
+<div class="wrap btm-padding-1 graybg">
+   <div class="shadow-header-wrap header-publicnav">
+      <app-header></app-header>
+      <app-sub-menu [current_menu_item]="'interviews'"></app-sub-menu>
+   </div>
+
+
+   <div class="inner-wrap">
+
+      <div class="job-list-grid">
+
+            <div class="page-subhead">
+                  <div class="row">
+                   
+                  <div class="col-md-12">
+                    <application-tabs [application_tabs]="'interview'"></application-tabs>
+                  </div>
+
+
+       
+                     <!-- <div class="col-md-3" *ngIf="!isLoading">
+                        <div class="btn-group custom-btn-group pull-right" role="group">
+                           <button 
+                               (click)="view_type='grid'" type="button" class="btn btn-default btn-sm"><i class="material-icons">apps</i></button>
+                           <button 
+                           (click)="view_type='list'" type="button" class="btn btn-default btn-sm"><i class="material-icons">menu</i></button>
+                           <button type="button" class="btn btn-default btn-sm"><i class="material-icons">graphic_eq</i> <span>Filter</span></button>
+                        </div>
+                     </div> -->
+       
+                  </div>
+               </div>
+
+               <div class="alert-widgets-nopadding" *ngIf="interviews?.length>=1"> 
+                  
+
+                     <div class="alert-widgets style2">
+                 
+                         <div class="s-graphics">
+                 
+                             <i class="material-icons">event</i>
+                 
+                         </div>
+                 
+                         <div class="s-contents">
+                             
+                             <div class="row">
+                 
+                                 <div class="col-md-8">
+                 
+                                     <h2>Interviews</h2>
+                                     <p>Here you can see the interviews scheduled by hiring manager once your application accepted</p>
+                                 
+                                 </div>
+                 
+                                 <div class="col-md-4">
+                                     <div class="mini-search-i">
+                                         <input type="text" placeholder="Search your interviews">
+                                         <button><i class="material-icons">search</i></button>
+                                     </div>
+                                 </div>
+                 
+                             </div>
+                             
+                 
+                         </div>
+                 
+                     </div>
+                 
+                 
+               </div>
+
+               <div class="row" *ngIf="isLoading" style="margin-top: 0px;">
+                     <div class="col-md-4">
+                        <div class="card-grid-job">
+                           <div class="job-title">
+                              <label class="shine"></label>
+                           </div>
+                           <div class="job-info">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="job-description">
+                              <label class="shine"></label>
+                              <label class="shine"></label>
+                           </div>
+                           <div class="badges">
+                              <label class="shine"></label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="card-grid-job">
+                           <div class="job-title">
+                              <label class="shine"></label>
+                           </div>
+                           <div class="job-info">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="job-description">
+                              <label class="shine"></label>
+                              <label class="shine"></label>
+                           </div>
+                           <div class="badges">
+                              <label class="shine"></label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="card-grid-job">
+                           <div class="job-title">
+                              <label class="shine"></label>
+                           </div>
+                           <div class="job-info">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="job-description">
+                              <label class="shine"></label>
+                              <label class="shine"></label>
+                           </div>
+                           <div class="badges">
+                              <label class="shine"></label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="card-grid-job">
+                           <div class="job-title">
+                              <label class="shine"></label>
+                           </div>
+                           <div class="job-info">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="job-description">
+                              <label class="shine"></label>
+                              <label class="shine"></label>
+                           </div>
+                           <div class="badges">
+                              <label class="shine"></label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="card-grid-job">
+                           <div class="job-title">
+                              <label class="shine"></label>
+                           </div>
+                           <div class="job-info">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="job-description">
+                              <label class="shine"></label>
+                              <label class="shine"></label>
+                           </div>
+                           <div class="badges">
+                              <label class="shine"></label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="card-grid-job">
+                           <div class="job-title">
+                              <label class="shine"></label>
+                           </div>
+                           <div class="job-info">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="blckinfo">
+                                       <i class="material-icons"><label class="shine shine-icon"></label></i>
+                                       <span><label class="shine" style="width: 80%;"></label></span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="job-description">
+                              <label class="shine"></label>
+                              <label class="shine"></label>
+                           </div>
+                           <div class="badges">
+                              <label class="shine"></label>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+        
+        <app-empty-list  *ngIf="interviews?.length<1 && !isLoading" [pageName]="'interviews'"></app-empty-list>
+          
+         <div class="row">
+
+           
+   <!--Interview card start-->
+      <div class="col-md-4" *ngFor="let interview of interviews" style="cursor: pointer;">
+    <div class="card-grid-job job-grid-type2">
+ 
+ 
+  
+       <div class="job-title">
+        
+        <h4>{{ interview.title }}</h4>
+       </div>
+       <div class="job-info">
+          <div class="row">
+             <div class="col-md-6">
+                <div class="blckinfo">
+                   <i class="material-icons">apartment</i>
+                   <span>{{ interview?.client_organization?.name }} </span> 
+                </div>
+             </div>
+             <div class="col-md-6" *ngIf="interview.location!=null">
+                <div class="blckinfo">
+                   <i class="material-icons">room</i>
+                   <span>{{ interview.location | slice:0:16 }}</span>
+                </div>
+             </div>
+             <div class="col-md-6" *ngIf="interview.location==null">
+                <div class="blckinfo">
+                   <i class="material-icons">room</i>
+                    <span>Not mention</span>
+                </div>
+             </div>
+
+            
+          </div>
+          
+          <div class="interview-date" [ngClass]="(interview?.dates?.length==1) ? '' : 'multiple-timeslots' ">
+
+            <div class="row">
+                <div class="col-md-6 interview-date-s">
+                    <span>Date</span>
+                    <label>{{ interview?.dates[0]?.date | date:'MMM dd, yyyy' }}</label>
+                </div>
+                <div class="col-md-6 interview-time">
+                    <span>Time</span>
+                    <label>{{ interview?.dates[0]?.time_in | date:'h:mm' }} {{ interview?.dates[0]?.time_in | date:'a' }} -
+                    {{ interview?.dates[0]?.time_out | date:'h:mm' }} {{ interview?.dates[0]?.time_out | date:'a' }}</label>
+                </div>
+                
+                <div class="interview-type-label">
+                    <div class="row">
+                        <div class="col-md-6">
+                          
+                            <label *ngIf="interview.type=='video' || interview.type=='video'">Video Call</label>
+                            <i *ngIf="interview.type=='video' || interview.type=='video'" class="material-icons"> video_call</i>
+                           
+                          
+                            <label *ngIf="interview.type == 'phone' || interview.type == 'Phone'">Telephonic</label>
+                            <i *ngIf="interview.type == 'phone' || interview.type == 'Phone'" class="material-icons"> phone_in_talk</i>
+                           
+                            <label  *ngIf="interview.type=='face' || interview.type=='Face to face' || interview.type=='face-to-face'">Face to Face</label>
+                            <i  *ngIf="interview.type=='face' || interview.type=='Face to face' || interview.type=='face-to-face'" class="material-icons"> group</i>
+
+                            <label  *ngIf="interview.type=='skype' || interview.type=='Skype'">Skype</label>
+                            <i  *ngIf="interview.type=='skype' || interview.type=='Skype'" class="material-icons"> chat</i>
+                            
+                        </div>
+                        <div class="col-md-6">
+                           
+                           <div class="dropdown dropup interview-grid-actions"
+                              *ngIf="isLoading">
+                              <label style="background-color: forestgreen;
+                              color: white;
+                              padding: 7px 11px;
+    border-radius: 5px;
+    font-size: 14px;">Submitting...</label>
+                              </div>
+
+                           <div class="dropdown dropup interview-grid-actions"
+                              *ngIf="interview.current_status == 'New' && !isLoading" style="float: right;">
+                              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 Actions
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                 <a class="dropdown-item" style="display: none;">View Interview</a>
+
+                                 <a class="dropdown-item" *ngIf="interview.current_status == 'New'"
+                                    (click)="initInterviewDates(interview)" data-target="#accept_interview"
+                                    data-toggle="modal">Accept</a>
+
+                                 <a class="dropdown-item" *ngIf="interview.current_status == 'New'"
+                                    (click)="initInterviewDates(interview)" data-toggle="modal"
+                                    data-target="#reject_interview">Reject</a>
+                              </div>
+                           </div>
+
+                           <div class="dropdown dropup interview-grid-actions"
+                              *ngIf="interview.current_status == 'Accept'" style="float: right;">
+                              <label style="background-color: forestgreen;
+                              color: white;
+                              padding: 7px 11px;
+    border-radius: 5px;
+    font-size: 14px;">Accepted</label>
+                           </div>
+
+                           <div class="dropdown dropup interview-grid-actions"
+                              *ngIf="interview.current_status == 'Reject'" style="float: right;">
+                              <label style="background-color: indianred;
+                              color: white;
+                              padding: 7px 11px;
+    border-radius: 5px;
+    font-size: 14px;">Rejected</label>
+                           </div>
+                            
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+                
+                
+          </div>
+
+          <div class="job-status">
+                
+           
+                <a  class="job-status-btn-s sm-interview-label"><i class="material-icons">event</i>{{ interview.candidate_status }}</a>
+                <a  class="help-btns"><i class="material-icons">help_outline</i></a>
+            
+
+           
+          </div>
+
+
+       </div>
+       
+ 
+   
+       <div class="card-footer-job">
+          <div class="row"> 
+             
+             <div class="col-md-8">
+                
+                <div class="interviewername">
+                    <label>{{ interview.created_by.first_name | slice:0:1}}{{ interview.created_by.last_name | slice:0:1}}</label>
+                    <span>Interviewer</span>
+                    <i>{{ interview.created_by.first_name}} {{ interview.created_by.last_name}}</i>
+                </div>
+                
+             </div>
+
+             <div class="col-md-4">
+
+                <a  class="btn btn-default btn-sm pull-right icon-btn" style="line-height: 1px;">
+                    <i class="material-icons">arrow_forward</i>
+                </a>
+
+            </div>
+
+          </div>
+       </div>
+    
+ 
+ 
+    </div>
+ </div>
+            
+
+
+         </div>
+
+         <div class="row" *ngIf="!isLoading">
+            <div class="col-md-12" style="padding-left: 15px;" >
+                    <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                    [collectionSize]="pageObj.totalElements"
+                    [(page)]="pageObj.page"
+                    (pageChange)="pageChange($event)" 
+                    [pageSize]="pageObj.pageSize"
+                    [boundaryLinks]="true">
+                    </ngb-pagination>
+         </div>
+            </div>
+       
+
+      </div>
+
+   </div>
+</div>
+
+<!-- Accept Interview -->
+<div class="modal smodal custom-form-group-flat" id="accept_interview" style="margin-top:100px;">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Accept Interview</h4>
+         </div>
+         <div class="modal-body">
+            <form autocomplete="off">
+               <input autocomplete="false" name="hidden" type="text" style="display:none;">
+
+
+               <div class="form-group">
+                  <label>Choose Interview Date</label>
+
+                  <div>
+                     <tr *ngFor="let date of current_interview.dates; let i=index" style="margin-bottom: 5px;">
+                        <input name="interview_date" [checked]="i==0" style="margin-right:10px"
+                           (change)="handleChange($event)" [value]="date.id" type="radio" style="margin-right:10px">
+                        {{ current_interview.recommended_datetime_in | date: 'MM-dd-yy hh:mm' }}
+                        <td>Date:</td>
+                        <td>{{ date.date | date: 'MM/dd/yyyy' }} <span style="padding-left: 30px;"> Time In:
+                              {{ date.time_in | date: 'hh:mm a' }}</span> <span style="padding-left: 30px;">Time Out:
+                              {{ date.time_out | date: 'hh:mm a' }} </span></td>
+                     </tr>
+
+
+
+                  </div>
+
+
+
+
+
+               </div>
+               <div class="form-group">
+                  <label>Remarks</label>
+                  <textarea class="form-control" style="height: 100px;" name="reason"
+                     [(ngModel)]="current_interview.reason"></textarea>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" (click)="acceptInterview()">Accept</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Reject Interview -->
+<div class="modal smodal custom-form-group-flat" id="reject_interview" style="margin-top:100px;">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Reject Interview</h4>
+         </div>
+         <div class="modal-body">
+            <form autocomplete="off">
+               <input autocomplete="false" name="hidden" type="text" style="display:none;">
+
+
+
+               <div class="form-group">
+                  <label>Reject Reason</label>
+                  <textarea class="form-control" style="height: 100px;" name="reason"
+                     [(ngModel)]="current_interview.reason"></textarea>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" (click)="rejectInterview()">Submit</button>
+         </div>
+      </div>
+   </div>
+</div>

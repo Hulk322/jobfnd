@@ -1,0 +1,67 @@
+.job.job-detail .offered .tag.contract {
+    background: #c9bd2e;
+}
+
+.job.job-detail .offered .tag.reject {
+    background: #ea6930;
+}
+
+.job.job-detail .offered .tag.pending-approval {
+    background: #009bff;
+}
+
+.offered .bill a.reject {
+    border: 1px solid #009bff;
+    border-radius: 3px;
+    background: transparent;
+    color: #009bff !important;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 6px 10px;
+    margin-right: 10px;
+    transition: ease-in-out .3s;
+}
+
+.offered .bill a {
+    position: static;
+}
+
+.offered .bill a.approve {
+    border: 1px solid #bca02a;
+    border-radius: 3px;
+    background: #bca02a;
+    color: #fff !important;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 6px 10px;
+    margin-right: 10px;
+    transition: ease-in-out .3s;
+}
+
+.interview-details a.reject {
+    border: 1px solid #009bff;
+    border-radius: 3px;
+    background: transparent;
+    color: #009bff !important;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 6px 10px;
+    margin-right: 10px;
+    transition: ease-in-out .3s;
+}
+
+.interview-details a {
+    position: static;
+}
+
+.interview-details a.approve {
+    border: 1px solid #bca02a;
+    border-radius: 3px;
+    background: #bca02a;
+    color: #fff !important;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 6px 10px;
+    margin-right: 10px;
+    transition: ease-in-out .3s;
+}

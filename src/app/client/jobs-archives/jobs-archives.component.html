@@ -1,0 +1,365 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+    <div class="main-head tabs-active" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Jobs</h2>
+                <a routerLink="/client/jobs/create" class="btn-orange"><i class="material-icons">add</i>Add Job</a>
+                <a routerLink="/client/templates/create" class="btn-secondary">Add Job Template</a>
+            </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs">
+                <ul>
+                    <li><a routerLink="/client/jobs"><label class="blue dot"></label> Active Jobs</a></li>
+                    <li class="active"><a routerLink="/client/job-archives"><label class="orange dot"></label> Closed Jobs</a></li>
+                    <li><a routerLink="/client/job-drafts"><label class="gray dot"></label> Drafts</a></li>
+                </ul>
+
+                <div class="searchbox">
+                    <form>
+                        <button><i class="material-icons">search</i></button>
+                        <input type="search" name="search_keyword" placeholder="Search by ID, Title"  
+                        (keyup)="searchJobs($event)" [(ngModel)]="search_keyword"  
+                          >
+                    </form>
+                </div>
+
+                <div class="view-switcher">
+
+                    <ul>
+                        <li>
+                            <a><i class="material-icons">filter_list</i></a>
+                            <ul class="drop-wrap" style="display: none;">
+
+                                <div class="submission-filter-wrap">
+
+                                    <h1>
+                                        <i class="material-icons">filter_list</i> Filter
+                                        <a href="clearfilter">Clear all</a>
+                                    </h1>
+
+                                    <h2 class="drop-down-subtitle">Job</h2>
+                                    <div class="block">
+
+                                        <input type="text" class="form-control" placeholder="City">
+
+                                        <ul class="filter-chips">
+                                            <li>
+                                                <label>Content Marketing Manager</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                            <li>
+                                                <label>Vice President of Marketing</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">Vendor</h2>
+                                    <div class="block">
+
+                                        <input type="text" class="form-control" placeholder="City">
+
+                                        <ul class="filter-chips">
+                                            <li>
+                                                <label>ABC Company</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                            <li>
+                                                <label>US Tech Solutions</label>
+                                                <a href="#"><i class="material-icons">close</i></a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">Submission Type</h2>
+                                    <div class="block">
+
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input"
+                                                id="customControlInline">
+                                            <label class="custom-control-label" for="customControlInline">Direct
+                                                Submissions</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check2">
+                                            <label class="custom-control-label" for="check2">Submission from
+                                                Vendor</label>
+                                        </div>
+                                    </div>
+
+                                    <h2 class="drop-down-subtitle">By Status</h2>
+                                    <div class="block">
+
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check3">
+                                            <label class="custom-control-label" for="check3">Accepted</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check4">
+                                            <label class="custom-control-label" for="check4">Rejected</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="check5">
+                                            <label class="custom-control-label" for="check5">Interview Scheduled</label>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </ul>
+                        </li>
+                        <li><a><i class="material-icons">menu</i></a></li>
+                        <li><a><i class="material-icons">view_module</i></a></li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+    <div class="col-md-12" *ngIf="jobs?.length<1 && !isLoading" style="text-align: center;">
+        <div class="errormsgscreen">
+            <img src="assets/admin/images/graphics/no-jobs-found.svg" style="margin-top: 13%;">
+            <h3>No Closed Jobs Found</h3>
+        </div>
+    </div>
+
+        <div class="row" *ngIf="isLoading">
+            <div class="col-md-4" *ngFor="let number of [0,1,2,3,4,5]">
+
+                <div class="card job-grid">
+
+
+
+
+                    <div class="inner">
+
+                        <div class="s-details">
+
+                            <div class="job-head-list">
+                                <a href="jobs-details.html" class="card-title-lg">
+                                    <h2>
+                                        <div class="shine"></div>
+                                    </h2>
+                                </a>
+                            </div>
+
+                            <div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                            </div>
+
+                            <div class="job-description">
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                                <div class="shine mini"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="job-additionalinfo">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="shine mini"></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="job-statisticsv1">
+
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="shine mini"></div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+
+
+
+
+
+            <div class="col-md-4" *ngFor="let job of jobs | orderBy:'id':true" >
+
+                <div class="card job-grid">
+
+
+                <div class="btn-group job-grid-actions">
+                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="material-icons">more_vert</i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" [routerLink]="['/client/jobs/edit/', job.id]">Edit</a>
+                        <a class="dropdown-item" style="cursor: pointer;" (click)="selectJob(job)"  data-toggle="modal" data-target="#job_delete_model">Delete</a>
+                    </div>
+                </div>
+
+
+                    <div class="inner" [routerLink]="['/client/job/', job.id]">
+
+                        <div class="s-details" style="cursor: pointer;">
+
+                            <div class="job-head-list">
+                                <a [routerLink]="['/client/job/', job.id]" class="card-title-lg">
+                                    <h2>{{ job.title  | slice:0:25 }}</h2>
+                                </a>
+                                <label>{{ job.address }}</label>
+                            </div>
+
+                            <div>
+                                <label class="badge large red"
+                                    *ngIf="job.job_type=='Temp Hire'">{{ job.job_type }}</label>
+                                <label class="badge large green"
+                                    *ngIf="job.job_type=='Full Time'">{{ job.job_type }}</label>
+                                <label *ngIf="job.category != null" class="badge large gray">{{job.category.name}}</label>
+                            </div>
+
+                            <div class="job-description">
+                                <label>Description</label>
+                                <span>{{ job.excerpt }}...</span>
+                            </div>
+
+                        </div>
+
+                        <div class="job-additionalinfo">
+                            <ul>
+                                <li><i class="material-icons">monetization_on</i> <span>
+                                        <span class="salary"
+                                            *ngIf="job.job_type=='Full Time'">{{ job.currency?job.currency:'USD' }}
+                                            {{ job.salary  | number: '1.2-2' }}</span>
+                                        <span class="bill_rate"
+                                            *ngIf="job.job_type=='Temp Hire'">{{ job.currency?job.currency:'USD' }}
+                                            {{ job.min_rate  | number: '1.2-2' }} -
+                                            {{ job.currency?job.currency:'USD' }}
+                                            {{ job.max_rate  | number: '1.2-2' }}</span>
+                                    </span></li>
+                                    <li>
+                                        <label class="experience-icon">
+                                        <svg *ngIf="job.experience=='Entry'||job.experience==null" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="b" y1="11.126" transform="translate(94.123 512.609)"/><line class="b" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+
+                                        <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="b" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+
+                                        <svg *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="a" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+
+                                        <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a{fill:none;stroke:#5bcb58;stroke-linecap:round;stroke-width:3px;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="a" y1="12.916" transform="translate(99.745 510.82)"/><line class="a" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+                                        </label>
+                                           <span>{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                                    </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="job-statisticsv1">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="job-stat-info green">
+                                    <label>{{ job?.submissionsCount }}</label>
+                                    <label>Applications</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="job-stat-info blue">
+                                    <label>{{ job?.interviewsCount }}</label>
+                                    <label>Interview</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="job-stat-info orange">
+                                    <label>{{ job?.offersCount }}</label>
+                                    <label>Offers</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Job modal -->
+<div class="modal fade" id="job_delete_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Job Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Reason</label>
+          <select class="form-control" name="reason" [(ngModel)]="job_delete.reason">
+            <option value="why you are delete this job?">why you are delete this job?</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Note</label>
+          <textarea  cols="20" rows="5" name="notes" [(ngModel)]="job_delete.notes" class="form-control" ></textarea>
+        </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  (click)="deleteJob(job.id, job)" data-dismiss="modal">Delete Job</button>
+      </div>
+    </div>
+  </div>
+</div>

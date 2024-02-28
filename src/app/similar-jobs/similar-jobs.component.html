@@ -1,0 +1,135 @@
+<div class="widget-similar-job" *ngIf="jobs?.length>=1 && path != '/submission-success'">
+     <h5><i class="material-icons">next_week</i> Similar Jobs</h5>
+     <ul>
+         <li  *ngFor="let job of jobs" style="margin-left: -56px;">
+             
+                   <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="80" height="80" xmlns="http://www.w3.org/2000/svg" style="margin-left: 1px;">
+                 </svg>
+                          
+             <div class="job-info"  style="margin-top: -40px; padding-left: 10px;">
+                 <h6>
+                     <a href="javascript:void(0)" (click)="goToJob(job.slug)">{{job.title}}</a>
+                 </h6>
+                 <p class="location">{{ job?.client_organization?.name }}</p>
+                 <p><i class="material-icons">room</i>{{ job.job_location!=null?job.job_location:'Not Available' }}</p>
+             </div>
+         </li>
+     </ul>
+ </div>
+
+ <div class="page-subhead" *ngIf="jobs?.length>=1  && path === '/submission-success'">
+    <div class="row">
+       <div class="col-md-9">
+          <div class="header-tabs">
+             <a>
+             <i class="material-icons">next_week</i>
+             Similar Jobs
+             </a>
+          </div>
+       </div>
+       <div class="col-md-3">
+          <div class="btn-group custom-btn-group pull-right" role="group">
+          </div>
+       </div>
+    </div>
+ </div>
+ <div class="row"  *ngIf="jobs?.length>=1  && path === '/submission-success'">
+    <div class="col-md-4" style="cursor: pointer;" *ngFor="let job of jobs">
+       <div class="card-grid-job">
+          <div class="job-title">
+             <h4 (click)="goToJob(job.slug)">{{job.title}}</h4>
+          </div>
+          <div class="job-info">
+             <div class="row">
+                <div class="col-md-6">
+                   <div class="blckinfo">
+                      <i class="material-icons">apartment</i>
+                      <span>{{ job?.client_organization?.name }}</span> 
+                   </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="blckinfo">
+                      <i class="material-icons">room</i>
+                      <span>{{ job.job_location!=null?job.job_location:'Not Available' }}</span>
+                   </div>
+                </div>
+                <div class="col-md-6">
+                  <span *ngIf="job.job_type=='Temp Hire'" itemprop="employmentType" class="badge badge-red" style="
+                  font-weight: normal;
+    color: white;
+    background: #e92121;
+    padding: 7px 14px 7px 14px;
+    width: 70%;
+    border-radius: 8px;
+              ">{{ job.job_type }}</span>
+              <span *ngIf="job.job_type=='Full Time'" itemprop="employmentType" class="badge badge-red" style="
+              font-weight: normal;
+color: white;
+background: #57e160;
+padding: 7px 14px 7px 14px;
+width: 70%;
+border-radius: 8px;
+          ">{{ job.job_type }}</span>
+                </div>
+                <div class="col-md-6">
+                   <div class="blckinfo">
+                    <div class="icon-exp">
+                                          
+                        <svg *ngIf="job.experience=='Entry'||job.experience==null" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="b" y1="11.126" transform="translate(94.123 512.609)"/><line class="b" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+   
+                        <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="b" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+   
+                        <svg *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="a" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+   
+                        <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a{fill:none;stroke:#5bcb58;stroke-linecap:round;stroke-width:3px;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="a" y1="12.916" transform="translate(99.745 510.82)"/><line class="a" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+                        
+                     </div> 
+                     <span style="padding-left: 10px;">{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                   </div>
+                </div>
+                <div class="col-md-12">
+                   <div class="blckinfo">
+                      <i class="material-icons">monetization_on</i>
+                      <span itemprop="baseSalary" class="" *ngIf="job.job_type=='Full Time' && job.salary!=null">
+                        <label class="price">{{job.salary | currency: '$' }} </label>
+                        </span>
+                        <span *ngIf="job.job_type=='Temp Hire' && (job.min_rate!=null || job.max_rate!=null)" class="">
+                        <label>
+                        <p itemprop="baseSalary" style="float: left;" *ngIf="job.min_rate>0">{{job.min_rate | currency: '$' }}/{{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}  </p> 
+                        <p style="float: left; padding-left: 7px;
+                        padding-right: 7px;" *ngIf="job.min_rate>0 && job.max_rate>0"> - </p>
+                        <p *ngIf="job.max_rate>0"> {{ job.max_rate | currency: '$' }}/{{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}</p> </label>
+                        </span>
+                   </div>
+              </div>
+               <div class="job-description">
+                              <p itemprop="description" [innerHtml]="job.excerpt">  </p>
+                           </div>
+                        </div>
+                        <div class="card-footer-job" style="margin-top: 10px;">
+                           <div class="row">
+                           <div class="col-md-7"> 
+                              <div class="score-info"> 
+                                 <div class="scorewrap">
+                                       <svg class="circle-chart" viewBox="0 0 33.83098862 33.83098862" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+                                          <circle class="circle-chart__background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431"></circle>
+                                          <circle class="circle-chart__circle" stroke="#9494e6" stroke-width="2" attr.stroke-dasharray="{{job.pivot.WeightedScore}}, 100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.915494" r="15.91549431"></circle>
+                                          
+                                          <g class="circle-chart__info">
+                                              <text class="circle-chart__percent" x="16.91549431" fill="#9494e6" y="16" alignment-baseline="central" text-anchor="middle" font-size="9">{{ job.pivot.WeightedScore}}%</text>
+                                          </g>
+                                          
+                                      </svg>
+                                 </div> 
+                                 <label>job is {{job.pivot.WeightedScore}}% matched</label>
+                              </div>
+                           </div>
+                              <div class="col-md-5 card-footer-no-score">
+                                 <a href="javascript:void(0)" 
+                                 (click)="goToJob(job.slug)" class="btn btn-primary btn-apply-1">Apply</a>
+                                 <a style="display: none;" href="javascript:void(0)"> <i class="material-icons bookmark-active ">bookmark</i></a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>

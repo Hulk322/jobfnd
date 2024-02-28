@@ -1,0 +1,148 @@
+<app-sidebar [current_menu_item]="'team-members'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Team Members</h2>
+                    
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+
+                              <div class="main-content-content eco-box-shadow">
+
+
+                                 <div class="setting-right-side">
+                                    <app-errors></app-errors>
+                                    <div class="setting-right-side-content">
+                                       <table class="table">
+                                          <tbody>
+                                             <tr>
+                                                <th>#</th>
+                                                <th>Name / Email</th>
+                                                <th>Access Level</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                             </tr>
+                                             <tr *ngFor="let member of teamMembers; let i = index">
+                                                <td> {{ i+1 }} </td>
+                                                <td>{{ member.first_name | titlecase }} {{ member.last_name | titlecase }} 
+                                                  <br>
+                                                  <small>{{ member.email }}</small>  
+                                                </td>
+                                                <td>{{ member?.pivot?.access_level | titlecase  }} </td>
+                                                <td><span class="label label-success" *ngIf="member.banned==0"> Active </span>
+                                                   <span class="label label-danger" *ngIf="member.banned==1"> Inactive </span>
+                                                </td>
+                                                <td>
+                                                   <a (click)="edit(member)" *ngIf="member.id!=current_user_id" class="btn btn-primary" style="margin-right:5px;">
+                                                      <i class="fa fa-pencil"></i>
+                                                   </a>
+                                                   <button (click)="delete(member.id, member)" *ngIf="member.id!=current_user_id" [disabled]="member.deleted"
+                                                      class="btn btn-danger" [ngClass]="{ 'fa fa-spinner': member.deleted  }">
+                                                      <i [ngClass]="{ 'fa fa-trash': !member.deleted }"></i>
+
+                                                   </button>
+                                                </td>
+                                             </tr>
+
+
+
+
+
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="setting-left-side form-style-v2">
+                                       <h4 *ngIf="!team_member.id">Add Team Member</h4>
+                                       <h4 *ngIf="team_member.id">Update Team Member</h4>
+                                       <form method="POST" role="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+
+                                          <div class="form-group">
+                                             <label for="">First Name</label>
+                                             <input name="first_name" required [(ngModel)]="team_member.first_name" type="text" class="form-control" id=""
+                                                placeholder="" value="">
+                                          </div>
+
+                                          <div class="form-group">
+                                              <label for="">Last Name</label>
+                                              <input name="last_name" required [(ngModel)]="team_member.last_name" type="text" class="form-control" id=""
+                                                 placeholder="" value="">
+                                           </div>
+
+                                           <div class="form-group">
+                                              <label for="">Email</label>
+                                              <input name="email" required [(ngModel)]="team_member.email" type="text" class="form-control" id=""
+                                                 placeholder="" value="">
+                                           </div>
+
+                                           <div class="form-group">
+                                              <label for="exampleInputEmail1">Access Level</label>
+                                              <select name="access_level" [(ngModel)]="team_member.pivot.access_level"  class="form-control" required="required">
+                                                  <option value="{{ level }}" *ngFor="let level of accessLevels">
+                                                      {{ level | titlecase }}
+                                                   </option>
+                                              </select>
+                                           </div>
+
+                                           <div class="form-group">
+                                              <label for="">Status</label>
+                                              <select name="banned" required [(ngModel)]="team_member.banned" class="form-control select2"
+                                                tabindex="-1">
+                                                <option value="0">Active</option>
+                                                <option value="1">Inactive</option>
+                                             </select>
+                                           </div>
+
+                                          
+
+                                          
+
+                                          <button type="submit" *ngIf="!team_member.id" [disabled]="isLoading"
+                                             class="btn btn-primary pull-right">Add</button>
+                                          <button type="submit" *ngIf="team_member.id" [disabled]="isLoading"
+                                             class="btn btn-primary pull-right">Update</button>
+                                       </form>
+                                    </div>
+                                 </div>
+
+
+
+                              </div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div>
+
+
+
+</div>
+        
+        
+    
+
+        
+    

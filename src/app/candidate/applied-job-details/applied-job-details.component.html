@@ -1,0 +1,665 @@
+<div class="wrap btm-padding-1 graybg">
+   <div class="shadow-header-wrap header-publicnav">
+      <app-header></app-header>
+      <app-sub-menu [current_menu_item]="'my-applications'"></app-sub-menu>
+   </div>
+   <div class="inner-wrap">
+      <div class="row">
+         <div class="col-md-9 col-sm-12">
+
+            <div class="job-activity-wrap">
+
+               <div class="job job-single-header">
+                   
+                   <ul class="job-activity-wizard-tab">
+                       <li>
+                           <a href="javascript:void(0);" 
+                           (click)="current_tab='job_status'"
+                            class="active">Job Status</a>
+                       </li>
+                       <li>
+                           <a href="javascript:void(0);" 
+                            [ngClass]="{'active': job?.user_interviews?.length>0}" 
+                            (click)="current_tab='interviews'"
+                            >Interviews</a>
+                       </li>
+                       <li>
+                           <a href="javascript:void(0);" 
+                            [ngClass]="{'active': job?.user_offers?.length>0}" 
+                            (click)="changeTabToOffers()" >Offers</a>
+                       </li>
+                       <li>
+                           <a href="javascript:void(0);" 
+                           [ngClass]="{'active': job?.user_contracts?.length>0}" 
+                            (click)="changeTabToContracts()" >Contracts</a>
+                       </li>
+                   </ul>
+                   
+               </div>
+                   
+               <div class="job job-detail  additional-qn-wrap open no-top-padding">
+                   
+                   <div class="job-status-wrap">
+                       <!-- aproved html goes here -->
+                       <div class="status-content approved job-box job-status-box" 
+                        *ngIf="job?.submission?.status=='Accepted' && current_tab=='job_status'">
+                           <p>Your Application has been Approved by @{{ job?.client_organization?.name }} on <span class="color-grey">{{ job.submission.updated_at | date:'MMM dd, yyyy' }}</span></p>
+                           <p><span class="tag">{{ job?.submission?.status }}</span> <span class="color-grey small">Submission Date : {{ job.submission.created_at | date:'MMM dd, yyyy' }}</span></p>
+                       </div>
+           
+                       <!-- rejected html goes here -->
+                       <div class="status-content rejected" 
+                        *ngIf="job?.submission?.status=='Rejected' && current_tab=='job_status' ">
+                        <p>Your Application has been Rejected by @{{ job?.client_organization?.name }} on <span class="color-grey">{{ job.submission.updated_at | date:'MMM dd, yyyy' }}</span></p>
+                           <p><span class="tag">{{ job?.submission?.status }}</span> <span class="color-grey small">Submission Date : {{ job.submission.created_at | date:'MMM dd, yyyy' }}</span></p>
+                       </div>
+           
+                       <!-- waiting approval html goes here -->
+                       <div class="status-content waiting-approval" 
+                        *ngIf="job?.submission?.status=='New Submission' && current_tab=='job_status' ">
+                        <p>Your Application is Awaiting Approval by @{{ job?.client_organization?.name }} since <span class="color-grey">{{ job.submission.created_at | date:'MMM dd, yyyy' }}</span></p>
+                           <p><span class="tag">{{ job?.submission?.status }}</span> <span class="color-grey small">Submission Date : {{ job.submission.created_at | date:'MMM dd, yyyy' }}</span></p>
+                       </div>
+           
+                       <!--Interviews information goes here -->
+                       <div *ngIf="current_tab=='interviews'">
+                       <div class="row interview-details job-box interviews-box" 
+                       *ngFor="let interview of job.user_interviews"
+                       >
+
+                       
+
+                           <div class="col-md-4 text-left">
+                               <h6>
+                                   <i class="material-icons">event</i> 
+                                   Interview Details
+                               </h6>
+                               <ul>
+                                   <li>
+                                       <i class="material-icons">location_on</i> 
+                                       {{ interview.location | slice:0:37 }}
+                                   </li>
+                                   <li>
+                                       <i class="material-icons">how_to_reg</i> 
+                                       {{ interview.candidate.first_name }} {{ interview.candidate.last_name }}
+                                   </li>
+                                   <li class="active" *ngIf="interview.type=='Face to face'">
+                                       <i class="material-icons">face</i> 
+                                       {{ interview.type }}
+                                   </li>
+
+                                   <li class="active" *ngIf="interview.type=='Phone'">
+                                    <i class="material-icons">phone</i> 
+                                    {{ interview.type }}
+                                </li>
+
+                                <li class="active" *ngIf="interview.type=='Skype'">
+                                 <i class="material-icons">videocam</i> 
+                                 {{ interview.type }}
+                             </li>
+
+                               </ul>
+                               <p class="note" *ngIf="interview?.notes?.length > 0">
+                                   Notes : {{ interview.notes  }} <a href="#" style="display: none;" >More</a>
+                               </p>
+                           </div>
+                           <div class="col-md-8 text-left">
+                               <table class="table table-hover">
+                                   <thead>
+                                       <tr>
+                                           <th style="display: none;">
+                                               <label for="selectallinterview">
+                                                   <input type="checkbox" name="selectall" id="selectallinterview" value="selectall">
+                                               </label> 
+                                            </th>
+
+                                            <th>
+                                               <label for="selectallinterview">Status</label>
+                                            </th>
+
+                                            <th>
+                                                <label for="selectallinterview">Date</label>
+                                            </th>
+                                            <th>
+                                               <label for="selectallinterview">TimeIn</label>
+                                            </th>
+                                            <th>
+                                               <label for="selectallinterview">TimeOut</label>
+                                            </th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr *ngFor="let date of interview.dates">
+                                           <td class="align-middle" style="display: none;">
+                                               <label class="mb-0" for="int1">
+                                                   <input type="checkbox" name="int1" id="int1" value="int1">
+                                               </label> 
+                                           </td>
+
+                                           <td>
+                                              <label *ngIf="date.is_selected==1">
+                                                 <i style="color: green;" _ngcontent-serverapp-c13="" class="material-icons">check_circle</i>
+                                                </label>
+
+                                                <label *ngIf="date.is_selected==0">
+                                                   <i 
+                                                   style="color: #787878;" _ngcontent-serverapp-c13="" class="material-icons">hourglass_empty</i>
+                                                  </label>
+                                           </td>
+
+                                           
+
+                                           <td>
+                                               <label for="int1">{{ date.date | date: 'MM/dd/yyyy' }}</label>
+                                           </td>
+
+                                           <td>
+                                               <label for="int1">{{ date.time_in | date: 'hh:mm a' }}</label>
+                                           </td>
+
+                                           <td>
+                                               <label for="int1">{{ date.time_out | date: 'hh:mm a' }}</label>
+                                           </td>
+
+                                       </tr>
+                                       
+                                       
+                                   </tbody>
+                               </table>
+                               <div class="row">
+                                   <div class="col-md-8">
+                                       <p class="note">
+                                         Total {{ interview.dates.length }} slots (Number of available slots) are available, Choose your Comfortable slot and submit  
+                                       </p>
+                                   </div>
+                                   <div class="col-md-4"  *ngIf="!isLoading">
+
+                                    <a class="reject" 
+                                    data-toggle="modal"
+                                    data-target="#reject_interview"
+                                
+                                (click)="initInterviewDates(interview)"
+                                *ngIf="interview.candidate_status=='New'" >Reject</a> 
+
+                               <a  class="approve"  
+                               
+                               data-target="#accept_interview"
+                               data-toggle="modal"
+                               (click)="initInterviewDates(interview)"
+                               *ngIf="interview.candidate_status=='New'">Accept</a>
+
+                                       
+                                   </div>
+                               </div>
+                           </div>
+
+                        
+
+                       </div>
+                     </div>
+           
+                       <!--Offer information goes here -->
+                       <div *ngIf="current_tab=='offers'" >
+                       <div class="row offered  job-box offers-box" 
+                       *ngFor="let _offer of job.user_offers" >
+
+                        
+
+                           <div class="col-md-7 text-left with-shadow">
+                               <h6>
+                                   <i class="material-icons">recent_actors</i> 
+                                   {{ _offer.title }}
+                               </h6>
+                               <ul>
+                                   <li>
+                                       <i class="material-icons">category</i> 
+                                       {{ job?.category?.name }}
+                                   </li>
+                                   <li>
+                                       {{ _offer.created_at | date:'MMM dd, yyyy' }}
+                                   </li>
+                                   
+                               </ul>
+                               <p>
+                                   <span [ngClass]="{'tag': true,
+                                                    'pending-approval': _offer.candidate_status=='Pending Approval',
+                                                    'reject': _offer.candidate_status=='Reject', 
+                                                    'contract': _offer.candidate_status=='Contract' 
+                                                    }">{{ _offer.candidate_status }}</span>
+                               </p>
+                           </div>
+                           <div class="col-md-5 text-left bill"> 
+                               <p>Salary / Bill Rate</p>
+                               <h3>${{ (_offer.type=='Full Time'?_offer.salary:_offer.bill_rate) | number: '1.2-2' }}/ {{ _offer.type=='Full Time'?'Yearly':'Monthly' }}</h3>
+                               <a class="reject" 
+                               data-target="#reject_offer" 
+                                data-toggle="modal" 
+                                (click)="offer=_offer"
+                                *ngIf="_offer.candidate_status=='Pending Approval'" >Reject &amp; propose new</a> 
+                               <a  class="approve"  
+                               
+                               data-toggle="modal" 
+                          data-target="#accept_offer"
+                          (click)="offer=_offer"
+                               *ngIf="_offer.candidate_status=='Pending Approval'">Approve</a>
+                           </div>
+                        
+                       </div>
+                     </div>
+
+                       <div class="row offered job-box contracts-box" *ngIf="current_tab=='contracts'">
+                           Contact content goes here..
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+            <div class="job job-single-header" *ngIf="isLoading">
+               <label class="shine" style="width: 80%;"></label>
+               <div class="row">
+                  <div class="col-md-4">
+                     <label class="shine" style="width: 100%;"></label>
+                  </div>
+                  <div class="col-md-4">
+                     <label class="shine" style="width: 100%;"></label>
+                  </div>
+                  <div class="col-md-4">
+                     <label class="shine" style="width: 100%;"></label>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-4">
+                     <label class="shine" style="width: 100%;"></label>
+                  </div>
+                  <div class="col-md-4">
+                     <label class="shine" style="width: 100%;"></label>
+                  </div>
+                  <div class="col-md-4">
+                     <label class="shine" style="width: 100%;"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="job job-single-header" *ngIf="!isLoading">
+               <h4 class="single-job-title-1">{{ job?.title }}</h4>
+               <div class="job-details-hor single-job-head">
+                  <label class="blckinfo blue"><i class="material-icons">apartment</i>
+                  <span>{{ job?.client_organization?.name }} </span></label>
+                  <label [title]="job.job_location" class="blckinfo">
+                  <i class="material-icons">room</i>
+                  <span>{{ job.job_location!=null?job.job_location:'Not Available' }}</span>
+                  </label>
+                  <label class="blckinfo">
+                     <div class="icon-exp">
+                        <svg *ngIf="job.experience=='Entry'||job.experience==null" xmlns="http://www.w3.org/2000/svg"
+                           width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                           <defs>
+                              <style>
+                                 .a,
+                                 .b {
+                                 fill: none;
+                                 stroke-linecap: round;
+                                 stroke-width: 3px;
+                                 }
+                                 .a {
+                                 stroke: #5bcb58;
+                                 }
+                                 .b {
+                                 stroke: #c8c7c7;
+                                 }
+                              </style>
+                           </defs>
+                           <g transform="translate(-87 -506.736)">
+                              <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                              <line class="b" y1="11.126" transform="translate(94.123 512.609)" />
+                              <line class="b" y1="12.916" transform="translate(99.745 510.82)" />
+                              <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                           </g>
+                        </svg>
+                        <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'"
+                           xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                           <defs>
+                              <style>
+                                 .a,
+                                 .b {
+                                 fill: none;
+                                 stroke-linecap: round;
+                                 stroke-width: 3px;
+                                 }
+                                 .a {
+                                 stroke: #5bcb58;
+                                 }
+                                 .b {
+                                 stroke: #c8c7c7;
+                                 }
+                              </style>
+                           </defs>
+                           <g transform="translate(-87 -506.736)">
+                              <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                              <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                              <line class="b" y1="12.916" transform="translate(99.745 510.82)" />
+                              <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                           </g>
+                        </svg>
+                        <svg
+                           *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'"
+                           xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                           <defs>
+                              <style>
+                                 .a,
+                                 .b {
+                                 fill: none;
+                                 stroke-linecap: round;
+                                 stroke-width: 3px;
+                                 }
+                                 .a {
+                                 stroke: #5bcb58;
+                                 }
+                                 .b {
+                                 stroke: #c8c7c7;
+                                 }
+                              </style>
+                           </defs>
+                           <g transform="translate(-87 -506.736)">
+                              <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                              <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                              <line class="a" y1="12.916" transform="translate(99.745 510.82)" />
+                              <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                           </g>
+                        </svg>
+                        <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg" width="20.245"
+                           height="18.5" viewBox="0 0 20.245 18.5">
+                           <defs>
+                              <style>
+                                 .a {
+                                 fill: none;
+                                 stroke: #5bcb58;
+                                 stroke-linecap: round;
+                                 stroke-width: 3px;
+                                 }
+                              </style>
+                           </defs>
+                           <g transform="translate(-87 -506.736)">
+                              <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                              <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                              <line class="a" y1="12.916" transform="translate(99.745 510.82)" />
+                              <line class="a" y1="15.5" transform="translate(105.745 508.236)" />
+                           </g>
+                        </svg>
+                     </div>
+                     <span>{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                  </label>
+                  <label class="blckinfo"
+                     *ngIf="(job.job_type=='Full Time' && job.salary!=null) || (job.job_type=='Temp Hire' && (job.min_rate>0 || job.max_rate>0) )">
+                  <i class="material-icons">monetization_on</i>
+                  <span class="" *ngIf="job.job_type=='Full Time' && job.salary!=null">
+                  {{job.salary | currency: '$' }}
+                  </span>
+                  <span *ngIf="job.job_type=='Temp Hire' && job.min_rate!=null" style="overflow: inherit;">
+                  <label
+                     *ngIf="job.min_rate>0" class="mb-0">{{job.min_rate | currency: '$' }}/{{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}
+                  </label>
+                  <label *ngIf="job.min_rate>0 && job.max_rate>0" class="mb-0"> - </label>
+                  <label *ngIf="job.max_rate>0" class="mb-0">
+                  {{ job.max_rate | currency: '$' }}/{{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}</label>
+                  </span>
+                  </label>
+                  <div class="job-skills-type">
+                     <div class="badges">
+                        <span
+                           [ngClass]="{'badge': true, 'badge-green': job.job_type=='Full Time', 'badge-red': job.job_type=='Temp Hire' }">{{ job.job_type }}</span>
+                        <span class="badge badge-white"
+                           *ngFor="let skill of job.skills | slice:0:5">{{ skill.name }}</span>
+                        <span class="badge badge-more badge-white" *ngIf="job.skills.length>5">
+                        +{{ job.skills.length-5 }}</span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div [ngClass]="{'job job-detail s-job-detail-single': true, 'open':  show_more_description==true }">
+               <h3  *ngIf="!isLoading">Job Brief</h3>
+               <div *ngIf="isLoading">
+                  <label class="shine" style="width: 100%;"></label>
+                  <label class="shine" style="width: 100%;"></label>
+                  <label class="shine" style="width: 100%;"></label>
+                  <label class="shine" style="width: 100%;"></label>
+               </div>
+               <p itemprop="description" [innerHTML]="job.description">
+               </p>
+               <p [innerHTML]="job.reason_for_hire">
+               </p>
+               <p><span class="api_job_id" itemprop="identifier">{{ job.api_job_id }}</span></p>
+               <input type="hidden" value="{{ job?.category?.name }}" itemprop="industry">
+               <input type="hidden" value="{{ job.openings }}" itemprop="totalJobOpenings">
+               <input type="hidden" value="{{job.posted}}" itemprop="datePosted">
+               <input type="hidden" value="{{job.start_date}}" itemprop="jobStartDate">
+            </div>
+            <div class="job-footer job-single-footer">
+               <a (click)="show_more_description=!show_more_description" href="javascript:void(0)" class="expand-job-description">
+               <i *ngIf="show_more_description==false" class="material-icons">expand_more</i>
+               <i *ngIf="show_more_description==true" class="material-icons">keyboard_arrow_up</i>
+               {{ show_more_description==false?'SHOW MORE':'SHOW LESS' }}</a>
+            </div>
+            <div *ngIf="job?.submission?.answers" class="job job-single-header additional-qn-wrap-head" >
+               <h4 class="single-job-title-1"  *ngIf="!isLoading"> <i class="material-icons icon-fl">help</i> Qualifying Questions</h4>
+            </div>
+            <div *ngIf="job?.submission?.answers?.length>0" class="job job-detail  additional-qn-wrap open fontstyle">
+               <div class="qn-item" *ngFor="let answer of job?.submission?.answers; let i = index">
+                  <label class="qn"><span>{{ i+1 | number:'2.0' }}.</span> {{ answer.question.question }}</label>
+                  <div class="control-group">
+                     <p style="font-weight:bolder; color:black" *ngIf="answer.question.type=='date'">{{ answer.answer | date: 'MM/dd/yyyy' }}</p>
+                     <p style="font-weight:bolder; color:black" *ngIf="answer.question.name=='expected-pay-rate'">{{ answer.answer | currency: '$' }}</p>
+                     <p style="font-weight:bolder; color:black" *ngIf="answer.question.type!='date' && answer.question.name!='expected-pay-rate'">
+                        {{ answer.answer }}
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div class="card m-t-20"  *ngIf="custom_fields?.length>0" style="padding-left: 30px; padding-right: 30px; padding-bottom: 20px;">
+               <div class="custom_field" *ngFor="let field of custom_fields; let i=index" style="margin-top: 20px;
+                  margin-bottom: 0px;">
+                  <div class="form-group" style="margin-bottom:0px">
+                     <h4>{{ field.label }}</h4>
+                  </div>
+                  <div>
+                     <p [innerHTML]='field.answer'></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-sm-3 left-side-bar">
+            
+            <div class="company-detail"  *ngIf="!isLoading && show_company_sidebar==true">
+               <img style="width: 236px" *ngIf="job?.client_organization?.businessLogoFullUrl!= 'null'"
+                  src="{{ job?.client_organization?.businessLogoFullUrl }}">
+               <img *ngIf="job?.client_organization?.businessLogoFullUrl== 'null'" src="assets/images/author.jpg">
+               <table class="table table-borderless">
+                  <tbody>
+                     <tr>
+                        <th>Company Name</th>
+                        <td>{{ job?.client_organization?.name }}</td>
+                     </tr>
+                     
+                     <tr *ngIf="job?.client_organization?.location">
+                        <th>Location</th>
+                        <td>{{ job?.client_organization?.location }}</td>
+                     </tr>
+
+                     <tr>
+                        <th>Open Jobs</th>
+                        <td>{{ active_jobs }}</td>
+                    </tr>
+
+                     <tr *ngIf="job?.client_organization?.created_at">
+                        <th>Member Since</th>
+                        <td>{{ job?.client_organization?.created_at | date:'MM/dd/yyyy' }}</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <h4>About Company</h4>
+               <p [innerHTML]="job?.client_organization?.description"></p>
+               <a style="display: none;" (click)="searchClientJobs(job?.client_organization?.name)"
+                  class="badge badge-gray badge-block">More from {{ job?.client_organization?.name }}</a>
+            </div>
+            <div class="subscribe">
+               <app-subscribe-to-job [job_slug]="job.slug"></app-subscribe-to-job>
+            </div>
+            <div class="send-in-email">
+               <app-send-job-in-email [job_slug]="job.slug"></app-send-job-in-email>
+            </div>
+            <div class="box-shadow job-link">
+               <span>Job Link</span>
+               <a style="cursor: pointer; color:#007bff" class="btn-link pull-right" (click)="copyMessage()">Copy
+               Link</a>
+               <input type="text" class="form-control copy-link" value="{{ job_link }}">
+            </div>
+            <app-recommended-jobs [job_slug]="job.id"></app-recommended-jobs>
+            <app-similar-jobs [job_slug]="job.id"></app-similar-jobs>            
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+<!-- Accept Offer -->
+<div class="modal smodal custom-form-group-flat" id="accept_offer" style="margin-top:100px;">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button class="close" data-dismiss="modal">&times;</button>
+         <h4 class="modal-title">Accept Offer</h4>
+       </div>
+       <div class="modal-body">
+         <form autocomplete="off">
+           <input autocomplete="false" name="hidden" type="text" style="display:none;">
+           <div *ngIf="offer.type=='Full Time'">
+             <div class="form-group">
+               <label>Salary</label>
+               <input type="text" class="form-control" name="salary" [(ngModel)]="offer.salary">
+             </div>
+             
+           </div>
+           <div *ngIf="offer.type=='Temp Hire'">
+             <div class="form-group">
+               <label>Bill Rate</label>
+               <input type="text" class="form-control" name="salary" [(ngModel)]="offer.bill_rate">
+             </div>
+             
+           </div>
+           <div class="form-group">
+             <label>Remarks</label>
+             <textarea class="form-control" style="height: 100px;" name="reason" [(ngModel)]="offer.reason"></textarea>
+           </div>
+         </form>
+       </div>
+       <div class="modal-footer">
+         <button class="btn btn-primary" data-dismiss="modal" (click)="acceptOffer()">Accept</button>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Reject Offer -->
+ <div class="modal smodal custom-form-group-flat" id="reject_offer" style="margin-top:100px;">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button class="close" data-dismiss="modal">&times;</button>
+         <h4 class="modal-title">Reject Offer</h4>
+       </div>
+       <div class="modal-body">
+         <form autocomplete="off">
+           <input autocomplete="false" name="hidden" type="text" style="display:none;">
+           <div class="form-group">
+             <label>Reject Reason</label>
+             <textarea class="form-control" required style="height: 100px;" name="reason" [(ngModel)]="offer.reason"></textarea>
+           </div>
+         </form>
+       </div>
+       <div class="modal-footer">
+         <button class="btn btn-primary" data-dismiss="modal" (click)="rejectOffer()">Submit</button>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+
+
+ <!-- Accept Interview -->
+<div class="modal smodal custom-form-group-flat" id="accept_interview" style="margin-top:100px;">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Accept Interview</h4>
+         </div>
+         <div class="modal-body">
+            <form autocomplete="off">
+               <input autocomplete="false" name="hidden" type="text" style="display:none;">
+
+
+               <div class="form-group">
+                  <label>Choose Interview Date</label>
+
+                  <div>
+                     <tr *ngFor="let date of current_interview.dates; let i=index" style="margin-bottom: 5px;">
+                        <input name="interview_date" [checked]="i==0" style="margin-right:10px"
+                           (change)="handleChange($event, date.id)" [value]="date.id" type="radio" style="margin-right:10px">
+                        {{ current_interview.recommended_datetime_in | date: 'MM-dd-yy hh:mm' }}
+                        <td>Date:</td>
+                        <td>{{ date.date | date: 'MM/dd/yyyy' }} <span style="padding-left: 30px;"> Time In:
+                              {{ date.time_in | date: 'hh:mm a' }}</span> <span style="padding-left: 30px;">Time Out:
+                              {{ date.time_out | date: 'hh:mm a' }} </span></td>
+                     </tr>
+
+
+
+                  </div>
+
+
+
+
+
+               </div>
+               <div class="form-group">
+                  <label>Remarks</label>
+                  <textarea class="form-control" style="height: 100px;" name="reason"
+                     [(ngModel)]="current_interview.reason"></textarea>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" (click)="acceptInterview()">Accept</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Reject Interview -->
+<div class="modal smodal custom-form-group-flat" id="reject_interview" style="margin-top:100px;">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Reject Interview</h4>
+         </div>
+         <div class="modal-body">
+            <form autocomplete="off">
+               <input autocomplete="false" name="hidden" type="text" style="display:none;">
+
+
+
+               <div class="form-group">
+                  <label>Reject Reason</label>
+                  <textarea class="form-control" style="height: 100px;" name="reason"
+                     [(ngModel)]="current_interview.reason"></textarea>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" (click)="rejectInterview()">Submit</button>
+         </div>
+      </div>
+   </div>
+</div>

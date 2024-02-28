@@ -1,0 +1,62 @@
+@import url("../../assets/css/style.css");
+
+.create-account .member{
+    padding-top: 13px;
+    color: #959595;
+    font-size: 13px;
+}
+
+.other-links p {
+    position: relative;
+    color: #000;
+    font-size: 14px;
+    font-weight: 400;
+    padding-left: 125px;
+    padding-top: 40px;
+    padding-bottom: 23px;
+}
+
+.other-links p:before {
+    position: absolute;
+    left: 0;
+    top: 49px;
+    height: 1px;
+    width: 115px;
+    content: "";
+    background-color: #DBC6C6;
+}
+
+.other-links p:after {
+    position: absolute;
+    right: 0;
+    top: 49px;
+    height: 1px;
+    width: 120px;
+    content: "";
+    background-color: #DBC6C6;
+}
+
+.other-links .col {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.other-links a .fa {
+    float: right;
+}
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+  .formBtn:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: auto;
+}
+
+.form-control.ng-touched.ng-invalid{
+    border: 1px solid red;
+}

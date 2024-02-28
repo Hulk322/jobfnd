@@ -1,0 +1,45 @@
+<div class="box">
+      <app-errors></app-errors>
+
+     <div class="job" *ngFor="let submission of submissionsData" (click)="goToView( submission.id )">
+        <div class="author-info">
+        <div class="avatar">
+          <img src="{{ submission?.candidate?.meta?.profilePictureFullUrl }}">
+        </div>
+        <div class="info">
+           <h4>{{ submission.first_name }} {{ submission.last_name }}</h4>
+           <span><i class="fa fa-map-marker"></i> {{(submission?.full_address?.length>0?submission.full_address:'Any location') | slice:0:33}}</span>
+
+           <br>
+           <span class="profession"><i class="fa fa-briefcase"></i> 
+           {{ submission?.job?.title }}</span>
+        </div>
+        </div>
+        <div class="price text-center" *ngIf="submission.job.job_type=='Direct Hire' && submission.salary_amount!=null">
+          <label class="price">{{submission.salary_amount | currency: submission.job.currency?submission.job.currency:'USD':'symbol-narrow' }} - {{submission.salary_type}}</label>
+        </div>
+        <div class="price text-center" *ngIf="submission.job.job_type=='Temp Hire' && submission.bill_rate_min!=null">
+            <label>{{submission.bill_rate_min | currency: submission.job.currency?submission.job.currency:'USD':'symbol-narrow' }}/h 
+              -  {{ submission.bill_rate_max | currency: submission.job.currency?submission.job.currency:'USD':'symbol-narrow' }}/h {{submission.salary_type}}</label>
+          </div>
+        <div class="job-skills text-center">
+          <label [hidden]="i>defaultSkillsLength && !showAllSkills" *ngFor="let skill of submission.skills | slice:0:2; let i=index">
+          <span >{{skill.name}}</span>
+          </label>
+          <label *ngIf="submission?.skills?.length>0" (click)="showAllSkills=!showAllSkills; $event.stopPropagation();">
+            <i class="fa fa-angle-right"></i>
+          </label>
+        </div>
+        <div class="start-date">
+          <span>Estimated Start Date</span><br>
+          <span class="date" *ngIf="submission.estimated_joning_date">{{submission.estimated_joning_date | date:'MM/dd/yyyy' }}
+          </span>
+          <span class="date" *ngIf="!submission.estimated_joning_date">Not define</span>
+        </div>
+        <div class="download text-center" *ngIf="submission.resumeFullUrl!=null">
+          <a href="{{ submission.resumeFullUrl }}"><i class="fa fa-download"></i></a>
+        </div>
+      </div>
+      
+      
+</div>        

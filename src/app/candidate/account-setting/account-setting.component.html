@@ -1,0 +1,459 @@
+<div class="wrap btm-padding-1 graybg">
+    <div class="shadow-header-wrap header-publicnav">
+        <app-header></app-header>
+        <app-sub-menu [current_menu_item]="'account-settings'"></app-sub-menu>
+    </div>
+    <div class="inner-wrap settings">
+        
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="settings-wrap">
+
+                    <h3>
+                        <i class="material-icons">settings_applications</i>Settings
+                    </h3>
+
+                    <label class="settings-cat">General</label>
+                    <ul>
+                        <li>
+                            <a (click) = "scroll(account)"><i class="material-icons">perm_identity</i>Account</a>
+                        </li>
+                        <li>
+                            <a (click) = "scroll(job)"><i class="material-icons">work_outline</i>Job Preferences</a>
+                        </li>
+                        <li>
+                            <a ><i class="material-icons">how_to_reg</i>Availability</a>
+                        </li>
+                    </ul>
+
+                    
+                    <label class="settings-cat">Security</label>
+                    <ul>
+                        <li>
+                            <a (click) = "scroll(changePswd)"><i class="material-icons">vpn_key</i>Change Password</a>
+                        </li>
+
+                        <li>
+                            <a ><i class="material-icons">fingerprint</i>Where You're Logged In</a>
+                        </li>
+                    </ul>
+
+                    <label class="settings-cat">Notifications</label>
+                    <ul>
+                        <li>
+                            <a ><i class="material-icons">phonelink_setup</i>Mobile</a>
+                        </li>
+                        <li>
+                            <a ><i class="material-icons">mail_outline</i>Email</a>
+                        </li>
+                    </ul>
+
+                    <label class="settings-cat">Privacy</label>
+                    <ul>
+                        <li>
+                            <a ><i class="material-icons">domain_disabled</i>Block Companies</a>
+                        </li>
+                    </ul>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-9">
+
+                <div class="account-settings-wrap">
+
+                    <div class="heading" #account><i class="material-icons">perm_identity</i>Account Settings</div>
+                    <div class="inner">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <table class="table table-borderless table-account-settings" style="margin-bottom: 0px;">
+                                    
+                                    <tr>
+                                        <td style="padding-left:0px;" width="30%" class="slabel">Primary Email Address</td>
+                                        <!-- <td width="50%" class="svalue">{{user_detail.email}}</td> -->
+                                        <td class="svalue" width="50%">
+                                            <input type="email" value="{{user_detail.email}}" class="form-control" readonly="">
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <!-- <td>
+                                            <a href="#" class="sedit">
+                                                <i class="material-icons">edit</i>Edit
+                                            </a>
+                                        </td> -->
+                                    </tr>
+
+                                    <tr>
+                                        <td  style="padding-left:0px;" class="slabel">Secondary Email Address</td>
+                                        <!-- <td class="svalue" *ngIf='!editMode'  class='cell' (click)='editMode=true'>{{accountMeta.second_email}}
+                                        </td> -->
+                                        <td class="svalue field-style" width="50%">
+                                                <input class='form-control' placeholder="{{accountMeta.second_email}}" type='email' [(ngModel)]='second_email'>
+                                        </td>
+                                        <td>
+                                           <!-- <a  class="btn btn-default btn-sm" *ngIf='!editMode'  >
+                                                <i class="material-icons">check</i>
+                                            </a> -->
+                                            <a  class="btn btn-default btn-sm"  (click)='saveExpectedSalary(this)' >
+                                                <i class="material-icons">check</i>
+                                            </a>
+                                        </td>
+                                        <!-- <td>
+                                            <a  class="sedit" *ngIf='editMode' (click)='editMode=false' >
+                                                <i class="material-icons">cancel</i>Cancel
+                                            </a>
+                                        </td> -->
+                                    </tr>
+
+                                    <tr>
+                                        <td  style="padding-left:0px;" class="slabel">Phone Number</td>
+                                        <!-- <td class="svalue" *ngIf='!editModephone'  class='cell' (click)='editModephone=true'>{{accountMeta.phone}}
+                                        </td> -->
+                                        <td class="svalue account-phone" width="50%">
+                                        <international-phone-number  [(ngModel)]="phone" placeholder='{{accountMeta.phone}}' [maxlength]="20" [required]="true" #phoneNumber="ngModel" name="phone_number" ></international-phone-number>
+                                        </td>
+                                        <!-- <td class="svalue" width="50%">
+                                                <input class='form-control' placeholder="{{accountMeta.phone}}" [(ngModel)]="phone" type='text' 
+                                                 >
+                                        </td> -->
+                                        <td>
+                                            <!-- <a  class="btn btn-default btn-sm" *ngIf='!editModephone' (click)='editModephone=true' >
+                                                <i class="material-icons">check</i>
+                                            </a> -->
+                                            <a  class="btn btn-default btn-sm"  (click)='saveExpectedSalary(this)' >
+                                                <i class="material-icons">check</i>
+                                            </a>
+                                        </td>
+                                        <!-- <td>
+                                            <a  class="sedit" *ngIf='editModephone' (click)='editModephone=false' >
+                                                <i class="material-icons">cancel</i>Cancel
+                                            </a>
+                                        </td> -->
+                                    </tr>
+                                    <tr>
+                                        <td  style="padding-left:0px;" class="slabel">Bucket source</td>
+                        
+                                        <td class="svalue field-style" width="50%">
+                                                <input class='form-control' value="{{accountMeta.bucket_source}}" type='text' [(ngModel)]='bucket_source'>
+                                        </td>
+                                        <td>
+                                    
+                                            <a  class="btn btn-default btn-sm"  (click)='saveExpectedSalary(this)' >
+                                                <i class="material-icons">check</i>
+                                            </a>
+                                        </td>
+                                
+                                    </tr>
+                                    
+
+                                </table>
+
+
+                            </div>
+
+                            <!-- <div class="col-md-4">
+
+                                <div class="profile-image-change">
+                                    <img src="https://devapi.simplifyhire.com/profile-pictures/1571981711-shanu-smalljpg.jpeg">
+                                    <br>
+                                    <a href="#" class="btn btn-sm btn-secondary">Change Pro</a>
+                                    <a href="#" class="btn btn-sm btn-danger"><i class="material-icons">close</i></a>
+                                    
+                                </div>
+                            
+                            </div> -->
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="account-settings-wrap">
+
+                    <div class="heading" #job><i class="material-icons">work_outline</i>Job Preferences</div>
+                    <div class="inner">
+
+                        <form class="custom-form-group-flat">
+
+                            <h4 class="sep-title" style="margin:0px 0px 10px 0px;">Location</h4>
+
+                            <div class="row">
+
+                                <div class="col-md-8 ">
+
+                                    <div class="form-group">
+                                        <label>Desired location (maximum 3)</label>
+                                        <AutocompleteComponent [placeholder]="placeholder" [autocompleteInput]="place" (setAddress)="getAddress($event)" adressType="geocode">
+                                        </AutocompleteComponent>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <button  class="btn-new-add" [disabled] = "isdisabled" [ngClass]="{'buttonDisabled':isdisabled}" style="margin-top:30px;" (click) = "addAddress()"><i  class="material-icons">add_circle_outline</i>Add Location</button>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label  class="badge badge-white badge-with-icon icon-right" *ngFor="let place of selectedLocations;let i = index">{{place.location}} <a (click)="removeAddress(i,place)"><i class="material-icons">cancel</i></a></label>
+                                </div>
+
+                            </div>
+
+                            <h4 class="sep-title" style="margin:40px 0px 10px 0px;">Expected Salary (hourly)</h4>
+
+                            <div class="row">
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Choose Currency</label>
+                                            <select class="form-control" [(ngModel)] = "currencyOption" name="currency">
+                                                <option value="">Choose</option>
+                                                <option *ngFor = "let value of currencyValues" [ngValue]="value">{{value}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Min Rate</label>
+                                            <input type="number"  [(ngModel)]="minRate" id="minRate" name="minRate" class="form-control" required placeholder="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Max Rate</label>
+                                           <input type="number" [(ngModel)]="maxRate" id="maxRate" name="maxRate" class="form-control" required placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                         <button  class="btn-new-add"  style="margin-top:30px;" (click)="saveExpectedSalary(this)"><i  class="material-icons">add_circle_outline</i>Save Salary</button>
+                                        </div>
+                                    </div>
+                                    
+    
+    
+                                </div>
+
+
+                                <h4 class="sep-title" style="margin:40px 0px 10px 0px;">Desired Industry</h4>
+
+                                    <div class="row">
+
+                                        <div class="col-md-8 ">
+                                            <div class="form-group">
+                                                <label>Desired location (maximum 3)</label>
+                                                <select class="form-control" [(ngModel)]="selectedOption" name="industries">
+                                                    <option>Select a Industry</option>
+                                                    <option *ngFor="let indus of inudstriesData" [ngValue] ="indus" >{{indus.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <button  class="btn-new-add" style="margin-top:30px;" [disabled] = "isIndustryDisabled" [ngClass]="{'buttonDisabled':isIndustryDisabled}" (click) = "addIndustry()"><i  class="material-icons">add_circle_outline</i>Add Industry</button>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label  class="badge badge-white badge-with-icon icon-right" *ngFor="let industryName of selectedIndustries; let i = index">{{industryName.name}} <a (click)="removeIndustry(i,industryName)"><i class="material-icons">cancel</i></a></label>
+                                         </div>
+
+                                    </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+                <div class="account-settings-wrap">
+
+                    <div class="heading"><i class="material-icons">how_to_reg</i>Availability</div>
+                    <div class="inner">
+                               <app-card></app-card>
+                      
+                    </div>
+                </div>
+
+
+                <div class="account-settings-wrap custom-form-group-flat">
+
+                    <div class="heading" #changePswd><i class="material-icons">vpn_key</i>Change Password</div>
+                    <div class="inner">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group setup-password-field">
+                                    <label for="old_password">Current Password</label>
+                                    <input type="password" #showpassword [(ngModel)]="user.old_password" id="old_password" name="old_password" class="form-control" required placeholder="">
+                                    <i class="material-icons" #eye_show_password id="old_password" (click)="showPassword(this,$event)">visibility</i>
+                                    
+                                 </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                              <div class="form-group setup-password-field" style="margin-top: 15px">
+                               <label for="password">New Password (Min 8 characters)</label>
+                               <input type="password" #shownewpassword name="password" id="newPassword" pattern=".{6,}" (keyup)="validateRegex($event.target.value)" [(ngModel)]="user.password" class="form-control" required placeholder="">
+                               <i class="material-icons" #eye_show_new_password id="newPassword" (click)="showPassword(this,$event)">visibility</i>
+                               
+                              </div>
+                              <div class="password-status">
+                                                              
+                                <p class="" [ngClass]="min8? 'good': ''" ><i class="fa  fa-check-circle"></i> Minimum 8 Characters </p>
+
+                                <p   [ngClass]="oneCapital? 'good': ''"><i class="fa  fa-check-circle"></i> 1 uppercase letter</p>
+
+                                <p [ngClass]="oneLower? 'good': ''"><i class="fa  fa-check-circle"></i> 1 Lower case letter </p>
+
+                                <p [ngClass]="oneNumeric? 'good': ''"><i class="fa  fa-check-circle"></i>  1 numeric </p>
+                                <p [ngClass]="oneSpecial? 'good': ''"><i class="fa  fa-check-circle"></i>   1 special character</p>
+                                <p [ngClass]="ConfirmPasswordMatch? 'good': ''"><i class="fa  fa-check-circle"></i>   Confirm Password match</p>
+                                <!--  <p [ngClass]="oneSpecial? 'bad': 'good'"><i class="fa  fa-check-circle"></i>   space not allowed</p> -->
+
+                            </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label for="password_confirmation">Retype Password</label>
+                                    <input type="password"
+                                    [ngClass]="{'form-control':true, 
+                                             'has-success': ConfirmPasswordMatch,
+                                             'has-error': !ConfirmPasswordMatch && user.password_confirmation!=null}" id="password_confirmation" name="password_confirmation" pattern=".{6,}" [(ngModel)]="user.password_confirmation" required class="form-control" placeholder="" (keyup)="validateRegex($event.target.value)"> 
+                                </div>
+                                
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    
+                                    <button class="btn btn-primary formBtn" [disabled]="passwordDontmatch" (click)="resetPassword()">Reset Password</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="account-settings-wrap">
+
+                    <div class="heading"><i class="material-icons">fingerprint</i>Where You're Logged In</div>
+                    <div class="inner">
+                        
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sr #</th>
+                                    <th>Device</th>
+                                    <th>IP</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor = "let value of deviceInfo;let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{value.browser}}</td>
+                                    <td>{{value.ip}}</td>
+                                    <td>{{value.login_at | date}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+    
+    
+
+                <!-- <div class="account-settings-wrap">
+
+                    <div class="heading"><i class="material-icons">phonelink_setup</i>Mobile</div>
+                    <div class="inner">
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="account-settings-wrap">
+
+                    <div class="heading"><i class="material-icons">mail_outline</i>Email</div>
+                    <div class="inner">
+
+
+
+                    </div>
+                </div> -->
+
+
+                <!-- <div class="account-settings-wrap">
+
+                    <div class="heading"><i class="material-icons">domain_disabled</i>Block Companies</div>
+                    <div class="inner">
+
+
+
+                    </div>
+                </div> -->
+
+                
+            </div>
+
+
+        </div>
+            
+    </div>
+</div>
+<!-- references modal 
+<div class="modal" id="edit_client_modal" style="margin-top:100px;">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header">
+             <button class="close" data-dismiss="modal">&times;</button>
+             <h4 class="modal-title">Edit Client</h4>
+          </div>
+          <div class="modal-body">
+             
+          </div>
+          <div class="modal-footer">
+             <button class="btn btn-primary" data-dismiss="modal" (click)="updateClient()">Update</button>
+          </div>
+       </div>
+    </div>
+ </div>-->

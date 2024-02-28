@@ -1,0 +1,147 @@
+<div class="wrap btm-padding-1 graybg">
+  <div class="shadow-header-wrap header-publicnav">
+    <app-header></app-header>
+    <app-sub-menu [current_menu_item]="'dashboard'"></app-sub-menu>
+  </div>
+
+  <!-- <div class="dashsearch">
+     <div class="search-bar-lay2">
+
+        <div class="search-bar">
+           <div class="form-group item">
+              <input type="text" name="job" class="form-control" placeholder="Search by keywords (PHP, .Net, etc)">
+           </div>
+           <div class="form-group item">
+             
+              <input type="text" class="form-control" placeholder="Choose Location">
+           </div>
+           <div class="form-group item">
+              <select class="form-control new---job-selection" >
+              
+              </select>
+           </div>
+           <div class="form-group submit">
+              <button type="submit" name="search" (click)="search('any')" class="btn btn-bright-blue btn-block btn-lg">Search</button>
+           </div>
+        </div>
+
+     </div>
+  </div> -->
+
+
+  <div class="inner-wrap">
+
+    <app-top-search-bar></app-top-search-bar>
+
+    
+
+    <div>
+
+      <div class="row grid">
+                       
+        <!-- Screen 1 -->
+        <div class="col-md-12">
+
+            <div class="card-grid-job ">
+
+                <div class="row">
+
+                  <div class="application-success">
+
+                    <img src="assets/images/success-application.svg" width="200px"> 
+
+                    <h3>Your Application has been submitted Successfully</h3>
+
+                    <a routerLink="/candidate/applied-jobs" class="btn btn-primary">View Applied Jobs</a>
+
+                  </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Screen 1 -->
+
+
+   
+</div>
+    </div>
+
+    <div class="row" style="">
+      <div class="col-sm-12">
+
+        <app-similar-jobs [job_slug]="job_id"></app-similar-jobs>
+
+
+        <div class="recommended_jobs" style="display: none;">
+          <div style="cursor: pointer" [ngClass]="{'job':true, 'job-applied':job.hasApplied==true}"
+            *ngFor="let job of jobs">
+            <button class="btn btn-default" *ngIf="isCandidateLoggedIn"
+              [disabled]="job.hasApplied==true || isLoading==true" data-toggle="modal" data-target="#myModal"
+              (click)="oneClickApplyToJob(job); $event.stopPropagation();"><i class="fa fa-check-circle"></i>&nbsp;
+              Apply</button>
+
+            <button *ngIf="!isCandidateLoggedIn" [disabled]="job.hasApplied==true" 
+              #applymodalBtn class="btn btn-default" data-toggle="modal" data-target="#myModal" data-backdrop="static"
+              data-keyboard="false"><i class="fa fa-check-circle"></i>&nbsp; Apply</button>
+
+            <div (click)="goToJob(job.id)">
+              <h4 (click)="goToJob(job.id)">{{job.title | titlecase }}</h4>
+
+              <span class="company mr-5" (click)="goToJob(job.id)">
+                <img *ngIf="job?.client_organization?.businessLogoFullUrl== 'null'" class="media-object"
+                  src="assets/images/author.jpg">
+
+                <img *ngIf="job?.client_organization?.businessLogoFullUrl != 'null'" class="media-object"
+                  src="https://api.simplifyhire.com/business_information/logos/40_thumbnail_1566935879.png">&nbsp;&nbsp;
+                {{ job?.client_organization?.name }} </span>
+
+
+              <span class="city mr-5" (click)="goToJob(job.id)" *ngIf="job.address">
+                <i class="icons-location"></i>&nbsp; {{job.address}}</span>
+
+              <span class="experience mr-5">
+                <i [ngClass]="{
+                                   'icons-progress-entery':job.experience=='Entry'||job.experience==null, 
+                                   'icons-high-progress-experinced':job.experience=='Experienced'||job.experience=='experienced',
+                                   'icons-high-progress-intermediate': job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)',
+                                   'icons-high-progress-expert':job.experience=='Expert' 
+                                  }"></i>&nbsp; {{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+
+              <span class="salary mr-5"
+                *ngIf="(job.job_type=='Full Time' && job.salary!=null) || (job.job_type=='Temp Hire' && job.min_rate!=null)">
+                <i class="fa fa-camera-retro" aria-hidden="true"></i>&nbsp;
+
+                <span class="price text-center" *ngIf="job.job_type=='Full Time' && job.salary!=null">
+                  <label class="price">{{job.salary | currency: '$' }} </label>
+                </span>
+                <span class="price text-center" *ngIf="job.job_type=='Temp Hire' && job.min_rate!=null">
+                  <label>{{job.min_rate | currency: '$' }}/h
+                    - {{ job.max_rate | currency: '$' }}/h </label>
+                </span>
+
+              </span>
+
+
+              <p [innerHtml]="job.description.slice(0, 250)"> </p>
+
+              <span class="badge badge-green">{{ job.job_type }}</span>
+              <span class="badge badge-white"
+                *ngFor="let skill of job.skills | slice:0:4">{{ skill.name | slice:0:15 }}</span>
+              <span class="posted-time pull-right">Posted {{job.posted}} - {{job.submissionsCount}} applicants <br>
+                {{ job.api_job_id }}</span>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,63 @@
+
+            <router-outlet></router-outlet>
+   
+
+            <div id="togglesidebar" class="transition notificationswrap toggle-sidebar">
+                    <div class="head">
+                        <h3>Notifications</h3>
+                        <a class="close_notifications_bar_button" style="cursor: pointer;"><i class="material-icons">cancel</i></a>
+                    </div>
+                    
+                    <div class="notifications-content">
+                        <div class="card job-grid" *ngIf="notifications?.length>0">
+                            <div class="inner">
+                                <div class="s-details">
+                                      <section [ngClass]="{'notifications-item':true,
+                                      'new':notification.is_read==0}" 
+                                       *ngFor="let notification of notifications">
+                  <label [ngClass]="{'notification-head':true,
+                                      'blue':notification.notification_type=='submissions',
+                                      'orange':notification.notification_type=='interviews',
+                                      'green':notification.notification_type=='offers'
+                                        }"><i class="material-icons">
+                                           {{ notification.notification_type=='submissions'?'work':'' }} 
+                                           {{ notification.notification_type=='interviews'?'chat_bubble':'' }}
+                                           {{ notification.notification_type=='offers'?'grain':'' }}</i> {{ notification.title }}   <span>{{ notification.posted }}</span></label>
+                  <div class="notificationinfo ">
+                   {{ notification.description }}
+                  </div>
+                  <!-- <div class="notification-actions">
+                   <a href="#">View Job</a>
+                  </div> -->
+                  </section>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card job-grid" style="display: none;">
+                            <div class="inner">
+                  
+                                <div class="s-details">
+                                    <div class="job-head-list">
+                                        <a href="jobs-details.html" class="card-title-lg">
+                                            <h2>New Submission for <label>Web Developer</label></h2>
+                                        </a>
+                                    </div>
+                  
+                                    <div>
+                                        <label class="badge large gray">
+                                            <i class="material-icons">work</i>
+                                            Content Marketing Manager
+                                        </label>
+                                        <label class="badge large gray"><i class="material-icons">person</i> Yuva</label>
+                                    </div>
+                                </div>
+                  
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                  </div>

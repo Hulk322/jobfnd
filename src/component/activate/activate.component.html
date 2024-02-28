@@ -1,0 +1,79 @@
+<div class="wrap">
+            <div class="content">
+                  <div class="header">
+                        <div class="logo">
+                              <img src="assets/images/login/logo.png">
+                        </div>
+                        <nav appLoginNavbar class="navbar navbar-expand-lg navbar-light">
+                        </nav>
+      
+      
+                  </div>
+      
+                  <div class="login--2-page" [class.hide]="first_time_loading">
+                              <div class="main-content">
+                                  <div class="setup-password">
+                                        <div class="setup-header">
+                                              <div class="img">
+                                                     <img src="assets/images/email-2.svg">
+                                               </div>
+                                               <div class="heading">
+                                                   <h1>Your Account is Activated Successfully...</h1>
+                                                   <h4>Setup your Account Password</h4>
+                                               </div>
+                                        </div>
+                                          
+                                          <form #loginForm=ngForm (ngSubmit)="onSubmit()" ngNativeValidate> 
+                                                      <app-errors></app-errors>
+                                                      <div class="form-group setup-password-field no-margin">
+                                                                  <label for="">Enter Your Password</label>
+                                                                  <input type="password" 
+                                                                  class="form-control" 
+                                                                  name="password" 
+                                                                  id="password"
+                                                                  #showpassword 
+                                                                  placeholder="Enter Your Password"
+                                                                  (keyup)="validateRegex($event.target.value)"
+                                                                  [(ngModel)]="form.password">
+                                                                  <i #eye_show_password (click)="showPassword(this, $event)" class="show-hide-password material-icons">visibility</i> 
+                                                            </div>
+                                                            <div class="password-status">
+                                                              
+                                                              <p class="" [ngClass]="min8? 'good': ''" ><i class="fa  fa-check-circle"></i> Minimum 8 Characters </p>
+                   
+                                                              <p   [ngClass]="oneCapital? 'good': ''"><i class="fa  fa-check-circle"></i> 1 uppercase letter</p>
+                   
+                                                              <p [ngClass]="oneLower? 'good': ''"><i class="fa  fa-check-circle"></i> 1 Lower case letter </p>
+                   
+                                                              <p [ngClass]="oneNumeric? 'good': ''"><i class="fa  fa-check-circle"></i>  1 numeric </p>
+                                                              <p [ngClass]="oneSpecial? 'good': ''"><i class="fa  fa-check-circle"></i>   1 special character</p>
+                                                              <p [ngClass]="ConfirmPasswordMatch? 'good': ''"><i class="fa  fa-check-circle"></i>   Confirm Password match</p>
+                                                              <!--  <p [ngClass]="oneSpecial? 'bad': 'good'"><i class="fa  fa-check-circle"></i>   space not allowed</p> -->
+                   
+                                                            </div>
+                                                            <div class="form-group"   style="">
+                                                                  <label for="">Confirm your password</label>
+                                                                  <input type="password" 
+                                                                  [ngClass]="{'form-control':true, 
+                                                                              'has-success': ConfirmPasswordMatch,
+                                                                              'has-error': !ConfirmPasswordMatch && form.password_confirmation!=null}"
+                                                                  name="password_confirmation" 
+                                                                  placeholder="Confirm your Password"
+                                                                  (keyup)="matchPassword($event.target.value)"
+                                                                  [(ngModel)]="form.password_confirmation">
+                                                            </div>
+
+                                                            <button 
+                                                            type="submit" 
+                                                            [disabled]="disableButton"
+                                                            class="btn btn-blue pull-right btn-lg">Continue</button> 
+                                          </form>
+                                    </div>
+                              </div>
+                        </div>
+                  
+            </div>
+           
+      </div>
+      <!-- /wrap -->
+       <app-footer></app-footer>

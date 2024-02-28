@@ -1,0 +1,193 @@
+<app-sidebar [current_menu_item]="'settings'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Settings - Cost Centers</h2>
+                    <a href="" data-target="#edit_client_modal" data-toggle="modal" class="btn-orange">Add Cost Center</a>
+                </div>
+            </div>
+            
+        </div>
+<!-- 
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+                              <div class="main-content-content eco-box-shadow">
+
+
+                                 <div class="setting-right-side">
+                                    
+                                    <div class="setting-right-side-content">
+                                       <table class="custom-table">
+                                          <tbody>
+                                             <tr>
+                                                <th>#</th>
+                                                <th>Cost Center Name</th>
+                                                <th>Actions</th>
+                                             </tr>
+                                             <tr *ngFor="let cost_center of cost_centers; let i = index">
+                                                <td> {{ i+1 }} </td>
+                                                <td>{{ cost_center.name | titlecase }} ( {{ cost_center.cost_code }} )</td>
+                                                <td style="text-align: center;">
+                                                   <a (click)="edit(cost_center)" class="btn btn-primary" style="margin-right:5px; color: white;">
+                                                      <i class="fa fa-pencil"></i>
+                                                   </a>
+                                                   <button (click)="delete(cost_center.id, cost_center)" [disabled]="cost_center.deleted"
+                                                      class="btn btn-danger" [ngClass]="{ 'fa fa-spinner': cost_center.deleted  }">
+                                                      <i [ngClass]="{ 'fa fa-trash': !cost_center.deleted }"></i>
+                              
+                                                   </button>
+                                                </td>
+                                             </tr>
+                              
+                              
+                              
+                              
+                              
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="setting-left-side form-style-v2">
+                                       <h4 style="margin-top: 25px;" *ngIf="!cost_center.id">Add Cost Center</h4>
+                                       <h4 style="margin-top: 25px;" *ngIf="cost_center.id">Update Cost Center</h4>
+                                       <form method="POST" 
+                                       class="custom-form" role="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+                              
+                                          <div class="form-group">
+                                             <label for="">Cost Center Name</label>
+                                             <input name="name" required [(ngModel)]="cost_center.name" type="text" class="form-control" id=""
+                                                placeholder="">
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">Cost Center Code</label>
+                                             <input name="code" required [(ngModel)]="cost_center.cost_code" type="text" class="form-control" id=""
+                                                placeholder="">
+                                          </div>
+                              
+                                          <button type="submit" *ngIf="!cost_center.id" [disabled]="isLoading"
+                                             class="btn btn-primary pull-right">Save</button>
+                                          <button type="submit" *ngIf="cost_center.id" [disabled]="isLoading"
+                                             class="btn btn-primary pull-right">Update</button>
+                                       </form>
+                                    </div>
+                                 </div>
+                              
+                              
+                              
+                              </div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div> -->
+
+<div style=" margin:80px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            
+   <div class="row">
+
+       <div class="col-md-12">
+           
+           <table class="custom-table table-style-2 table table-striped">
+               <thead>
+                   <tr>
+                       <th>Cost Center Name</th>
+                       <th>Cost Center Code</th>
+                       <th></th>
+                   </tr>
+               </thead>
+               <tbody>
+
+                   
+                   <tr *ngFor="let cost_center of cost_centers">
+                       <td width="30%">
+                           <label class="title-bold">{{ cost_center.name | titlecase }}
+                           </label>
+                       </td>
+                       <td>
+                           <label class="title-bold">{{ cost_center.cost_code }}</label>
+                       </td>
+                       
+                       <td width="50" align="right">
+                           <div class="btn-group">
+                             <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               <i class="material-icons">more_horiz</i>
+                             </button>
+                             <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" data-target="#edit_client_modal" data-toggle="modal" (click)="edit(cost_center)">Edit</a>
+                               <a class="dropdown-item" (click)="delete(cost_center.id, cost_center)">Delete</a>
+                             </div>
+                           </div>
+                       </td>
+                   </tr>
+
+                   
+                   
+               </tbody>
+           </table>
+           
+           
+       
+       </div>
+
+   </div>
+   
+   
+</div>
+
+</div>
+
+<div class="modal smodal custom-form-group-flat" id="edit_client_modal" style="margin-top:0px;" 
+data-keyboard="false" data-backdrop="static" #completeModal>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title"  *ngIf="!cost_center.id">Add Cost Center</h4>
+            <h4 class="modal-title"  *ngIf="cost_center.id">Edit Cost Center</h4>
+            <button class="close" data-dismiss="modal" (click)="dataDismiss()">&times;</button>
+            
+         </div>
+         <div class="modal-body">
+             <form  ngNativeValidate>
+                              
+                                          <div class="form-group">
+                                             <label for="">Cost Center Name</label>
+                                             <input name="name" required [(ngModel)]="cost_center.name" type="text" class="form-control" id=""
+                                                placeholder="">
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">Cost Center Code</label>
+                                             <input name="code" required [(ngModel)]="cost_center.cost_code" type="text" class="form-control" id=""
+                                                placeholder="">
+                                          </div>
+                                       </form>
+         </div>
+         <div class="modal-footer">
+                <button type="submit" *ngIf="!cost_center.id" [disabled]="isLoading"
+                                   class="btn btn-primary pull-right" (click)="addOrupdate()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+                 <button type="submit" *ngIf="cost_center.id" [disabled]="isLoading"
+                                  class="btn btn-primary pull-right" (click)="addOrupdate()">Update<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+

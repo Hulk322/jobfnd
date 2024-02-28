@@ -1,0 +1,114 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Interview</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card no-padding">
+      <form #createInterviewForm=ngForm autocomplete="off" (submit)="onSubmit()" ngNativeValidate>
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+        <app-errors></app-errors>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input [(ngModel)]="interview.title" name="title" class="form-control" type="text">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label for="last_name">Type</label>
+              <select [(ngModel)]="interview.type" name="type" class="form-control">
+                <option value="{{ type }}" *ngFor="let type of types">{{ type }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-sm-10">
+            <div class="form-group">
+              <label for="last_name">Location</label>
+              <input [(ngModel)]="interview.location" name="location" 
+              class="form-control" type="text">
+            </div>
+          </div>
+
+        </div>
+
+      <div style="padding-bottom:5px;">
+        Dates & Times
+        <a style="cursor:pointer; padding-left:5px;" (click)="addDate()">
+          <i class="icons_plus"></i>
+        </a>
+      </div>
+            
+
+      <div class="row" *ngFor="let recommended_date of interview.recommended_dates; let index = index;trackBy:trackByIndex;">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="recommended_datetime_in">Recommended Date</label>
+            <input [(ngModel)]="recommended_date.date" 
+            name="recommended_datetime_in-{{index}}" class="form-control"
+              placeholder="MM/DD/YYYY" [bsConfig]="{ containerClass: 'theme-blue', 
+                  dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker type="text">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="recommended_datetime_out">Time In ( hh:mm am/pm )</label>
+            <input [(ngModel)]="recommended_date.time_in" placeholder="hh:mm" name="time_in-{{index}}" class="form-control"
+              type="time">
+          </div>
+        </div>
+
+        
+        <div class="col-sm-3">
+            <div class="form-group">
+              <label for="recommended_datetime_out">Time Out ( hh:mm am/pm )</label>
+              <input [(ngModel)]="recommended_date.time_out" placeholder="hh:mm" name="time_out-{{index}}" class="form-control"
+                type="time">
+            </div>
+          </div>
+
+        
+
+        <div class="col-sm-3" style="margin-top:35px;">
+          <div class="form-group">
+              <button class="btn btn-danger" 
+                  type="button"
+            (click)="deleteDate(index)" >
+            <i class="fa fa-trash"></i>
+           
+            </button>
+              
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea name="notes" row="1" class="form-control notes" [(ngModel)]="interview.notes"></textarea>
+      </div>
+    </form>
+  </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-dark-blue" [disabled]="isLoading"
+    (click)="onSubmit()">
+      <span *ngIf="!isLoading">Create Interview</span>
+      <span *ngIf="isLoading">Creating...</span>
+    </button>
+    <button type="button" class="btn btn-outline-dark" 
+    (click)="activeModal.close('Close click')">
+      Close
+    </button>
+  </div>
+
+

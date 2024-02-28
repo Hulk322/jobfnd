@@ -1,0 +1,13 @@
+.picture{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+/*.user-name {
+    padding-left: 5px;
+}*/
+
+.loginuserinfo label {
+    background-color: transparent;
+}

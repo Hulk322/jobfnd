@@ -1,0 +1,7 @@
+.rejected.active {
+    border-bottom: 3px solid #FE4A44;
+}
+
+.all.active {
+    border-bottom: 3px solid #C8C8C8;
+}

@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "https://fonts.googleapis.com/css?family=Rubik:300,400,500";
+
+/*@import "assets-v2/template-assets/bower_components/select2/dist/css/select2.min.css";
+@import "assets-v2/template-assets/bower_components/bootstrap-daterangepicker/daterangepicker.css";
+@import "assets-v2/template-assets/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css";
+@import "assets-v2/template-assets/bower_components/slick-carousel/slick/slick.css";
+@import "assets-v2/template-assets/css/main.css";
+@import "assets-v2/icon_fonts_assets/feather/style.css";
+@import "assets-v2/template-assets/css/style.css";*/
+
+@import "../node_modules/ngx-toastr/toastr.css";
+
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+@import "../node_modules/c3/c3.min.css";
+.modal-body .banner {
+  margin: auto; display: block; max-width: 300px;
+}
+.modal-body .logo {
+    margin: auto; display: block;
+}
+.text-center {
+  text-align: center;
+}
+.margin-center {
+  margin-left: auto;
+  margin-right: auto;
+    display: block;
+    max-width: 20%;
+    margin-top: 10px;
+}
+
+/* .modal-body .description {
+  padding: 20px; width: 500px; margin-right: auto; margin-left: auto; text-align: left; margin-bottom: 20px;
+} */

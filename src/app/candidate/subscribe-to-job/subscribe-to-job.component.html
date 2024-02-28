@@ -1,0 +1,20 @@
+<div class="company-detail">
+    <h5 style="font-size: 17px !important;
+    font-weight: 600;
+    color: #414141;">Get notified for similar jobs</h5>
+
+    <p style="padding-bottom: 0px; color: #485463;">Sign up and receive similar job alerts to your email</p>
+    
+    <input class="form-control" 
+    autocomplete="off" 
+    name="email"
+    style="margin-top: 10px; display: none;" 
+    [(ngModel)]="email" placeholder="your@email.com">
+    <button  class="btn btn-md btn-primary" 
+    [disabled]="isLoading"
+    (click)="subscribe()"
+    style="
+    text-align: center;
+    margin-top: 10px;
+">Subscribe</button>
+</div>

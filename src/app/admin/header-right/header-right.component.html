@@ -1,0 +1,25 @@
+<div class="head-right">
+    <div class="notificationwrap">
+
+        <a href="javascript:void(0)" class="btn-dark-theme"><i class="material-icons">emoji_objects</i></a>
+
+        <a href="javascript:void(0)" class="btn-notification">
+            <i class="material-icons"><span>0</span> notifications_none</i>
+        </a>
+
+    </div>
+    <div class="loginuserinfo ">
+        <div class="loginuser-details">
+            <label><img class="picture" src="{{ profile_picture }}"></label>
+            <span><span class="user-name"> {{ full_name | titlecase }}</span> <i class="material-icons">keyboard_arrow_down</i></span>
+        </div>
+        <div class="submenu">
+            <ul>
+                <li><a routerLink="/admin/profile"><i class="material-icons">person_outline</i>My Profile</a></li>
+                <li style="display: none;"><a href="#"><i class="material-icons">settings_applications</i>Account Settings</a></li>
+                <li><a routerLink="/admin/change-password"><i class="material-icons">security</i>Change Password</a></li>
+                <li><a style="cursor: pointer;" (click)="logout()"><i class="material-icons">subdirectory_arrow_right</i>Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

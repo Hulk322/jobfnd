@@ -1,0 +1,57 @@
+<div class="container clearfix">
+<h4>Profile </h4>
+
+<form #updateProfileForm=ngForm (submit)="onSubmit()" ngNativeValidate>
+
+    <app-errors></app-errors>
+  
+                  <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+  
+                              <div class="form-group">
+                                    <label for="">First Name</label>
+                                    <input type="text" 
+                                    class="form-control" [(ngModel)]="user.first_name" name="first_name"
+                                     placeholder="First Name">
+                              </div>
+                              
+                              <div class="form-group">
+                                    <label for="">Last Name</label>
+                                    <input type="text" class="form-control" 
+                                    [(ngModel)]="user.last_name" name="last_name"
+                                     placeholder="First Name">
+                              </div>
+
+                              <div class="form-group">
+                                <label for="">Email</label>
+                                <input type="text" class="form-control" 
+                                [(ngModel)]="user.email" name="email"
+                                 placeholder="First Name"
+                                 readonly>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="">Phone</label>
+                                <input  
+                                    pattern="[^a-zA-Z]+" 
+                                    oninvalid="this.setCustomValidity('Alphabets are not allowed.')" 
+                                    oninput="setCustomValidity('')" 
+                                    [(ngModel)]="user.meta.phone" 
+                                    name="phone" 
+                                    id="phone" 
+                                    class="form-control" 
+                                    type="text">
+                              </div>
+
+                              <div class="form-group">
+                                    <label for="">Profile Picture</label>
+                                    <input name="user.meta.profile_picture" type="file" (change)="handleFileUpload($event.target.files)" id="profile_picture" ref="file" class="form-element form-control">
+                              </div>
+  
+                              <button type="submit" class="btn btn-success">Submit</button>
+  
+                        </div>
+                  </div>
+
+                  </form>
+</div>

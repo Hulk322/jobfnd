@@ -1,0 +1,234 @@
+<app-sidebar [current_menu_item]="'Create Contract'"></app-sidebar>
+<div class="content-area floated" #content_area>
+   <div class="main-head no-tabs">
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Create Contract</h2>
+         </div>
+         <app-header-right></app-header-right>
+      </div>
+   </div>
+   <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="row">
+         <div class="col-md-10">
+            <div class="card job-grid single-job">
+               <div class="inner">
+                  <div class="s-details" style="padding-left: 25px; padding-right: 25px;">
+                     <div class="main-content-content form-style-v2">
+                        <div class="element-box">
+                           <form #createOfferForm=ngForm class="custom-form" autocomplete="off"
+                           (submit)="onSubmit()" ngNativeValidate>
+                           <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                           <div class="row">
+                              <div class="col-sm-6">
+                                 <div class="form-group">
+                                    <label for="title">Select Job <span style="color:red;">*</span></label>
+                                    <select class="form-control" (change)="jobChange()" name="job_id"
+                                    [(ngModel)]="contract.job_id">
+                                    <option value="{{ job.id }}" *ngFor="let job of jobs">
+                                       {{ job.title }}
+                                    </option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="col-sm-6">
+                                 <div class="form-group">
+                                    <label for="title">Select Submission <span style="color:red;">*</span></label>
+                                    <select class="form-control" (change)="submissionChange()"
+                                    name="submission_id" [(ngModel)]="contract.submission_id">
+                                    <option value="">Select</option>
+                                    <option value="{{ submission.id }}"
+                                       *ngFor="let submission of submissions">
+                                       {{ submission.email }} - ( {{ submission.first_name }}
+                                       {{ submission.last_name }} )
+                                    </option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div *ngIf="current_step==3">
+                              <div class="row">
+                                 <div class="col-sm-3">
+                                        <div class="form-group">
+                                    <label for="title">Start Date <span style="color:red;">*</span></label>
+                                    <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                                    [(ngModel)]="contract.start_date" name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                    dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-3">
+                                        <div class="form-group">
+                                    <label for="title">End Date</label>
+                                    <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                                    [(ngModel)]="contract.end_date" name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                    dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                        <div class="form-group">
+                                    <label for="title">Timesheet Approving Manager <span style="color:red;">*</span></label>
+                                    <select name="manager" class="form-control" [(ngModel)]="contract.timesheet_manager"
+                                    tabindex="-1">
+                                    <option value="">Select</option>
+                                    <option value="{{ manager.id }}"
+                                       *ngFor="let manager of managers">
+                                       {{ manager.email }} - ( {{ manager.first_name }}
+                                       {{ manager.last_name }} )
+                                    </option>
+                                    </select>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                        <div class="form-group">
+                                       <label for="title">Location</label>
+                                       <AutocompleteComponent name="Location" [placeholder]="placeholder"
+                                       [autocompleteInput]="contract.location" (setAddress)="getAddress($event)" 
+                                       (valueChange)="onValueChange($event)"
+                                       adressType="geocode">
+                                       </AutocompleteComponent>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="row">
+                                    
+                                    <div class="col-sm-3">
+                                            <div class="form-group">
+                                       <label for="title">Contract Type</label>
+                                       <select name="contract_type" class="form-control" [(ngModel)]="contract.type"
+                                       tabindex="-1">
+                                       
+                                       <option value="Full Time">Full Time</option>
+                                       <option value="Temp Hire">Temp Hire</option>
+                                       </select>
+                                       </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                            <div class="form-group">
+                                       <label for="title">Vendor Markup <span style="color:red;">*</span></label>
+                                       <input 
+                                        class="form-control" name="vendor_markup" type="text" currencyMask
+                                        [(ngModel)]="contract.vendor_markup" >
+                                       </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="contract.type=='Full Time'">
+                                            <div class="form-group">
+                                       <label for="title">Salary <span style="color:red;">*</span></label>
+                                       <input 
+                                        class="form-control" name="salary" type="text" currencyMask
+                                        [(ngModel)]="contract.salary" >
+                                       </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="contract.type=='Full Time'">
+                                            <div class="form-group">
+                                       <label for="title">Salary Type <span style="color:red;">*</span></label>
+                                       <select name="salary_type" class="form-control" [(ngModel)]="contract.salary_type" tabindex="-1">
+                                            <option value="">Select</option>
+                                            <option value="{{ pay_type }}" *ngFor="let pay_type of salary_types">{{ pay_type }}
+                                            </option>
+                                         </select>
+                                    </div>
+
+                                 </div>
+
+                              
+                           </div>
+
+                           <div class="row" *ngIf="contract.type=='Temp Hire'">
+                                    
+                                <div class="col-sm-3">
+                                        <div class="form-group">
+                                   <label for="title">Bill Rate <span style="color:red;">*</span></label>
+                                   <input 
+                                   class="form-control" name="bill_rate" type="text" currencyMask
+                                   [(ngModel)]="contract.bill_rate" >
+                                   </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                        <div class="form-group">
+                                   <label for="title">Client OverTime Rate <span style="color:red;">*</span></label>
+                                   <input 
+                                    class="form-control" name="vendor_markup" type="text" currencyMask
+                                    [(ngModel)]="contract.client_overtimerate" >
+                                   </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                        <div class="form-group">
+                                   <label for="title">Contractor OverTime Rate <span style="color:red;">*</span></label>
+                                   <input 
+                                    class="form-control" name="contractor_overtime_rate" type="text" currencyMask
+                                    [(ngModel)]="contract.contractor_overtime_rate" >
+                                   </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                        <div class="form-group">
+                                   <label for="title">Contractor Double Time Rate <span style="color:red;">*</span></label>
+                                   <input 
+                                   class="form-control" name="contractor_doubltime_rate" type="text" currencyMask
+                                   [(ngModel)]="contract.contractor_doubltime_rate" >
+                                   
+                                </div>
+
+                             </div>
+
+                          
+                       </div>
+
+                           <div class="row">
+                                    
+                                <div class="col-sm-12">
+                                        <div class="form-group">
+                                                <label for="title">Notes</label>
+                                                <editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew"
+                                                [init]="{plugins: 'link',  height : '380px'}" 
+                                                name="notes" [(ngModel)]="contract.notes">
+                                             </editor>
+                                        </div>
+                                </div>
+                           </div>
+
+                           <div class="row">
+                                    
+                                <div class="col-sm-12">
+                                        <div class="form-group">
+                                               
+                                                <input type="checkbox" 
+                                                name="force_new" 
+                                                [(ngModel)]="contract.force_new" >
+                                                <label for="title"> Force New</label>
+                                             
+                                        </div>
+                                </div>
+                           </div>
+
+
+                           <div class="form-divider">
+                              <div class="form-row" style="margin-top: 5px;">
+                                 <button type="submit" class="btn btn-primary"
+                                    [disabled]="isLoading"><span *ngIf="!isLoading">Create Contract</span><span
+                                    *ngIf="isLoading">Creating...</span></button>
+                              </div>
+
+                           </div>
+                        </div>
+                           
+
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- templates modal-->
+</div>

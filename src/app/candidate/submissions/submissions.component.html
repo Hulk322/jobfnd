@@ -1,0 +1,58 @@
+<div class="wrap btm-padding-1 graybg">
+  <div class="shadow-header-wrap header-publicnav">
+     <app-header></app-header>
+     <app-sub-menu [current_menu_item]="'submissions'"></app-sub-menu>
+  </div>
+  <div  class="inner-wrap">
+        
+    <div class="row">
+  
+        <div class="col-md-12 col-sm-12   cabdidate-dashborad_profile mt-4">
+  
+            <div class="search-results">
+                <h4>Applications</h4>
+                
+                
+            
+         
+               <ul class="nav navbar-nav">
+                     <li><a (click)="recent()" [ngClass]="{ 'recent':true,  'active':showType=='recent'}" >Recent</a></li>
+                     <li><a (click)="all()" [ngClass]="{ 'all':true,  'active':showType=='all'}">All</a></li>
+                     <li><a (click)="rejected()" [ngClass]="{ 'rejected':true,  'active':showType=='rejected'}">Rejected</a></li>
+                     <li (click)="showInGrid()"><a><i class="fa fa-th-large" [ngClass]="{'active':isGrid}"></i></a></li>
+                     <li (click)="showInList()"><a><i class="fa fa-bars" [ngClass]="{'active':isList}"></i></a></li>
+               </ul>
+               <label class=" form-group">
+                 <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                 <input type="search" (keyup)="searchSubmissions($event)" class="form-control" 
+                  [(ngModel)]="search_keyword" placeholder="Search By Submission ID, Job Title">
+               </label>
+         
+   </div>
+   
+   <div class="main-content-content">
+     <app-submissions-list *ngIf="isList" [submissionsData]="submissions"></app-submissions-list>   
+     <app-submissions-grid *ngIf="isGrid" [submissionsData]="submissions"></app-submissions-grid>    
+
+     <div class="row" *ngIf="!isLoading">
+      <div class="col-md-12" style="padding-left: 15px;">
+              <ngb-pagination *ngIf="pageObj.totalElements > 15"
+              [collectionSize]="pageObj.totalElements"
+              [(page)]="pageObj.page"
+              (pageChange)="pageChange($event)" 
+              [pageSize]="pageObj.pageSize"
+              [boundaryLinks]="true">
+              </ngb-pagination>
+      </div>
+  </div>
+
+   </div>
+  
+   </div>
+   </div>
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+       <label class="section-title" style="font-weight:bold;">Work History</label>  
+    </div>
+ </div>
+ <div *ngIf="employments">
+    <div *ngFor="let employment of employments">
+       <div class="row">
+          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+             <div class="form-group">
+                <label for="">Job Title</label>
+                <input type="text" [(ngModel)]="employment.title" name="title[]" value="" class="form-control">
+             </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+             <div class="form-group">
+                <label for="">Start Date</label>
+                <input type="date" [(ngModel)]="employment.start_date" name="employment[]start_date" value="" class="form-control">
+             </div>
+          </div>
+       </div>
+       <div class="row">
+          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+             <div class="form-group">
+                <label for="">Employer</label>
+                <input type="text" [(ngModel)]="employment.employer" name="employment[]employer" class="form-control">
+             </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+             <div class="form-group">
+                <label for="">End Date</label>
+                <input type="date" [(ngModel)]="employment.end_date" name="employment[]end_date" class="form-control">
+             </div>
+          </div>
+       </div>
+       <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+             <div class="form-group">
+                <label for="">Description</label>
+                <textarea type="text"[(ngModel)]="employment.description" name="employment[]description" rows="3" class="form-control"></textarea>
+             </div>
+          </div>
+       </div>
+       <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+             <label class="section-title"></label>  
+          </div>
+       </div>
+    </div>
+ </div>
+ <div v-else>
+    <div class="row">
+       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <div class="form-group">
+             <label for="">Job Title</label>
+             <input type="text" v-model="employment.title" value="" class="form-control">
+          </div>
+       </div>
+       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+             <label for="">Start Date</label>
+             <input type="date" v-model="employment.start_date" value="" class="form-control">
+          </div>
+       </div>
+    </div>
+    <div class="row">
+       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <div class="form-group">
+             <label for="">Employer</label>
+             <input type="text" v-model="employment.employer" value="" class="form-control">
+          </div>
+       </div>
+       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+             <label for="">End Date</label>
+             <input type="date" v-model="employment.end_date" value="" class="form-control">
+          </div>
+       </div>
+    </div>
+    <div class="row">
+       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group">
+             <label for="">Description</label>
+             <textarea type="text" v-model="employment.description" rows="3" class="form-control"></textarea>
+          </div>
+       </div>
+    </div>
+    <div class="row">
+       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+          <label class="section-title"></label>  
+       </div>
+    </div>
+ </div>

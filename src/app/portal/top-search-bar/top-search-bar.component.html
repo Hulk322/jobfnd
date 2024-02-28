@@ -1,0 +1,23 @@
+<div class="search-bar" style="margin-top: 0px">
+  <div class="form-group item">
+     <input type="text" name="job" [(ngModel)]="filters.what" (keyup.enter)="search()" class="form-control" placeholder="Search by keywords (PHP, .Net, etc)">
+  </div>
+  <div class="form-group item">
+        <AutocompleteComponent [placeholder]="placeholder" [autocompleteInput]="filters.where" (setAddress)="getAddress($event)" adressType="geocode">
+           </AutocompleteComponent>
+           <span class="icons_tracker pull-right"></span> 
+     <input type="text" class="form-control" placeholder="Choose Location" style="display: none">
+  </div>
+  <div class="form-group item">
+        <select class="form-control new---job-selection" [(ngModel)]="filters.categories">
+              <option value="AllCategories">All Categories</option>
+                <option *ngFor="let category of all_categories" 
+                [value]="category.name" [hidden]="!category.name">
+                   {{category.name}} ({{category.count}})
+                </option>
+             </select>
+  </div>
+  <div class="form-group submit">
+     <button type="submit" name="search" (click)="search()" class="btn btn-bright-blue btn-block btn-lg">Search</button>
+  </div>
+</div>

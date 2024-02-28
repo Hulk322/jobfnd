@@ -1,0 +1,1646 @@
+<div class="wrap btm-padding-1 graybg">
+   <div class="shadow-header-wrap header-publicnav">
+      <app-header></app-header>
+      <app-sub-menu [current_menu_item]="'resume'"></app-sub-menu>
+   </div>
+   <div class="inner-wrap">
+      <div class="row">
+         <div class="col-md-3 col-sm-12 cabdidate-dashborad_profile ">
+            
+            
+            <div class="card scard profile-status" *ngIf="!isLoading" style="padding-bottom: 0px;">
+               <div class="card-header bg-transparent">
+                  <span class="text-blue bold">Profile Status</span>
+               </div>
+               <div class="completeness row">
+                  <div class="col">
+                     <h4 style="margin-top: 6px;margin-bottom: 6px;">{{ form_data?.profileCompleteness?.score }}% Complete</h4>
+                     <span>Update profile more likely to be contacted by employers</span>
+                  </div>
+                  <div class="col-md-auto">
+                     <div class="profile_score">
+                        <svg  class="profile-score-chart" viewbox="0 0 33.83098862 33.83098862" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+                           <circle class="profile-score-background" stroke="#efefef" stroke-width="5" fill="none" cx="18.91549431" cy="18.91549431" r="15.91549431" />
+                           <circle class="profile-score-circle" stroke="#3188FC" stroke-width="5" attr.stroke-dasharray="{{ form_data?.profileCompleteness?.score }},100" stroke-linecap="round" fill="none" cx="18.91549431" cy="18.915494" r="15.91549431" />
+               
+                           <g class="profile-score-info">
+                               <text class="profile-score-percent" x="32.91549431" fill="#000000" y="34" alignment-baseline="central" text-anchor="middle" font-size="10">{{ form_data?.profileCompleteness?.score }}%</text>
+                           </g>
+                       </svg>
+                        <!-- {{ form_data?.profileCompleteness?.score }}%--></div> 
+                     <img style="display: none;"  class="img-responsive pull-right" src="assets/images/graph.png" alt="">
+                  </div>
+               </div>
+               <div class="card-footer " *ngIf="newActionCount<4" style="margin-top: 20px;">
+                  <h4 class="bold"><span class="text-blue">{{newActionCount}} New Actions</span>  to improve your profile</h4>
+                  <ul class="list-unstyled-completeness pt-2">
+                     <li *ngIf="form_data.resume.employments.length==0"><a data-target="#work_history" 
+                        data-toggle="modal" (click)="resetWorkHistory()"><i class="icons_plus-sm"></i> Add Work History</a></li>
+                     <li *ngIf="form_data.resume.title==null || form_data.resume.title==''"><a data-target="#basic_info" data-toggle="modal"><i class="icons_plus-sm"></i> Add Profile Title</a></li>
+                     <li *ngIf="form_data.resume.about_me==null || form_data.resume.about_me==''"><a data-target="#about_me" data-toggle="modal"><i class="icons_plus-sm"></i> Add About Me </a></li>
+                     <li *ngIf="form_data.resume.educations.length==0"><a data-target="#education" data-toggle="modal" 
+                        (click)="resetEducation()"><i class="icons_plus-sm"></i> Add Education</a></li>
+                  </ul>
+               </div>
+            </div>
+   
+   
+            
+   
+            <section class="card scard profile-info p-0">
+               <div class="ribbon" *ngIf="!isLoading"></div>
+   
+               <div class="card-head">
+   
+                     <a data-target="#basic_info" data-toggle="modal" *ngIf="!isLoading" class="action-main-edit" >
+                        <i class="material-icons">edit </i>
+                     </a>
+   
+               </div>
+   
+              
+               <div  *ngIf="isLoading" style="width: 100%; margin:auto; text-align: center;" >
+                  <div style="width: 60%; margin:auto;">
+                     <div class="shine shine-img" style="margin:50px auto 10px auto; width: 130px !important; height: 130px !important;"></div>
+                     <div class="shine"></div>
+                     <div class="shine" style="margin-bottom: 30px;"></div>
+                  </div>   
+                  <div class="flex gender ">
+                     <div class="col">
+                        <label class="shine shine-icon" style="margin-bottom:0px; margin-left: 20px;" ></label>
+                        <label class="shine" style="float: left; margin-bottom: 0px; width: 100px;" ></label>
+                     </div>
+                     <div class="col">
+                        <label class="shine shine-icon" style="margin-bottom:0px; margin-left: 20px;" ></label>
+                        <label class="shine" style="float: left; margin-bottom: 0px; width: 100px;" ></label>
+                     </div>
+                  </div>
+               </div>
+   
+               <div class="profile-img"  *ngIf="!isLoading">
+                  
+                  
+                  <img 
+                     class="profile-thumbnail" 
+                     src="{{ form_data.profile.meta.profilePictureFullUrl }}" alt="">
+               </div>
+   
+               <h3 class="profile-username"  *ngIf="!isLoading">
+                  {{ form_data.profile.first_name | titlecase }} 
+                  {{ form_data.profile.last_name | titlecase }}
+               </h3>
+   
+               <h5 class="profile-title-desig"  *ngIf="!isLoading">
+                  {{ form_data.resume.title }}
+               </h5>
+   
+   
+               <div class="flex gender" *ngIf="!isLoading">
+                  <div class="col">
+                     <i class="icon-male text-blue"></i>
+                     <span *ngIf="form_data.resume.gender!='null'"> {{ form_data.resume.gender }}</span>
+                  </div>
+                  <div class="col dob-field">
+                     <i class="material-icons text-blue">calendar_today</i>
+                     {{ form_data.resume.dob | date }}
+                  </div>
+               </div>
+            </section>
+   
+   
+            <section class="card scard contactinfo">
+   
+   
+               <div class="card-head">
+   
+                     <h4 class="card-title-large mini-title">Contact Information</h4>
+                     <a data-target="#contact_info" data-toggle="modal" class="action-main-edit" *ngIf="!isLoading">
+                        <i class="material-icons">edit </i>
+                     </a>
+   
+               </div>
+   
+               <div *ngIf="isLoading">
+   
+                  <div class="contact-info-item" >
+   
+                     <label class="shine shine-icon"></label>
+                     <label class="shine" style="width: 90%; float: left;"></label>
+   
+                  </div>
+   
+                  <div class="contact-info-item" >
+   
+                     <label class="shine shine-icon"></label>
+                     <label class="shine" style="width: 90%; float: left;"></label>
+   
+                  </div>
+   
+                  <div class="contact-info-item" >
+   
+                     <label class="shine shine-icon"></label>
+                     <label class="shine" style="width: 90%; float: left;"></label>
+   
+                  </div>
+   
+                  <div class="contact-info-item" >
+   
+                     <label class="shine shine-icon"></label>
+                     <label class="shine" style="width: 90%; float: left;"></label>
+   
+                  </div>
+   
+               
+   
+               </div>
+   
+               <div *ngIf="!isLoading">
+                  <div class="contact-info-item profile-email" *ngIf="form_data.profile.email != 'null' && form_data.profile.email != null && form_data.profile.email != ''">
+   
+                     <i class="material-icons">email</i>
+                     <span>{{ form_data.profile.email }}</span>
+   
+                  </div>
+   
+                  <div class="contact-info-item" *ngIf="form_data.resume.mobile != 'null' && form_data.resume.mobile != null && form_data.resume.mobile != ''">
+   
+                     <i class="material-icons">mobile_friendly</i>
+                     <span>{{ form_data.resume.mobile }}</span>
+   
+                  </div>
+   
+                  <div class="contact-info-item" *ngIf="form_data.resume.home_phone != 'null' && form_data.resume.home_phone != null && form_data.resume.home_phone != ''">
+   
+                     <i class="material-icons">phone_in_talk</i>
+                     <span>{{ form_data.resume.home_phone }}</span>
+         
+                  </div>
+   
+                  <div class="contact-info-item" *ngIf="form_data.resume.home_phone == 'null' || form_data.resume.home_phone == null || form_data.resume.home_phone == ''">
+   
+                     <i class="material-icons">phone_in_talk</i>
+                     <span><a data-target="#contact_info" data-toggle="modal" class="alert-link2">+ Add your Secondary Contact</a></span>
+         
+                  </div>
+   
+   
+                  <div class="contact-info-item" *ngIf="form_data.resume.full_address != 'null' && form_data.resume.full_address != null && form_data.resume.full_address != ''">
+   
+                     <i class="material-icons">location_city</i>
+                     <span>{{ form_data.resume.full_address }}</span>
+         
+                  </div>
+               </div>   
+               
+            </section>
+   
+   
+            <section class="card scard willingtowork">
+   
+               <div class="card-head">
+   
+                     <h4 class="card-title-large mini-title">I am willing to work on</h4>
+                     <a data-target="#salary" data-toggle="modal" class="action-main-edit" *ngIf="!isLoading">
+                        <i class="material-icons">edit </i>
+                     </a>
+   
+               </div>
+               
+               <div class="contact-info-item" *ngIf="isLoading" >
+   
+                  <label class="shine shine-icon"></label>
+                  <label class="shine" style="width: 90%; float: left;"></label>
+   
+               </div>
+               
+               <div class="clearfix grid-0" *ngIf="!isLoading && form_data.resume.salary_amount!='' && form_data.resume.salary_amount!=null " >
+                  <p class="card__price"><b> {{ form_data.resume.salary_amount|currency}}</b> / <span class="card__time">{{ form_data.resume.salary_type!=null?form_data.resume.salary_type:'Hourly' }}</span> </p>
+               </div>
+   
+            </section>
+   
+   
+            <div class="card scard card__blue relocate"  *ngIf="!isLoading" >
+               <div class="flex grid-0">
+                  <div class="col">	
+                     <img src="assets/images/relocate.svg">
+                  </div>
+                  <div class="col-6">
+                     <p  class="mt-3">Are you ready to Relocate ?</p>
+                     <div *ngIf="form_data.resume.willing_to_relocate==1">
+                        <p>Yes</p>
+                     </div>
+                     <div *ngIf="form_data.resume.willing_to_relocate==0">
+                        <p>No</p>
+                     </div>
+                  </div>
+                  <div class="col text-right">
+                     <a  data-target="#willing_to_relocate" data-toggle="modal"><i class="fa fa-pencil badge-circle-transparent"></i></a>
+                  </div>
+               </div>
+            </div>
+   
+   
+            <section class="card scard socialmedia">
+               <div class="card-head">
+   
+                     <h4 class="card-title-large mini-title">Social Media</h4>
+                     <a data-target="#salary" data-target="#social_media" data-toggle="modal" (click)="resetSocial()" *ngIf="!isLoading" class="action-main-edit" >
+                        <i class="material-icons">edit </i>
+                     </a>
+   
+               </div>
+               
+               <div class="contact-info-item" *ngIf="isLoading" >
+   
+                  <label class="shine shine-icon"></label>
+                  <label class="shine shine-icon"></label>
+                  <label class="shine shine-icon"></label>
+                  <label class="shine shine-icon"></label>
+                  <label class="shine shine-icon"></label>
+                  
+               </div>
+               
+               <div class="profile-social-links" *ngIf="!isLoading">
+                  <a *ngFor="let social of form_data.resume.social_media" 
+                     href="{{ social.url }}">
+                  <i *ngIf="social.title=='github'" class="fa  fa-github-alt"></i>
+                  <i *ngIf="social.title=='twitter'" class="fa  fa-twitter"></i>
+                  <i *ngIf="social.title=='linkedin'" class="fa  fa-linkedin"></i>
+                  <i *ngIf="social.title=='facebook'" class="fa  fa-facebook"></i>
+                  <i *ngIf="social.title=='instagram'" class="fa  fa-instagram"></i>
+                  <i *ngIf="social.title=='stackoverflow'" class="fa  fa-stack-overflow"></i>
+                  <i *ngIf="social.title=='tiktok'" class="fa  fa-tiktok"></i>
+                  <i *ngIf="social.title=='reddit'" class="fa  fa-reddit"></i>
+                  <i *ngIf="social.title=='medium'" class="fa  fa-medium"></i>
+                  <i *ngIf="social.title=='other'" class="fa  fa-other"></i>
+                  </a>
+               </div>
+            </section>
+            <!-- <div class="card scard socialmediaadd">
+               <div class="flex grid-0">
+                  <div class="col-md-auto">
+                        <h3  class="title-smallsm">Social Media</h3>
+                  </div>
+                  <div class="col text-right">
+                     <a href=""><i class="fa fa-pencil badge-circle-gray"></i></a>
+                  </div>
+               </div>
+               <a href="#">+ Link Your Social Media</a>
+            </div> -->
+         </div>
+   
+   
+         <div class="col-md-9 col-sm-12  no-box-shadow  cabdidate-dashborad_profile">
+            <app-errors></app-errors>
+            <div class="card m-b-20" *ngIf="job.title && job.title=='___NOT_FOR__NOW'">
+               <h4 class="card_h4">{{ job.title }}</h4>
+               <p>
+                  <read-more [text]="job.description | htmlToPlaintext " [maxLength]="250"></read-more>
+               </p>
+               <div class="row">
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4">
+                     <button 
+                     class="btn btn-blokc btn-primary pull-right" 
+                     type="submit" 
+                     [disabled]="isLoading"
+                     value="1 click Apply" 
+                     name="1 click Apply" 
+                     (click)="oneClickApplyToJob(job.slug); $event.stopPropagation();">Apply</button>
+                  </div>
+               </div>
+            </div>
+            
+            
+            <section class="card scard aboutme">  
+   
+               <div class="card-head">
+   
+                     <h4 class="card-title-large"><i class="material-icons">person_pin</i> About Me</h4>
+                     <a data-target="#about_me" data-toggle="modal" class="action-main-edit" *ngIf="!isLoading">
+                        <i class="material-icons">edit </i>
+                     </a>
+   
+               </div>
+               
+               <div  class="pb-3 about-paragraph" *ngIf="!isLoading">
+                  <read-more *ngIf="form_data.resume?.about_me?.length>7" [text]="form_data.resume.about_me ? form_data.resume.about_me : ''" [maxLength]="250"></read-more>
+                  <span [innerHTML]="form_data.resume.about_me" *ngIf="form_data.resume?.about_me?.length<8"></span>
+               </div>
+   
+               <div *ngIf="isLoading">
+                  <div class="shine "></div>
+                  <div class="shine "></div>
+                  <div class="shine "></div>
+               </div>
+                  
+   
+            </section>
+   
+   
+   
+   
+            
+            <section class="card scard workhistory">
+   
+               <div class="card-head">
+   
+                     <h4 class="card-title-large"> <i class="material-icons">work </i>  Work History</h4>
+   
+                     <a  data-target="#work_history" data-toggle="modal"  class="action-main-add" *ngIf="!isLoading" (click)="resetWorkHistory()">
+                        <i class="material-icons">add </i> <span>Add New</span>
+                     </a>
+                  
+               </div>
+   
+   
+               <div class="row">
+                  <div class="col">
+                     
+                  </div>
+                  <div class="col-md-auto text-right">
+                     
+                  </div> 
+               </div>
+   
+            <ul class="timeline" *ngIf="!isLoading">
+               
+               
+                  <li *ngFor="let work_history of form_data.resume.employments">
+                     
+                     <div class="wh-date-item">
+                        <label class="date">{{ work_history.start_date | date:'yyyy' }}  - </label>
+                        <span *ngIf="isValidDate(work_history.end_date)">{{ work_history.end_date | date:'yyyy' }}</span>
+                        <span *ngIf="!isValidDate(work_history.end_date)">Present</span>
+   
+                        <div style="clear: both;"></div>
+   
+                        <div class="sactions small">
+   
+                              <a class="edit" data-target="#work_history" data-toggle="modal"  (click)="editWorkHistory(work_history)">
+                                 <i class="material-icons">edit</i>
+                              </a>
+   
+                              <a class="delete" *ngIf="!work_history.deleted" (click)="deleteWorkHistory(work_history.id, work_history)">
+                                 <i class="material-icons">close</i> <span *ngIf="work_history.deleted">...</span>
+                              </a>
+   
+                        </div>
+   
+   
+                     </div>
+   
+                     <div class="wh-detail-item">
+                        <h4 class="title bold">{{ work_history.title }}<span class="cname">@{{ work_history.employer }}</span></h4>
+                        <p class="detial"><read-more [text]="work_history.description" [maxLength]="250"></read-more></p>
+                     </div>
+   
+                     
+   
+                     
+                  </li>
+   
+               </ul>
+   
+               <ul class="timeline shimmertm" *ngIf="isLoading">
+                  
+                  
+                  <li>
+                     
+                     <div class="wh-date-item">
+                        <div class="shine "  style="width:75%;"></div>
+                     </div>
+   
+                     <div class="wh-detail-item">
+                        <div class="shine "></div>
+                        <div class="shine "></div>
+                        <div class="shine "></div>
+                     </div>
+   
+                  </li>
+                  <div style="clear: both;"></div>
+                  <li>
+                     
+                     <div class="wh-date-item">
+                        <div class="shine "  style="width:75%;"></div>
+                     </div>
+   
+                     <div class="wh-detail-item">
+                        <div class="shine "></div>
+                        <div class="shine "></div>
+                        <div class="shine "></div>
+                     </div>
+   
+                  </li>
+   
+               </ul>
+               
+            </section>
+   
+   
+   
+   
+   
+   
+            <section class="card scard education">
+   
+               <div class="card-head">
+   
+                     <h4 class="card-title-large"> <i class="material-icons">account_balance </i> Education</h4>
+   
+                     <a  data-target="#education" data-toggle="modal"  (click)="resetEducation()"  class="action-main-add" *ngIf="!isLoading">
+                        <i class="material-icons">add </i> <span>Add New</span>
+                     </a>
+                  
+               </div>
+               
+               <!-- uidisabletimeline -->
+   
+               <ul class="timeline shimmertm" *ngIf="isLoading">
+                  
+                  
+                  <li>
+                     
+                     <div class="wh-date-item">
+                        <div class="shine "  style="width:75%;"></div>
+                     </div>
+   
+                     <div class="wh-detail-item">
+                        <div class="shine "></div>
+                        <div class="shine "></div>
+                        <div class="shine "></div>
+                     </div>
+   
+                  </li>
+                  <div style="clear: both;"></div>
+                  <li>
+                     
+                     <div class="wh-date-item">
+                        <div class="shine "  style="width:75%;"></div>
+                     </div>
+   
+                     <div class="wh-detail-item">
+                        <div class="shine "></div>
+                        <div class="shine "></div>
+                        <div class="shine "></div>
+                     </div>
+   
+                  </li>
+   
+               </ul>
+               <!-- uidisabletimeline -->
+               <ul class="timeline " *ngIf="!isLoading">
+               
+            
+                  <li *ngFor="let education of form_data.resume.educations">
+                     
+                     <div class="wh-date-item">
+                        <label class="date">{{ education.start_date | date:'yyyy' }} - {{ education.end_date | date:'yyyy' }}</label>
+                        <div style="clear: both;"></div>
+                        <div class="sactions small">
+   
+                           <a class="edit" data-target="#education" data-toggle="modal" (click)="editEducation(education)">
+                              <i class="material-icons">edit</i>
+                           </a>
+   
+                           <a class="delete" *ngIf="!education.deleted" (click)="deleteEducation(education.id, education)">
+                              <i class="material-icons">close</i> <span *ngIf="education.deleted">...</span>
+                           </a>
+   
+                        </div>
+                     </div>
+   
+                     <div class="wh-detail-item">
+                        <h4 class="title bold">{{ education.degree_type }}<span class="cname">@{{ education.institute }}</span></h4>
+                        <p class="detial">{{ education.degree_direction }}</p>
+                     </div>
+   
+                     
+                  </li>
+   
+               </ul>
+               
+            </section>
+   
+   
+            <section class="card scard skills">
+   
+               <div class="card-head">
+   
+                  <h4  class="card-title-large"> <i class="material-icons">category </i> Skills</h4>
+   
+               </div>
+               
+   
+               <div *ngIf="isLoading">
+                  <div class="shine "></div>
+                  <div class="shine "></div>
+                  <div class="shine "></div>
+               </div>
+               
+               <div  *ngIf="!isLoading" class="skills-tag">
+                  <tag-input [(ngModel)]='form_data.resume.skills' 
+                   (onAdd)="saveSkills()" 
+                    (onRemove)="saveSkills()" 
+                    [placeholder]="skill_add_placeholder" >
+                  </tag-input>
+
+               </div>
+            </section>
+            <section class="card scard skills">
+   
+               <div class="card-head">
+   
+                  <h4  class="card-title-large"> <i class="material-icons">category </i>Additional Skills</h4>
+   
+               </div>
+               
+   
+               <div *ngIf="isLoading">
+                  <div class="shine "></div>
+                  <div class="shine "></div>
+                  <div class="shine "></div>
+               </div>
+               
+               <div  *ngIf="!isLoading" class="skills-tag">
+                  <tag-input [(ngModel)]='form_data.resume.additional_skills' 
+                   (onAdd)="saveAdditionalSkills()" 
+                    (onRemove)="saveAdditionalSkills()" 
+                    [placeholder]="skill_add_placeholder" >
+                  </tag-input>
+
+               </div>
+            </section>
+   
+            <section class="card scard otherdetails spacing-adjust">
+   
+               <div class="card-head">
+   
+                     <h4  class="card-title-large"> <i class="material-icons">style </i> Other Details</h4>
+   
+                     <a  data-target="#experience" data-toggle="modal" 
+                     (click)="resetExperience()" class="action-main-add" *ngIf="!isLoading">
+                        <i class="material-icons">add </i> <span>Add New</span>
+                     </a>
+                  
+               </div>
+               
+               
+               <div class="other-details">
+   
+   
+                  <div class="row" *ngIf="isLoading">
+                  
+   
+                        <div class="col-md-3">
+      
+                           <div class="card minicard">
+                              
+                              <div class="shine" style="margin-bottom: 6px;"></div>
+                              <div class="shine "></div>
+      
+                           </div>
+      
+                        </div>
+   
+                        <div class="col-md-3">
+      
+                           <div class="card minicard">
+                              
+                              <div class="shine" style="margin-bottom: 6px;"></div>
+                              <div class="shine "></div>
+      
+                           </div>
+      
+                        </div>
+   
+                        <div class="col-md-3">
+   
+                           <div class="card minicard">
+                              
+                              <div class="shine" style="margin-bottom: 6px;"></div>
+                              <div class="shine "></div>
+      
+                           </div>
+      
+                        </div>
+   
+                        <div class="col-md-3">
+   
+                           <div class="card minicard">
+                              
+                              <div class="shine" style="margin-bottom: 6px;"></div>
+                              <div class="shine "></div>
+      
+                           </div>
+      
+                        </div>
+      
+                  </div>
+   
+   
+                  <div class="row" *ngIf="!isLoading">
+                     
+   
+                     <div class="col-md-3" *ngFor="let experience of form_data.resume.experiences">
+   
+                        <div class="card minicard">
+                           
+                           <p class="bold">{{ experience.industry }}</p>
+                           <p class="experience">{{ experience.experience }} Years of Experience</p>
+   
+                           <div class="sactions small">
+   
+                              <a class="edit" data-target="#experience" data-toggle="modal" (click)="editExperience(experience)">
+                                 <i class="material-icons">edit</i>
+                              </a>
+      
+                              <a class="delete" *ngIf="!experience.deleted" (click)="deleteExperience(experience.id, experience)">
+                                 <i class="material-icons">close</i> <span *ngIf="experience.deleted">...</span>
+                              </a>
+                              
+                           </div>
+   
+                        </div>
+   
+                     </div>
+   
+                  </div>
+   
+                  
+               </div>
+               <!-- other-details -->
+            </section>
+   
+   
+   
+            <section class="card scard references spacing-adjust">
+   
+               <div class="card-head">
+   
+                     <h4  class="card-title-large"> <i class="material-icons">local_florist </i>  References</h4>
+   
+                     <a  data-target="#references" data-toggle="modal" 
+                     (click)="resetReference()" class="action-main-add" *ngIf="!isLoading">
+                        <i class="material-icons">add </i> <span>Add New</span>
+                     </a>
+                  
+               </div>
+               
+               
+               <div class="references">
+   
+   
+                     <div class="row" *ngIf="isLoading">
+   
+                           <div class="col-md-6">
+         
+                              <div class="card minicard">
+         
+                                 <div class="row">
+         
+                                    <div class="col-md-3">
+                                       <div class="shine shine-img"></div>
+                                    </div>
+         
+                                    <div class="col-md-6">
+                                       <div class="shine"></div>
+                                       <div class="shine"></div>
+                                    </div>
+         
+                                    <div class="col-md-3">
+                                       <label class="shine shine-icon"></label>
+                                       <label class="shine shine-icon"></label>
+                                    </div>
+                                    
+                                 </div>
+   
+                              </div>
+         
+                           </div>
+   
+                           <div class="col-md-6">
+         
+                              <div class="card minicard">
+         
+                                 <div class="row">
+         
+                                    <div class="col-md-3">
+                                       <div class="shine shine-img"></div>
+                                    </div>
+         
+                                    <div class="col-md-6">
+                                       <div class="shine"></div>
+                                       <div class="shine"></div>
+                                    </div>
+         
+                                    <div class="col-md-3">
+                                       <label class="shine shine-icon"></label>
+                                       <label class="shine shine-icon"></label>
+                                    </div>
+                                    
+                                 </div>
+                                 
+                              </div>
+         
+                           </div>
+         
+                        </div>
+   
+   
+                  <div class="row" *ngIf="!isLoading">
+   
+                     <div class="col-md-6" *ngFor="let reference of form_data.resume.references">
+   
+                        <div class="card minicard reference-item">
+   
+                           <div class="row">
+   
+                              <div class="col-md-2">
+                                 <img src="https://ui-avatars.com/api/?name={{ reference.name }}&amp;rounded=true&amp;font-size=0.33" alt="" width="100%">
+                              </div>
+   
+                              <div class="col-md-7">
+                                 <h3>{{ reference.name }}</h3>
+                                 <label>{{ reference.title }}</label>
+                                 <span>@{{ reference.employer }}</span>
+                              </div>
+   
+                              <div class="col-md-3 ref-actions">
+                                 <a href="tel:{{ reference.phone }}"><i class="material-icons">settings_phone</i></a>
+                                 <a href="mailto:{{ reference.email }}"><i class="material-icons">email</i></a>
+                              </div>
+                              
+                           </div>
+   
+                           <div class="sactions small">
+   
+                              <a class="edit" data-target="#references" data-toggle="modal" (click)="editReference(reference)">
+                                 <i class="material-icons">edit</i>
+                              </a>
+      
+                              <a class="delete" *ngIf="!reference.deleted" (click)="deleteReference(reference.id, reference)">
+                                 <i class="material-icons">close</i> <span *ngIf="reference.deleted">...</span>
+                              </a>
+                              
+                           </div>
+   
+                        </div>
+   
+                     </div>
+   
+                  </div>
+   
+               </div>
+               <!-- references -->
+            </section>
+   
+            
+            <section class="card scard documents">
+   
+               <div class="card-head">
+   
+                     <h4 class="card-title-large"> <i class="material-icons">folder_special </i> Documents</h4>
+   
+                     <a  data-target="#documents" data-toggle="modal" 
+                     (click)="resetDocument()" class="action-main-add" *ngIf="!isLoading">
+                        <i class="material-icons">add </i> <span>Add New</span>
+                     </a>
+                  
+               </div>
+               
+   
+               <div class="row"  *ngIf="isLoading">
+   
+                     <div class="col-md-3">
+      
+                        <div class="card scard card-doc">
+   
+                              <div class="shine shine-img" style="margin:10px auto;"></div>
+   
+                              <div class="doc-info">
+      
+                                 <h3><div class="shine"></div></h3>
+      
+                                 <div class="doc-actions">
+      
+                                       <label class="shine shine-icon"></label>
+                                       <label class="shine shine-icon"></label>
+      
+                                 </div>
+      
+                              </div>
+      
+                        </div>
+      
+                     </div>
+   
+                     <div class="col-md-3">
+      
+                        <div class="card scard card-doc">
+   
+                              <div class="shine shine-img" style="margin:10px auto;"></div>
+   
+                              <div class="doc-info">
+   
+                                 <h3><div class="shine"></div></h3>
+   
+                                 <div class="doc-actions">
+   
+                                       <label class="shine shine-icon"></label>
+                                       <label class="shine shine-icon"></label>
+   
+                                 </div>
+   
+                              </div>
+   
+                        </div>
+   
+                     </div>
+   
+                     <div class="col-md-3">
+      
+                        <div class="card scard card-doc">
+   
+                              <div class="shine shine-img" style="margin:10px auto;"></div>
+   
+                              <div class="doc-info">
+      
+                                 <h3><div class="shine"></div></h3>
+      
+                                 <div class="doc-actions">
+      
+                                       <label class="shine shine-icon"></label>
+                                       <label class="shine shine-icon"></label>
+      
+                                 </div>
+      
+                              </div>
+      
+                        </div>
+      
+                     </div>
+                     <div class="col-md-3">
+                     
+                        <div class="card scard card-doc">
+                     
+                              <div class="shine shine-img" style="margin:10px auto;"></div>
+                     
+                              <div class="doc-info">
+                     
+                                 <h3><div class="shine"></div></h3>
+                     
+                                 <div class="doc-actions">
+                     
+                                       <label class="shine shine-icon"></label>
+                                       <label class="shine shine-icon"></label>
+                     
+                                 </div>
+                     
+                              </div>
+                     
+                        </div>
+                     
+                     </div>
+                     
+      
+                  </div>
+   
+   
+               <div class="row"  *ngIf="!isLoading">
+   
+                  <div class="col-md-3" *ngFor="let document of form_data.resume.documents">
+   
+                     <div class="card scard card-doc">
+   
+                           <a *ngIf="!document.deleted" href="{{ baseUrl }}/{{ document.path }}" target="_blank">
+                              <i *ngIf="!isPdf(document.path)" class="icon-page-green"></i>
+                              <i *ngIf="isPdf(document.path)" class="fa fa-file-pdf-o"></i>
+                           </a>
+   
+                           <div class="doc-info">
+   
+                              <h3>{{ document.title }}</h3>
+   
+                              <div class="doc-actions">
+   
+                                    <a *ngIf="!document.deleted" (click)="deleteDocument(document.id, document)" >
+                                       <i class="material-icons">delete_forever</i>
+                                    </a>
+                                    <a *ngIf="!document.deleted" href="{{ baseUrl }}/{{ document.path }}" target="_blank">
+                                       <i class="material-icons">cloud_download</i>
+                                    </a>
+   
+                              </div>
+   
+                           </div>
+   
+                     </div>
+   
+                  </div>
+   
+               </div>
+               
+            </section>
+   
+            
+         </div>
+      </div>
+   </div>
+   <!-- modal starts her -->
+   <!-- basic_info modal-->
+   <div class="modal smodal custom-form-group-flat" id="basic_info" style="margin-top:100px;" data-keyboard="false" data-backdrop="static" #completesaveBasicInfoModal>
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Update Basic Info</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">First Name</label>
+                           <input type="text" 
+                           class="form-control" 
+                           name="first_name" 
+                           [(ngModel)]="form_data.profile.first_name"
+                           required>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Last Name</label>
+                           <input type="text" 
+                           class="form-control" 
+                           name="last_name" 
+                           [(ngModel)]="form_data.profile.last_name"
+                           required>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Resume Title</label>
+                     <input type="text" 
+                     class="form-control" 
+                     name="title" 
+                     required
+                     [(ngModel)]="form_data.resume.title">
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Gender</label>
+                           <select 
+                           required
+                           class="form-control"
+                           [(ngModel)]="form_data.resume.gender"
+                           name="gender">
+                           <option value="Male">Male</option>
+                           <option value="Female">Female</option>
+                           <option value="Other">Other</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Date of Birth</label>
+                           <input type="text"
+                           required
+                           class="form-control"
+                           [(ngModel)]="form_data.resume.dob"
+                           name="dob"
+                           [bsConfig]="{ containerClass: 'theme-blue', 
+                           dateInputFormat: 'MM/DD/YYYY' }"
+                           bsDatepicker>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Profile Picture</label>
+                     <input name="profile_picture" 
+                        type="file" 
+                        (change)="handleFileUpload($event.target.files)" 
+                        id="profile_picture" ref="file" 
+                        class="form-element form-control">
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="submit" class="btn btn-primary" (click)="saveBasicInfo()" [disabled]="isLoading">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- contact_info modal-->
+   <div class="modal smodal custom-form-group-flat" id="contact_info" style="margin-top:100px;"  data-keyboard="false" data-backdrop="static" #completesaveContactInfoModal>
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Contact Info</h4>
+            </div>
+            <div class="modal-body">
+               <form #contactInfo="ngForm" autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="">Email</label>
+                     <input type="email" 
+                     class="form-control"
+                     required
+                     name="email"  
+                     readonly
+                     required
+                     [(ngModel)]="form_data.profile.email" #contactEmail="ngModel">
+                     <div *ngIf="contactEmail.value !== '' && contactEmail.untouched && contactEmail.invalid"
+                                 class="alert alert-danger">
+                                 Enter valid Email is required
+                                 </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Mobile</label>
+                           <input type="tel" id="tel"
+                           class="form-control" ngxPhoneMask
+                           name="mobile"
+                           [(ngModel)]="form_data.resume.mobile"
+                           required #contactMobile="ngModel">
+                           <div *ngIf="contactMobile.invalid && (contactMobile.dirty || contactMobile.touched)">  
+                              <div style="color: red;">  
+                                Enter a valid Mobile Number 
+                              </div>   
+                            </div>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="">Home Phone</label>
+                           <input type="tel" id="tel_home" 
+                           class="form-control" ngxPhoneMask 
+                           name="home_phone" 
+                           [(ngModel)]="form_data.resume.home_phone"
+                           required #homePhone="ngModel">
+                           <div *ngIf="homePhone.invalid && (homePhone.dirty || homePhone.touched)">  
+                              <div style="color: red;">  
+                                 Enter a valid home phone number 
+                              </div>   
+                            </div>  
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Address</label>
+                     <input type="text" 
+                     class="form-control" 
+                     name="full_address" 
+                     required
+                     [(ngModel)]="form_data.resume.full_address">
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="submit" [disabled]="!contactInfo.form.valid || isLoading" class="btn btn-primary formBtn" 
+                  (click)="saveContactInfo()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- about me modal -->
+   <div class="modal smodal custom-form-group-flat" id="about_me" style="margin-top:100px;" data-keyboard="false" data-backdrop="static" #completesaveAboutModal>
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title"><i class="material-icons">person_pin</i>About Me</h4>
+            </div>
+            <div class="modal-body">
+               <form #aboutMe = "ngForm">
+                  <div class="form-group">
+                     <textarea class="form-control" id="about_me_input"  [(ngModel)]="form_data.resume.about_me" name="about_me" required #about_me = "ngModel"></textarea>
+                     <div *ngIf="about_me.invalid && (about_me.dirty || about_me.touched)"
+                     class="alert alert-danger">
+                  About Me is required
+                      </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary formBtn" [disabled]="!aboutMe.form.valid || isLoading" (click)="saveAboutMe()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- work_history modal-->
+   <div class="modal smodal custom-form-group-flat" id="work_history" style="margin-top:100px;" data-keyboard="false" data-backdrop="static" #completeworkhistoryModal>
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="work_history.id==''"><i class="material-icons">work </i>Add Work History</h4>
+               <h4 class="modal-title" *ngIf="work_history.id!=''">Edit Work History</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off" #workHistory = "ngForm">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Title</label>
+                     <input type="text" required class="form-control"
+                     [(ngModel)]="work_history.title"
+                     name="title" 
+                     #titles = "ngModel">
+                     <div *ngIf="titles.invalid && (titles.dirty || titles.touched)"
+                     class="alert alert-danger">
+                        Title is required
+                      </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Employer</label>
+                     <input type="text" 
+                     required
+                     class="form-control"
+                     [(ngModel)]="work_history.employer"  
+                     name="employer" #employers = "ngModel">
+                     <div *ngIf="employers.invalid && (employers.dirty || employers.touched)"
+                     class="alert alert-danger">
+                     Employer is required
+                      </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="experience">Start Date</label>
+                           <input type="text"
+                           required
+                           class="form-control"
+                           [(ngModel)]="work_history.start_date"
+                           name="start_date"
+                           [bsConfig]="{ containerClass: 'theme-blue', 
+                           dateInputFormat: 'MM/DD/YYYY' }"
+                           bsDatepicker #start_date_work ="ngModel">
+                           <div *ngIf="start_date_work.invalid && (start_date_work.dirty || start_date_work.touched)"
+                     class="alert alert-danger">
+                     Start Date is required
+                      </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="experience">End Date</label>
+                           <input type="text"
+                           required
+                           class="form-control"
+                           [(ngModel)]="work_history.end_date"
+                           name="end_date" 
+                           [disabled]="end_date_disabled"
+                           [bsConfig]="{ containerClass: 'theme-blue', 
+                           dateInputFormat: 'MM/DD/YYYY' }"
+                           bsDatepicker #end_date ="ngModel">
+                           <div *ngIf="end_date.invalid && (end_date.dirty || end_date.touched)"
+                     class="alert alert-danger">
+                     End Date is required
+                      </div>
+                        </div>
+                     </div>
+                     <div class="col-md-2">
+                        <div class="form-group">
+                           <label for="experience">Present</label>
+                           <input type="checkbox" style="width:13px" class="form-control" (click)="toggleSelection($event)" > 
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Description</label>
+                     <textarea
+                     class="form-control" 
+                     id="work_history_description"
+                     required
+                     [(ngModel)]="work_history.description" 
+                     name="description"  #description ="ngModel"></textarea>
+                     <div *ngIf="description.invalid && (description.dirty || description.touched)"
+                     class="alert alert-danger">
+                     Description is required
+                      </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-3">
+                        <div class="form-group">
+                           <label for="experience">Display Order</label>
+                           <input type="number"
+                           required
+                           class="form-control"
+                           [(ngModel)]="work_history.sort_order"
+                           name="sort_order"
+                           >
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button 
+                  type="submit" 
+                  class="btn btn-primary formBtn" 
+                  [disabled]="!workHistory.form.valid" [disabled]="isLoading"
+                  (click)="addWorkHistory()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- experience modal -->
+   <div class="container">
+      <div class="row">
+         <div class="col-xs-12">
+            <div class="modal smodal custom-form-group-flat" id="experience" style="margin-top:100px;" data-keyboard="false" data-backdrop="static" #completeExperienceModal>
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" *ngIf="other_detail.id==''"><i class="material-icons">style </i>Add Experience</h4>
+                        <h4 class="modal-title" *ngIf="other_detail.id!=''">Edit Experience</h4>
+                     </div>
+                     <div class="modal-body">
+                        <form autocomplete="off" #experienceForm = "ngForm">
+                           <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                           <div class="form-group">
+                              <label for="experience">Experience</label>
+                              <input type="number" required class="form-control" 
+                              [(ngModel)]="other_detail.experience" name="experience" #experience="ngModel">
+                              <div *ngIf="experience.invalid && (experience.dirty || experience.touched)"
+                                 class="alert alert-danger">
+                                 Experience is required
+                                 </div>
+                           </div>
+                           <div class="form-group">
+                              <label for="experience">Industry</label>
+                              <input type="text" required class="form-control" 
+                               [(ngModel)]="other_detail.industry" name="industry" #industry = "ngModel">
+                               <div *ngIf="industry.invalid && (industry.dirty || industry.touched)"
+                                 class="alert alert-danger">
+                                 Industry is required
+                                 </div>
+                           </div>
+                        </form>
+                     </div>
+                     <div class="modal-footer">
+                        <button class="btn btn-primary formBtn" [disabled]="isLoading" (click)="addExperience()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- references modal -->
+   <div class="modal smodal custom-form-group-flat" id="references" style="margin-top:100px;"  data-keyboard="false" data-backdrop="static" #completeReferenceModal>
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="reference.id==''"><i class="material-icons">local_florist </i>Add Reference</h4>
+               <h4 class="modal-title" *ngIf="reference.id!=''">Edit Reference</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off" #refForm = "ngForm">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="">Name</label>
+                     <input type="text" class="form-control"
+                      [(ngModel)]="reference.name" required name="name" #name = "ngModel">
+                      <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                                 class="alert alert-danger">
+                                 Name is required
+                                 </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Title</label>
+                     <input type="text" class="form-control"
+                     name="title" required [(ngModel)]="reference.title" #title = "ngModel">
+                     <div *ngIf="title.invalid && (title.dirty || title.touched)"
+                                 class="alert alert-danger">
+                                 Title is required
+                                 </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Employer</label>
+                     <input type="text" 
+                     class="form-control"
+                     name="employer" required [(ngModel)]="reference.employer" #employer="ngModel">
+                     <div *ngIf="employer.invalid && (employer.dirty || employer.touched)"
+                                 class="alert alert-danger">
+                                 Employer is required
+                                 </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="">Phone</label>
+                           <input type="text" 
+                           class="form-control"
+                           required
+                           ngxPhoneMask
+                           [(ngModel)]="reference.phone" name="phone"  #phone="ngModel">
+                           <div *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+                                 class="alert alert-danger">
+                                 Phone Number is required
+                                 </div>
+                        </div>
+                     </div>
+                     <div class="col-md-8">
+                        <div class="form-group">
+                           <label for="">Email</label>
+                           <input type="email" 
+                           class="form-control"
+                           name="email" 
+                           [(ngModel)]="reference.email" #email="ngModel" email>
+                           <div *ngIf="email.value !== '' && email.untouched && email.invalid"
+                                 class="alert alert-danger">
+                                 Enter valid Email is required
+                                 </div>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary formBtn" [disabled]="!refForm.form.valid" [disabled]="isLoading" 
+                  (click)="addReference()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- education modal-->
+   <div class="modal smodal custom-form-group-flat" id="education" style="margin-top:100px;"  data-keyboard="false" data-backdrop="static" #completeEducationModal>
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="education.id==''"><i class="material-icons">account_balance </i>Add Education</h4>
+               <h4 class="modal-title" *ngIf="education.id!=''">Edit Education</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off" #eductationForm ="ngForm">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Degree Type</label>
+                     <input type="text" required class="form-control" 
+                     name="degree_type" 
+                     [(ngModel)]="education.degree_type" #degree_type="ngModel">
+                     <div *ngIf="degree_type.invalid && (degree_type.dirty || degree_type.touched)"
+                                 class="alert alert-danger">
+                                 Degree type is required
+                      </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Degree Direction</label>
+                     <input type="text" required class="form-control" 
+                     name="degree_direction" 
+                     [(ngModel)]="education.degree_direction" #degree_direction="ngModel">
+                     <div *ngIf="degree_direction.invalid && (degree_direction.dirty || degree_direction.touched)"
+                                 class="alert alert-danger">
+                                 Degree Direction is required
+                      </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Institute</label>
+                     <input type="text" required class="form-control" 
+                     name="institute" 
+                     [(ngModel)]="education.institute" #institute ="ngModel">
+                     <div *ngIf="institute.invalid && (institute.dirty || institute.touched)"
+                                 class="alert alert-danger">
+                                 Institute is required
+                      </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Start Date</label>
+                     <input type="text"
+                     required
+                     class="form-control"
+                     [(ngModel)]="education.start_date"
+                     name="start_date"
+                     [bsConfig]="{ containerClass: 'theme-blue', 
+                     dateInputFormat: 'MM/DD/YYYY' }"
+                     bsDatepicker #start_date="ngModel">
+                     <div *ngIf="start_date.invalid && (start_date.dirty || start_date.touched)"
+                                 class="alert alert-danger">
+                                 Start Date is required
+                      </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">End Date</label>
+                     <input type="text"
+                     required
+                     class="form-control"
+                     [(ngModel)]="education.end_date"
+                     name="end_date"
+                     [bsConfig]="{ containerClass: 'theme-blue', 
+                     dateInputFormat: 'MM/DD/YYYY' }"
+                     bsDatepicker #endDate="ngModel">
+                     <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)"
+                                 class="alert alert-danger">
+                                 End Date is required
+                      </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary formBtn"  [disabled]="!eductationForm.form.valid || isLoading" (click)="addEducation()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- salary modal -->
+   <div class="modal smodal custom-form-group-flat" id="salary" style="margin-top:100px;"   data-keyboard="false" data-backdrop="static" #completesaveSalaryModal>
+      <div class="modal-dialog modal-sm">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Salary</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off" #salary="ngForm"> 
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Salary Amount</label>
+                     <input type="number" [pattern]="salaryPattern" required class="form-control" min="0"
+                     name="salary_amount" 
+                     [(ngModel)]="form_data.resume.salary_amount" #salary_amount="ngModel">
+                     <div *ngIf="salary_amount.invalid && (salary_amount.dirty || salary_amount.touched)"
+                                 class="alert alert-danger">
+                                 <div *ngIf="salary_amount.errors.pattern">  
+                                    Enter a valid salary amount 
+                                 </div>
+                                 </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">Salary Type</label>
+                     <select class="form-control" required name="salary_type" 
+                     [(ngModel)]="form_data.resume.salary_type" #salary_type ="ngModel">
+                     <option value="Hourly">Hourly</option>
+                     <option value="Monthly">Monthly</option>
+                     <option value="Annually">Annually</option>
+                     </select>
+                     <div *ngIf="salary_type.invalid && (salary_type.dirty || salary_type.touched)"
+                                 class="alert alert-danger">
+                                 Salary Tyoe is required
+                                 </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary formBtn" [disabled]="!salary.form.valid || isLoading" (click)="saveSalary()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- willing to relocate -->
+   <div class="modal smodal custom-form-group-flat" id="willing_to_relocate" style="margin-top:100px;"  data-keyboard="false" data-backdrop="static" #completeModal>
+      <div class="modal-dialog modal-sm">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Willing To Relocate</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <select class="form-control" name="willing_to_relocate" 
+                     [(ngModel)]="form_data.resume.willing_to_relocate">
+                     <option value="1">Yes</option>
+                     <option value="0">No</option>
+                     </select>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" [disabled]="isLoading" (click)="saveWillingToWork()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- social media modal -->
+   <div class="modal smodal custom-form-group-flat" id="social_media" style="margin-top:100px;"  data-keyboard="false" data-backdrop="static" #completeSocialModal>
+      <div class="modal-dialog modal-sm">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="social.id==''">Add Social Media</h4>
+               <h4 class="modal-title" *ngIf="social.id!=''">Edit Social Media</h4>
+            </div>
+            <div class="modal-body">
+               <form autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Type/Title</label>
+                     <select 
+                     class="form-control" 
+                     name="title" 
+                     [(ngModel)]="social.title"
+                     required>
+                     <option 
+                        value="{{ social }}" 
+                        *ngFor="let social of socialMedia" >{{ social | titlecase }}</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="experience">URL</label>
+                     <input 
+                     type="url" 
+                     class="form-control" 
+                     name="url" 
+                     [(ngModel)]="social.url"
+                     required>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" [disabled]="isLoading" (click)="addSocial()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- skills modal -->
+   <div class="modal smodal custom-form-group-flat" id="skills" style="margin-top:100px;">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title"><i class="material-icons">category </i>Skills</h4>
+            </div>
+            <div class="modal-body">
+               <form #skillsForm="ngForm">
+                  <div class="form-group">
+                     <tag-input [(ngModel)]='form_data.resume.skills' name="skills" 
+                     (onAdd)="saveSkills()" 
+                     (onRemove)="saveSkills()" 
+                     [placeholder]="skill_add_placeholder"
+                      #skills="ngModel">
+                     </tag-input>
+                     <div *ngIf="skills.invalid && (skills.dirty || skills.touched)"
+                                 class="alert alert-danger">
+                                 Skills are required
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer"> 
+               <button class="btn btn-primary formBtn" data-dismiss="modal" [disabled]="!skillsForm.form.valid" (click)="saveSkills()">Save</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- documents modal-->
+   <div class="modal smodal custom-form-group-flat" id="documents" style="margin-top:100px;" data-keyboard="false" data-backdrop="static" #completeDocumentModal>
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" *ngIf="document.id==''"><i class="material-icons">folder_special </i>Add Document</h4>
+               <h4 class="modal-title" *ngIf="document.id!=''">Edit Document</h4>
+            </div>
+            <div class="modal-body">
+               <form #documentForm="ngForm" autocomplete="off">
+                  <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                  <div class="form-group">
+                     <label for="experience">Title</label>
+                     <input type="text" 
+                     required
+                     class="form-control" 
+                     name="title" 
+                     [(ngModel)]="document.title" #docTitle="ngModel">
+                     <div *ngIf="docTitle.invalid && (docTitle.dirty || docTitle.touched)"
+                                 class="alert alert-danger">
+                                 Title for Document is required
+                                 </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Document</label>
+                     <input 
+                     name="document" 
+                     type="file" 
+                     #documentFile 
+                     (change)="handleDocumentUpload($event.target.files)" 
+                     id="document" 
+                     ref="file" 
+                     class="form-element form-control" required>
+                     <div *ngIf="documentFile.invalid && (documentFile.dirty || documentFile.touched)"
+                                 class="alert alert-danger">
+                                 Please Uplaod a document
+                                 </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary formBtn" [disabled]="!documentForm.form.valid" (click)="addDocument()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+

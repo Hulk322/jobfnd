@@ -1,0 +1,224 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+
+
+<div class="content-area floated dashboard testclass" #content_area>
+
+    <div class="main-head tabs-active" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Invite user to job</h2>
+            </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs">
+                <ul>
+                    <li class="active"><a ><label class="blue dot"></label> All Invitations</a></li>
+                    
+                </ul>
+                
+                <div class="searchbox">
+                    <form>
+                        <button><i class="material-icons">search</i></button>
+                        <input type="search" placeholder="Search Invitations">
+                    </form>
+                </div>
+                
+                <div class="view-switcher" style="display: none;">
+                    
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0)" class="open-filter"><i class="material-icons">filter_list</i></a>
+                            
+            <!-- Switch to dark theme removing class light-theme here -->
+            <div class="drop-wrap light-theme">
+                <div class="submission-filter-wrap">
+                    <h1>
+                        <i class="material-icons">filter_list</i> Filter
+                        <a href="javascript:void(0)" class="close-filter-panel">
+                            <i class="material-icons">cancel</i>
+                        </a>
+                    </h1>
+                    <h2 class="drop-down-subtitle"><i class="material-icons">work_outline</i> Job</h2>
+                    <div class="block">
+                        <input type="text" class="form-control" placeholder="City">
+                        <ul class="filter-chips">
+                            <li>
+                                <label>Content Marketing Manager</label>
+                                <a ><i class="material-icons">close</i></a>
+                            </li>
+                            <li>
+                                <label>Vice President of Marketing</label>
+                                <a ><i class="material-icons">close</i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <h2 class="drop-down-subtitle"><i class="material-icons">business</i> Vendor</h2>
+                    <div class="block">
+                        <input type="text" class="form-control" placeholder="City">
+                        <ul class="filter-chips">
+                            <li>
+                                <label>ABC Company</label>
+                                <a ><i class="material-icons">close</i></a>
+                            </li>
+                            <li>
+                                <label>US Tech Solutions</label>
+                                <a ><i class="material-icons">close</i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <h2 class="drop-down-subtitle"><i class="icon icon-paperclip"></i> Submission Type</h2>
+                    <div class="block">
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="customControlInline">
+                            <label class="custom-control-label" for="customControlInline">Direct Submissions</label>
+                        </div>
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="check2">
+                            <label class="custom-control-label" for="check2">Submission from Vendor</label>
+                        </div>
+                    </div>
+                    <h2 class="drop-down-subtitle"><i class="material-icons">assignment</i> By Status</h2>
+                    <div class="block">
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="check3">
+                            <label class="custom-control-label" for="check3">Accepted</label>
+                        </div>
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="check4">
+                            <label class="custom-control-label" for="check4">Rejected</label>
+                        </div>
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="check5">
+                            <label class="custom-control-label" for="check5">Interview Scheduled</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-btn">
+                    <input type="reset" name="resetfilter" value="Clear all" class="btn btn-secondary">
+                    <input type="submit" name="applyfilter" value="Submit" class="btn btn-primary">
+                </div>
+            </div>
+                        </li>
+                        <li><a ><i class="material-icons">menu</i></a></li>
+                        <li><a class="active" href="invite-user-to-job.html"><i class="material-icons">view_module</i></a></li>
+                    </ul>
+                    
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <div style="margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh;">
+
+<div class="row" *ngIf="candidates?.length<1 && !isLoading">
+        <div class="col-md-12"  style="text-align: center;">
+            <img src="assets/images/no-job.svg" style="margin-top: 13%;">
+         </div>
+        </div>
+
+        <div class="row" [@listAnimation]="candidates.length">
+
+            
+
+             
+                
+              
+            <ng-container *ngFor="let candidate of candidates">
+                
+            <div class="col-md-3" *ngIf="!candidate.invited">
+            <div class="card invite-grid">
+                    <div class="invite-head" (click)="goToView( candidate.talent_id )">
+                        <div class="text-avatar">
+                            {{ candidate.WeightedScore }}
+                        </div>
+                        <a class="card-title-lg">
+                            <h2>{{ candidate.talent?.Name }}</h2>
+                        </a>
+                        <label><i class="material-icons">place</i> {{ candidate.talent?.Address | slice:0:20 }}</label>
+                    </div>
+                    <div class="invite-body">
+                        <ul>
+                            <li>
+                                <i class="material-icons">work_outline</i>
+                                <ul>
+                                    <li>
+                                        <h5>{{ candidate.talent?.experiences[0]?.JobTitle | slice:0:25 }}</h5>
+                                        <p>{{ candidate.talent?.experiences[0]?.Organization | slice:0:25 }}</p>
+                                        <p>
+                                            {{ candidate.talent?.experiences[0]?.StartDate }}
+                                            <span *ngIf="candidate.talent?.experiences[0]?.EndDate ">{{ "- " + candidate.talent?.experiences[0]?.EndDate }}</span>
+                                             <span *ngIf="!candidate.talent?.experiences[0]?.EndDate ">- Present</span>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h5>{{ candidate.talent?.experiences[1]?.JobTitle | slice:0:25 }}</h5>
+                                        <p>{{ candidate.talent?.experiences[1]?.Organization | slice:0:25 }}</p>
+                                        <p>
+                                            {{ candidate.talent?.experiences[1]?.StartDate }}
+                                            <span *ngIf="candidate.talent?.experiences[1]?.EndDate ">{{ "- " + candidate.talent?.experiences[1]?.EndDate }}</span>
+                                            <span *ngIf="!candidate.talent?.experiences[1]?.EndDate ">- Present</span>
+                                        </p>
+                                        <p>{{ candidate.talent?.experiences[1]?.EndDate?.StringDate }}</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <i class="material-icons">school</i>
+                                <ul>
+                                    <li>
+                                        <h5>
+                                            <span *ngIf="candidate.talent?.Institution">{{ candidate.talent?.Institution | slice:0:35 }}</span>
+                                            <span *ngIf="!candidate.talent?.Institution">N/A</span>
+                                        </h5>
+                                        <p>
+                                            <span *ngIf="candidate.talent?.DegreeName">{{ candidate.talent?.DegreeName | slice:0:35 }}</span>
+                                            <span *ngIf="!candidate.talent?.DegreeName">N/A</span>
+                                        </p>  
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="btn-wrap">
+                            <button [disabled]="isLoading" 
+                            (click)="dismiss(candidate)" class="btn btn-outline-secondary"><i class="material-icons">clear</i> Dismiss</button>
+                            <button [disabled]="isLoading" 
+                            (click)="inviteToJob(candidate)" class="btn btn-primary"><i class="material-icons">add</i> Add to Job</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </ng-container>
+    
+        </div>
+
+
+        <div class="row" *ngIf="moreUrl != null">
+            <div class="col-md-12" style="text-align: center;
+            margin-top: 7px;">
+                <button 
+                [disabled]="isLoading || isLoadingMore"
+                class="btn btn-primary" (click)="loadMore()" style="font-size: 19px;
+                width: 190px;">Load More 
+                    <span *ngIf="isLoadingMore" style="padding-left: 10px;"><i class="fa fa-spinner fa-spin"></i></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="candidates?.length">
+            <div class="col-md-12" style="padding-left: 15px;">
+                    <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                    [collectionSize]="pageObj.totalElements"
+                    [(page)]="pageObj.page"
+                    (pageChange)="pageChange($event)" 
+                    [pageSize]="pageObj.pageSize"
+                    [boundaryLinks]="true">
+                    </ngb-pagination>
+            </div>
+        </div>
+
+    </div>
+</div>

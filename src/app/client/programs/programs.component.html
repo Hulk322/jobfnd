@@ -1,0 +1,272 @@
+<app-sidebar [current_menu_item]="'settings'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Settings - Programs</h2>
+                    <a href=""  data-target="#edit_client_modal" data-toggle="modal" class="btn-orange"><i class="material-icons">person_add</i>Add Program</a>
+                </div>
+                
+
+                
+            </div>
+            
+        </div>
+
+      <!-- <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+                              <div class="main-content-content eco-box-shadow">
+
+
+                                 <div class="setting-right-side">
+                                    
+                                    <div class="setting-right-side-content">
+                                       <table class="custom-table">
+                                          <tbody>
+                                             <tr>
+                                                <th>#</th>
+                                                <th>Program Name</th>
+                                                <th style="display: none">Incharge</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                             </tr>
+                                             <tr *ngFor="let program of programs; let i = index">
+                                                <td> {{ i+1 }} </td>
+                                                <td>{{ program.name | titlecase }} ( {{ program.start_date | date:'MM/dd/yyyy' }} - {{ program.end_date | date:'MM/dd/yyyy' }} ) </td>
+                                                <td style="display: none">{{ program.program_incharge.first_name | titlecase  }} {{ program.program_incharge.last_name | titlecase  }}</td>
+                                                <td><span class="btn-success status" *ngIf="program.status==1"> Active </span>
+                                                   <span class="btn-danger status" *ngIf="program.status==0"> Inactive </span>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                   <a (click)="edit(program)" class="btn btn-primary" style="margin-right:5px; color: white;">
+                                                      <i class="fa fa-pencil"></i>
+                                                   </a>
+                                                   <button (click)="delete(program.id, program)" [disabled]="program.deleted"
+                                                      class="btn btn-danger" [ngClass]="{ 'fa fa-spinner': program.deleted  }">
+                                                      <i [ngClass]="{ 'fa fa-trash': !program.deleted }"></i>
+                              
+                                                   </button>
+                                                </td>
+                                             </tr>
+                              
+                              
+                              
+                              
+                              
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <div class="setting-left-side form-style-v2">
+                                       <h4 style="margin-top: 25px;" *ngIf="!program.id">Add New Program</h4>
+                                       <h4 style="margin-top: 25px;" *ngIf="program.id">Update Program</h4>
+                                       <form method="POST" role="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+                              
+                                          <div class="form-group">
+                                             <label for="">Program Name</label>
+                                             <input name="name" required [(ngModel)]="program.name" type="text" class="form-control" id=""
+                                                placeholder="" value="">
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">Start Date</label>
+                                             <input type="text" required placeholder="MM/DD/YYYY" autocomplete="off" class="form-control"
+                                                [(ngModel)]="program.start_date" name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                                               dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">End Date</label>
+                                             <input type="text" required placeholder="MM/DD/YYYY" autocomplete="off" class="form-control"
+                                                [(ngModel)]="program.end_date" name="end_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                                                     dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">Program Incharge</label>
+                                             <select name="incharge" required [(ngModel)]="program.incharge" id="input" class="form-control select2">
+                                                <option value="{{ member.id }}" *ngFor="let member of teamMembers">
+                                                   {{ member.first_name | titlecase }} {{ member.last_name | titlecase }}
+                                                </option>
+                                             </select>
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">Status </label>
+                                             <select name="status" required [(ngModel)]="program.status" id="input" class="form-control select2"
+                                                tabindex="-1">
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                             </select>
+                                          </div>
+                              
+                                          <button type="submit" *ngIf="!program.id" [disabled]="isLoading"
+                                             class="btn btn-primary pull-right">Save</button>
+                                          <button type="submit" *ngIf="program.id" [disabled]="isLoading"
+                                             class="btn btn-primary pull-right">Update</button>
+                                       </form>
+                                    </div>
+                                 </div>
+                              
+                              
+                              
+                              </div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div> -->
+<div style=" margin:80px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            
+   <div class="row">
+
+       <div class="col-md-12">
+           
+           <table class="custom-table table-style-2 table table-striped">
+               <thead>
+                   <tr>
+                       <th>Program Name</th>
+                       <th>Start Date</th>
+                       <th>End Date</th>
+                       <th>Program Incharge</th>
+                       <th>Status</th>
+                       <th></th>
+                   </tr>
+               </thead>
+               <tbody>
+
+                   
+                   <tr *ngFor="let program of programs">
+                       <td width="30%">
+                           <label class="title-bold">{{ program.name | titlecase }}
+                           </label>
+                       </td>
+
+                       <td>
+                           <span class="team-meber-email"><i class="material-icons">event</i> {{ program.start_date | date:'MM/dd/yyyy' }}</span>
+                       </td>
+                       <td>
+                           <span class="team-meber-email"><i class="material-icons">event</i> {{ program.end_date | date:'MM/dd/yyyy' }}</span>
+                       </td>
+                       <td>
+                           <div class="text-avatar">{{ program?.program_incharge?.first_name | titlecase | slice:0:1 }} {{ program?.program_incharge?.last_name | titlecase | slice:0:1 }}</div>
+                           <label class="title-bold">{{ program?.program_incharge?.first_name | titlecase  }} {{ program?.program_incharge?.last_name | titlecase  }}</label>
+                       </td>
+                       <td>
+                           <label class="label green" *ngIf="program.status==1">Active</label>
+                  <label class="label red" *ngIf="program.status==0">Inactive</label>
+                       </td>
+                       
+                       <td width="50" align="right">
+                           <div class="btn-group">
+                             <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               <i class="material-icons">more_horiz</i>
+                             </button>
+                             <div class="dropdown-menu dropdown-menu-right">
+                               <a data-target="#edit_client_modal" data-toggle="modal" class="dropdown-item" (click)="edit(program)">Edit</a>
+                               <a class="dropdown-item" (click)="delete(program.id,program)">Delete</a>
+                             </div>
+                           </div>
+                       </td>
+                   </tr>
+                   
+                   
+                   
+                   
+               </tbody>
+           </table>
+           
+           
+       
+       </div>
+
+   </div>
+   
+   
+</div>
+
+
+<div class="modal smodal custom-form-group-flat"  id="edit_client_modal" style="margin-top:0px;"data-keyboard="false" data-backdrop="static" #completeModal>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+               <h4 class="modal-title" *ngIf="!program.id">Add Program</h4>
+               <h4 class="modal-title" *ngIf="program.id">Edit Program</h4>
+            <button class="close" data-dismiss="modal" (click)="dataDismiss()">&times;</button>
+            
+         </div>
+         <div class="modal-body">
+             <form  ngNativeValidate>
+                              
+                                          <div class="form-group">
+                                             <label for="">Program Name</label>
+                                             <input name="name" required [(ngModel)]="program.name" type="text" class="form-control" id=""
+                                                placeholder="" value="">
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">Start Date</label>
+                                             <input type="text" required placeholder="MM/DD/YYYY" autocomplete="off" class="form-control"
+                                                [(ngModel)]="program.start_date" name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                                               dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">End Date</label>
+                                             <input type="text" required placeholder="MM/DD/YYYY" autocomplete="off" class="form-control"
+                                                [(ngModel)]="program.end_date" name="end_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                                                     dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">Program Incharge</label>
+                                             <select name="incharge" required [(ngModel)]="program.incharge" id="input" class="form-control select2">
+                                                <option value="{{ member.id }}" *ngFor="let member of teamMembers">
+                                                   {{ member.first_name | titlecase }} {{ member.last_name | titlecase }}
+                                                </option>
+                                             </select>
+                                          </div>
+                              
+                                          <div class="form-group">
+                                             <label for="">Status </label>
+                                             <select name="status" required [(ngModel)]="program.status" id="input" class="form-control select2"
+                                                tabindex="-1">
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                             </select>
+                                          </div>
+                              
+                                         
+                                       </form>
+         </div>
+         <div class="modal-footer">
+             <button type="submit" *ngIf="!program.id" [disabled]="isLoading"
+                     class="btn btn-primary pull-right" (click)="addOrUpdate()">Save<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+             <button type="submit" *ngIf="program.id" [disabled]="isLoading"
+                     class="btn btn-primary pull-right" (click)="addOrUpdate()">Update<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+</div>
+
+
+
+

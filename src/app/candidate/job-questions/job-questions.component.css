@@ -1,0 +1,52 @@
+.api_job_id {
+    font-size: 12px;
+    
+}
+
+.job-questions .col-md-3 {
+    padding-left: 0px !important;
+}
+
+.single-job button {
+    position: absolute;
+    top: 50px !important;
+    right: 15px !important;
+}
+.question-2 {
+	padding-left: 0;
+	    margin-left: -14px;
+	    max-width: 267px;
+}
+
+.job:hover {
+    box-shadow: none;
+    background: #fffcfc;
+}
+.job-questions_heading {
+    border: none;
+    padding: 20px 20px 10px 20px;
+}
+
+
+
+.theme-blue .bs-datepicker-head {
+    background-color: #3157d8;
+}
+.theme-blue .bs-datepicker-body table td span.selected, .theme-blue .bs-datepicker-body table td.selected span, .theme-blue .bs-datepicker-body table td span[class*="select-"]:after, .theme-blue .bs-datepicker-body table td[class*="select-"] span:after {
+    background-color: #3157d8;
+}
+.bs-datepicker-body table thead th {
+    padding-right: 1px;
+}
+.theme-blue .bs-datepicker-body table td.week span {
+    color: #3157d8;
+}
+.bs-datepicker-container {
+    padding: 0;
+}
+
+.save_job {
+    top: 30px;
+    right: 150px;
+    position: absolute;
+}

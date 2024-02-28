@@ -1,0 +1,19 @@
+.api_job_id {
+    font-size: 12px;
+    
+}
+
+.job-questions .col-md-3 {
+    padding-left: 0px !important;
+}
+
+.single-job button {
+    position: absolute;
+    top: 50px !important;
+    right: 15px !important;
+}
+.question-2 {
+	padding-left: 0;
+	    margin-left: -14px;
+	    max-width: 267px;
+}

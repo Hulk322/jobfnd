@@ -1,0 +1,143 @@
+<app-sidebar [current_menu_item]="'talent-pool'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Talent Pool</h2>
+                    
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+
+                              <div class="main-content-content">
+                                  
+                                  <div class="talent-pool">
+                                    
+                                    <div class="talent-pool_content form-style-v2">
+                                        
+                                        <input type="text" name="" id="input" class="form-control m-b-20" placeholder="Search by name, location, title" 
+                                        [(ngModel)]="filters.search" (blur)="search()">
+
+                                         <div class="card no-padding">
+
+                                            <table class="table table-transparent">
+                                              <tbody>
+                                                <tr *ngFor="let submission of submissions">
+                                                  <td style="width: 100%; ">
+                                                    <div class="media">
+                                                      <a class="pull-left" href="#">
+                                                        <img class="media-object" 
+                                                        [src]="submission.meta.profilePictureFullUrl" 
+                                                        alt="Image" style="width: 25%">
+                                                      </a>
+                                                      <div class="media-body">
+                                                        <h4 class="media-heading">
+                                                        {{ submission.defaultResume.first_name }} {{ submission.defaultResume.last_name }}</h4>
+                                                        <p class="title">
+                                                          {{submission.defaultResume.title}}
+                                                        </p>
+                                                        <p class="date"><i class="fa fa-calendar "></i> Created: {{ submission.created_at | date:'dd-MMM-y' }}</p>
+                                                      </div>
+                                                    </div>
+                                                  </td>
+                                                  <td>
+                                                    <i class="fa fa-map-marker"></i> {{submission.defaultResume.address}} 
+                                                  </td>
+                                                  <td>
+                                                    <a *ngIf="submission.defaultResume.path" [href]="createDownloadResumeUrl(submission.defaultResume.path)"><i class="fa fa-download"></i></a>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                              
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="talent-pool_sidebar_outer">
+                                          <div class="talent-pool_sidebar_inner">
+                                            
+                                            <button type="button" class="btn btn-success btn-fat btn-block m-b-20" routerLink="/vendor/upload-talent"> <i class="fa fa-plus"></i> Upload New Talent</button>   
+
+                                            <div class="card">
+
+                                              <p class="filter">Sort By</p>
+                                              <div class="radio radio-blue">
+                                                  <label for="optionsRadios4">
+                                                    <input type="radio" name="optionsRadios" 
+                                                    id="optionsRadios4" value="newest" 
+                                                    [(ngModel)]="filters.sort" (change)="search()">
+                                                   <span class="label-text">Newest First</span>
+                                                  </label>
+                                              </div>
+                                              <div class="radio radio-blue">
+                                                  <label for="optionsRadios5">
+                                                    <input type="radio" name="optionsRadios" 
+                                                    id="optionsRadios5" value="oldest" 
+                                                    [(ngModel)]="filters.sort" (change)="search()">
+                                                   <span class="label-text">Older First</span>
+                                                  </label>
+                                              </div>
+                                              <div class="radio radio-blue">
+                                                  <label for="optionsRadios6">
+                                                    <input type="radio" name="optionsRadios" id="optionsRadios6" value="desc" [(ngModel)]="filters.sort"
+                                                    (change)="search()">
+                                                   <span class="label-text">Descending</span>
+                                                  </label>
+                                              </div>
+
+                                              <p class="filter">Job Title</p>
+
+                                              <div class="radio radio-blue" *ngFor="let title of titles; let in=index">
+                                                  <label for="optionsRadios{{in+8}}">
+                                                    <input type="radio" name="titleRadios" 
+                                                    id="optionsRadios{{in+8}}" [value]="title" 
+                                                    [(ngModel)]="selectedTitle" (change)="search()">
+                                                   <span class="label-text">{{title}}</span>
+                                                  </label>
+                                              </div>
+                                            </div>
+
+                                          </div>  
+                                    </div>
+                                  </div>
+
+                              </div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div>
+
+
+
+</div>
+        
+        
+    
+
+        
+    

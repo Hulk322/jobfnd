@@ -1,0 +1,243 @@
+<app-sidebar [current_menu_item]="'settings'"></app-sidebar>
+
+<div class="content-area floated add-job-white" #content_area>
+
+      <div class="main-head no-tabs nav-down">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Business Setup</h2>
+                    
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row justify-content-md-center">
+                
+                
+                <div class="col-md-9">
+
+                    <form #updateProfileForm=ngForm class="custom-form" (submit)="onSubmit()" ngNativeValidate>
+                    
+                    <div class="card job-grid new-job-block" style="    margin-bottom: 0px;">
+                        <div class="inner">
+                            <div class="s-details job-form-block" style="padding-bottom: 20px !important;">
+
+                                <h1 class="form-head">Basic Details</h1>
+
+                                <div class="row">
+
+                                    <div class="col-md-9">
+
+                                        <section class="s-form-row medium">
+                                            <label class="form-label">Business Name</label>
+                                            <input type="text" 
+                                             placeholder="Enter Business Name" 
+                                             name="name"
+                                             [(ngModel)]="business.name" 
+                                              autocomplete="off">
+                                        </section>
+                                        
+                                        <section class="s-form-row medium">
+                                            <label class="form-label">About Your Business/Company</label>
+                                            <textarea   name="business_description" 
+                                            id="description" 
+                                            rows="7" class="form-control"
+                                            [(ngModel)]="business.description"  
+                                            ></textarea>
+                                            
+                                        </section>
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="company-profile-logo-upload">
+
+                                            <input name="user.profile_picture" type="file" (change)="handleFileUpload($event.target.files)" id="profile_picture_edit_time" ref="file" class="form-element form-control"style="display: none;">
+
+                                            <a href="javascript:void(0)" style="cursor: pointer;" onclick="document.getElementById('profile_picture_edit_time').click();">
+                                                <label style="cursor: pointer;">
+                                                    <i class="material-icons">cloud_upload</i>
+                                                    Upload Logo
+                                                </label> 
+                                            </a>
+                                             <img src="{{ business.businessLogoFullUrlPublic }}" style="min-width: 194px;">
+                                             
+                                         </div>
+                                    </div>
+
+                                </div>
+
+
+
+</div>
+</div></div>
+
+
+<div class="card job-grid new-job-block" style="padding-bottom: 0px !important; ">
+    <div class="inner">
+        <div class="s-details job-form-block" style="padding-bottom: 20px !important;">
+            
+            
+                <h1 class="form-head">Other Details</h1>
+                
+                <div class="row">
+                    
+                    <div class="col-md-6">
+                        <section class="s-form-row icon-left">
+                            <label class="form-label">SubDomain</label>
+                            <span><i class="material-icons">bubble_chart</i></span>
+                            <input type="text" placeholder="Sub Domain" 
+                            [(ngModel)]="business.subdomain" name="subdomain" >
+                        </section>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <section class="s-form-row icon-left">
+                            <label class="form-label">Website URL </label>
+                            <span><i class="material-icons">vpn_lock</i></span>
+                            <input type="text" placeholder="" value="https://" 
+                            name="business_name" 
+                                [(ngModel)]="business.website_url"  >
+                        </section>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <section class="s-form-row icon-left">
+                            <label class="form-label">Default Currency</label>
+                            <span><i class="material-icons">monetization_on</i></span>
+                            <select name="default_currency" [(ngModel)]="business.default_currency" 
+                                        tabindex="-1">
+                                        <option value="">Select</option>
+                                        <option value="{{ currency }}" *ngFor="let currency of currencies">{{ currency }}
+                                        </option>
+                                    </select>
+                        </section>
+                    </div>
+                    
+                    <div class="col-md-8">
+                        <section class="s-form-row icon-left">
+                            <label class="form-label">Industry</label>
+                            <span><i class="material-icons">next_week</i></span>
+
+                            <div class="icon-spacing">
+                                <ng-select2 
+                                 [data]="categories" 
+                                 [(ngModel)]="business.business_category" 
+                                 [value]="business.business_category"
+                                 name="business_category" 
+                                  placeholder="Choose Category" 
+                                   ></ng-select2>
+                             </div>
+
+                            
+                        </section>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="first_name">Business Location</label>
+                            <AutocompleteComponent name="location" [placeholder]="placeholder"
+                            [autocompleteInput]="business.location" (setAddress)="getAddress($event)"
+                            adressType="geocode">
+                         </AutocompleteComponent>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                    <section class="s-form-row medium">
+                    <label class="form-label">Client ID</label>
+                    <input type="text"  name="client_id"
+                        [(ngModel)]="business.client_id">
+                                        </section>
+                    </div>
+
+    
+                    
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <p>Score Setting</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="business?.score[0]" name="business?.score[0]" value="sovren" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Sovren
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="business?.score[1]" name="business?.score[1]" value="talentzhire" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Talentzhire
+                            </label>
+                          </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <p>Parse With</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"  name="business?.parse_with" value="sovren" [checked]="business?.parse_with === 'sovren'"  (change)="selectedRadioButtonValue($event)"  id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Sovren
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio"  name="business?.parse_with" value="talentzhire" [checked]="business?.parse_with === 'talentzhire'" (change)="selectedRadioButtonValue($event)" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Talentzhire
+                            </label>
+                          </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <p>Display Score</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="business?.display_score[0]" name="business?.display_score[0]" value="sovren" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Sovren
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="business?.display_score[1]" name="business?.display_score[1]" value="talentzhire" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Talentzhire
+                            </label>
+                          </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card job-grid new-job-block" style="padding-bottom: 0px !important; ">
+    <div class="inner">
+        <div class="s-details job-form-block" style="padding-top: 0px !important; padding-bottom: 0px !important;">
+            
+            
+                <div class="form-action-buttons">
+                    <button class="btn btn-lg btn-primary" [disabled]="isLoading">
+                        <span *ngIf="!isLoading">Update</span><span *ngIf="isLoading">Updating...</span></button>
+                </div>
+             
+        
+        </div>
+    </div>
+</div>
+
+</form>
+</div>
+
+
+
+
+</div></div>
+
+
+
+</div>

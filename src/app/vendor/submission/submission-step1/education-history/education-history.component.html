@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+        <label class="section-title" style="font-weight:bold;">Education History</label>  
+    </div>
+</div>
+<div *ngIf="educations">
+    <div *ngFor="let education of educations">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+                <label class="section-title"></label>  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="form-group">
+                    <label for="">Degree</label>
+                    <input type="text" [(ngModel)]="education.degree_type" name="degree_type[]" class="form-control">
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <label for="">Graduation Date</label>
+                <input type="text"
+							
+	placeholder="YYYY-MM-DD"
+	class="form-control"
+	[(ngModel)]="education.end_date"
+	name="end_date[]"
+	[bsConfig]="{ containerClass: 'theme-blue', 
+						 dateInputFormat: 'YYYY-MM-DD' }"
+    bsDatepicker>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <div class="form-group">
+                    <label for="">Institute</label>
+                    <input type="text" [(ngModel)]="education.institute" name="institute" class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div v-else>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+            <label class="section-title"></label>  
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+                <label for="">Degree</label>
+                <input type="text" v-model="education.degree_type" class="form-control">
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <label for="">Graduation Date</label>
+            <input type="text"
+							
+	placeholder="YYYY-MM-DD"
+	class="form-control"
+	
+	name="education_end_date"
+	[bsConfig]="{ containerClass: 'theme-blue', 
+						 dateInputFormat: 'YYYY-MM-DD' }"
+    bsDatepicker>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <div class="form-group">
+                <label for="">Institute</label>
+                <input type="text" v-model="education.institute" class="form-control">
+            </div>
+        </div>
+    </div>
+</div>

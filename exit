@@ -1,0 +1,548 @@
+[33mcommit efd0a7199c83a2283304478639bbe811ed912824[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Merge: e1de66fa b090b495
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Sep 21 16:35:16 2020 +0500
+
+    Merge branch 'dev' of https://bitbucket.org/shahidbashir/ecospace-ng-simplifyhire into dev
+
+[33mcommit e1de66fa3d58529871bb24d53dc920249a909bec[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Sep 21 16:34:45 2020 +0500
+
+    if code sheet 0 then show empty screen
+
+[33mcommit b090b495d3f8fd2b2cc2123d8011254e48ced7a4[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Thu Sep 17 15:41:59 2020 +0500
+
+    simpliyfhire key
+
+[33mcommit dfafdf955f813876364dbebb80825597468f3b6e[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Wed Sep 16 09:25:51 2020 +0500
+
+    add organization_id in google  analytics
+
+[33mcommit 1bcc288ed0a6ba55928494846d730339f64d5ea2[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Sep 15 19:37:30 2020 +0500
+
+    dd clientid on job question page
+
+[33mcommit f725383a255bb8848c2ace12f9b4c7e3a1af83c5[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Sep 15 18:59:30 2020 +0500
+
+    set client id in google analytics
+
+[33mcommit d73477eb0d647617b70f0966bbbf721be81ed384[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Sep 14 15:31:03 2020 +0500
+
+    show recent offers descending order
+
+[33mcommit b2ffacb35a1eaa26f876fa0a03d5cbf2f29a4137[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Thu Sep 10 17:21:01 2020 +0500
+
+    small fix
+
+[33mcommit f9499c66455515b313cfd7320582e401b53306c6[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Wed Sep 9 18:49:01 2020 +0500
+
+    fix script tag
+
+[33mcommit 878b6824d962b209740592ed9b977e7c769f0cbf[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Wed Sep 9 18:18:17 2020 +0500
+
+    change to script
+
+[33mcommit fdcee52e05dad456e3182b033420a6d961c7bfe8[m
+Merge: ba49f199 83d36fd0
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Wed Sep 9 14:43:09 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit ba49f1996d6cb9981209229d321aaccaf18866c6[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Wed Sep 9 14:34:18 2020 +0500
+
+    dyanmaic widgt url
+
+[33mcommit 83d36fd05f8390734413ada17e0c53aa4521046e[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Tue Sep 8 20:24:07 2020 +0500
+
+    this.checkResumeParsed()
+
+[33mcommit ad487a66150b2f09b9be42c7ac0fff2d9327eee9[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Tue Sep 8 20:16:13 2020 +0500
+
+    checkResumeParsed()
+
+[33mcommit 20ccb30a657e9a0eefb28c98f65e0dca5402ec53[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Tue Sep 8 18:59:41 2020 +0500
+
+    in case, is_parsed is not done, disable upload button
+
+[33mcommit 9408aab0a78fa0f864da060e33ead804c76c2591[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Tue Sep 8 17:53:24 2020 +0500
+
+    this.resume_uploaded==true && this.is_resume_parsed==true
+
+[33mcommit 18b657c305383076841484fb623b236cb7a66279[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Tue Sep 8 15:52:55 2020 +0500
+
+    data.data.resume.is_parsed
+
+[33mcommit 7ff269aef901c1656494cfc8c9240092b4e06e36[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Tue Sep 8 15:39:22 2020 +0500
+
+    is_resume_parsed check
+
+[33mcommit 2e4eb15fc85a7e0c3b377798e267984424c1497d[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Sep 7 13:46:24 2020 +0500
+
+    offers and interviews count show on job listing admin site
+
+[33mcommit 51635a2fc0548d2a33827a67c0da487eec314a8a[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Sep 4 17:41:49 2020 +0500
+
+    Comparison Preview Modal
+
+[33mcommit a682edbdd5a5783f51835670f427bfdd90fa42e1[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Thu Sep 3 20:36:47 2020 +0500
+
+    fix
+
+[33mcommit 751f0ec61576fb9e6ddf4d1dc22b6df5f5d6488d[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Thu Sep 3 18:26:06 2020 +0500
+
+    id changed to resume_id
+
+[33mcommit 5bff64ee8cd9244390cbbeaa128128b5c94dcbda[m
+Merge: 42c01c10 c093fef6
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Thu Sep 3 13:01:45 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit 42c01c10c031ac8b2f81af84db44b5dc244558f9[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Thu Sep 3 12:42:35 2020 +0500
+
+    after success on forget password redirect to login
+
+[33mcommit c093fef67ec28c6cd577524def421afbe6b8b015[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Thu Sep 3 00:50:26 2020 +0500
+
+     in applications
+
+[33mcommit b7445ddca3f0cd874bb6b4299cdf991da5a8d669[m
+Merge: e7e5102e fa615362
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Tue Sep 1 12:03:34 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit e7e5102eeb437795733aa0fbe859408453a7e5cc[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Tue Sep 1 01:15:43 2020 +0500
+
+    user can select up to 3
+
+[33mcommit 137997ac62f7657d3293858e89ec5a8f278b9e26[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Tue Sep 1 00:16:57 2020 +0500
+
+    undefined issue fixed
+
+[33mcommit 63b935c480ab786eeb14440c6428daeab0ff5105[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Mon Aug 31 22:43:04 2020 +0500
+
+    small fixes
+
+[33mcommit 0a5d10221d631948379d5bf241ef5e368d016bdd[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Mon Aug 31 22:41:04 2020 +0500
+
+    comparison table done
+
+[33mcommit 1ff84836596f6f8c8ecb5aedf65bacf1a20ce5e9[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Mon Aug 31 22:31:10 2020 +0500
+
+    comparison arrays
+
+[33mcommit fa6153626bfef2d1c9c7d4cf9d561e6e06ba47c5[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Aug 31 18:08:14 2020 +0500
+
+    fix categories  dropdown on public job view page
+
+[33mcommit 2cc7ea470319b28bd90e32fb419488cc4f9063b0[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Mon Aug 31 16:35:14 2020 +0500
+
+    Input comparison_data
+
+[33mcommit 839113d0f628140651c75eb9d1ba822050065445[m
+Merge: dc0eb75d 8bb6c382
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Mon Aug 31 16:16:21 2020 +0500
+
+    Merge branch 'dev' of https://bitbucket.org/simplifyworkforce/ecospace-ui into dev
+
+[33mcommit dc0eb75d90c34bfb17f5fcede7ba641539c18112[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Mon Aug 31 16:15:27 2020 +0500
+
+    compareCandidates Request
+
+[33mcommit 8bb6c38250c4191158f4360123dff1f1aada22c5[m
+Merge: f0be39a6 8e55d9cc
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Mon Aug 31 15:50:14 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit f0be39a6f50f024dbddc466be1eb0bc6405779b7[m
+Merge: aba7dd31 45941e4d
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Fri Aug 28 15:58:38 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit aba7dd319affd6341c6b41670e097c9466e39667[m
+Merge: 1e61f41b b8f252a0
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Fri Aug 28 15:51:30 2020 +0500
+
+    Merge branch 'master' of https://bitbucket.org/shahidbashir/ecospace-ng-simplifyhire into dev
+
+[33mcommit 45941e4d3cc5998f4d7669b9a9785de5f11dfa56[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Thu Aug 27 18:55:02 2020 +0500
+
+     Employer filter in discover candidate
+
+[33mcommit 8e55d9ccc1c8045c6cc1f419ec6e55cd2b458d7c[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Thu Aug 27 09:48:21 2020 +0500
+
+    fix job applications user interface
+
+[33mcommit 1e61f41bacc44db48748508097f8d890843eab8e[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Aug 25 17:40:38 2020 +0500
+
+    add phone mask
+
+[33mcommit 350e9ca5510330e7aa3111fdb8251a9d7c763244[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Aug 25 17:13:22 2020 +0500
+
+    fa  fa-stack-overflow
+
+[33mcommit 1ad1faee70ff064d4ab462e0d6bb8f27143aaad5[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Aug 25 17:09:12 2020 +0500
+
+    resume page all model window's updated
+
+[33mcommit be66fe139517f38b5322f081e71f70552c52eda4[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Aug 25 11:38:23 2020 +0500
+
+    about me model window update
+
+[33mcommit 2a052bc509814af7f9c42d9932ce62abf267dd4e[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Aug 24 13:22:56 2020 +0500
+
+    resume other model window updated like work history education etc.
+
+[33mcommit e6b059de6f1fd4cb2d0238c6e59fa15cdb64416b[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Aug 24 11:53:34 2020 +0500
+
+    candidate resume social and Willing To Relocate model window update
+
+[33mcommit b74bb80540efa2ac31c68409f554a1696b338621[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Aug 24 10:54:39 2020 +0500
+
+    fix Contact Information validations
+
+[33mcommit 7edaccc49e504f0013c65bfdffa9f616be724b86[m
+Merge: 6ed35091 49119795
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Sat Aug 22 10:33:16 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit 491197951d3b462a974d4a883fc6ba6d49336c63[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Aug 21 23:31:53 2020 +0500
+
+    Comparison sample table for candidates
+
+[33mcommit 70d15a66383e696a958db6f06d95a437a88cb34a[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Aug 21 23:05:30 2020 +0500
+
+    applied fancy loader also etc
+
+[33mcommit 87eeaa5b92c8bb76faa829d5249360d001562693[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Aug 21 21:06:52 2020 +0500
+
+    search mode
+
+[33mcommit f301b8dc9a429747cf587c741419b0e641b69f8b[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Aug 21 20:43:20 2020 +0500
+
+    hide apply to job for filterCandidates
+
+[33mcommit f81dd217daf5dd5fd37082709f5978b206768c44[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Aug 21 18:09:20 2020 +0500
+
+    updates to caps
+
+[33mcommit 1c3f5b251608b45e57d14143798677fcc7319d08[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Aug 21 17:54:26 2020 +0500
+
+    [disabled]="isLoading"
+
+[33mcommit 8bd900032f6ac1a2f4807d1545aa2b07fae82d79[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Aug 21 17:24:42 2020 +0500
+
+    font-size: 13px;
+
+[33mcommit 6ed35091027dbd5205e88676c80c1f942ce13744[m
+Merge: 0cf34641 71499fe5
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Fri Aug 21 16:44:27 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit 0cf346414fcd35275e05b7f22a5336c641f7a5d5[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Fri Aug 21 16:19:27 2020 +0500
+
+    Filters in discover candidates
+
+[33mcommit 3e83018ada431080a6f46bbc4931e339a2dd2c26[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Wed Aug 19 23:06:05 2020 +0500
+
+    compare candidates component placeholder
+
+[33mcommit 71499fe544bd27440087c207e1011f5c14d2be22[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Aug 18 16:05:12 2020 +0500
+
+    add search filter on closed job page
+
+[33mcommit 09ea78ffc25a9bca4518eda4d521a4c7562be75e[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Aug 17 17:40:13 2020 +0500
+
+    after come back http response then industries model window close
+
+[33mcommit 06f240c8558069e91083f3768d84a2cc39c6672a[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Thu Aug 13 18:34:43 2020 +0500
+
+    add activation checkbox on create client
+
+[33mcommit af20729f1cacd347d7e12f71d1c10c81fa0315ab[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Thu Aug 13 16:43:56 2020 +0500
+
+    admin add client
+
+[33mcommit b8f252a0caed4de29bbebce01c675f50bfe5afe5[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: dcd3a912 3cbb3c52
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Wed Aug 12 17:04:33 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit 3cbb3c5274b487dcda11dd710fc9c7c3ea853d7f[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Aug 11 17:49:49 2020 +0500
+
+    add simplifycareers live domain for logo
+
+[33mcommit dcd3a9129442ade5f9eb1bd1d6ff8b907c3b0d8b[m
+Merge: 8d9fe093 a3abe963
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Tue Aug 11 15:37:56 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit bc5a570f00ffa946ad17c55e4cb69f62d76fb9d0[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Tue Aug 11 11:11:43 2020 +0500
+
+    fixed
+
+[33mcommit a3abe963666220aed40a7ba814abf2aa1b1210aa[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Aug 10 18:07:55 2020 +0500
+
+    add two more googleAnalytics event
+
+[33mcommit 7dfdbafb8116950872a038d971f6bbb1e70ec9e3[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Aug 10 17:46:06 2020 +0500
+
+    add analytic_mode variable
+
+[33mcommit 2b736b04cb7da0e2b3a20d5c830ec5642d8bda00[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Mon Aug 10 12:16:00 2020 +0500
+
+    add debug version
+
+[33mcommit 57ff8ecdaa2b9d748197c80c64c593ba592d5087[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Sun Aug 9 01:30:46 2020 +0500
+
+    add gtag events
+
+[33mcommit 69bca5f3b63ab47c3c60bac8cbd121f21991f7df[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Sun Aug 9 01:09:16 2020 +0500
+
+    turn off gtm
+
+[33mcommit 11b7d4fcd14018d73280eb6917ab4a1013e43362[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Sun Aug 9 00:50:51 2020 +0500
+
+    test gtag on dev
+
+[33mcommit cbaf30f110ebc114c72b12c897bcdd15ee6d0dfa[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Sat Aug 8 23:01:13 2020 +0500
+
+    push gtm tag
+
+[33mcommit 0a886b55001012e58d5771db98ba1ed29aa5f1d5[m
+Merge: 3034bd3a a0b9cc62
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Fri Aug 7 12:27:31 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit 3034bd3ae2e189d80ca55fcbcb7f3b48d324ed8a[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Fri Aug 7 12:26:54 2020 +0500
+
+    remove user object
+
+[33mcommit 0a4655bd020bcf49da14f1ad0c30e2982fbf6696[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Thu Aug 6 21:06:48 2020 +0500
+
+    center align button on front end
+
+[33mcommit d418a4db15164a7a3a58dce1f3f6fe3e675777d3[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Thu Aug 6 17:26:08 2020 +0500
+
+    margin-center
+
+[33mcommit 107057a7c93ce9590b58dc9d7b9e94452c5ff549[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Thu Aug 6 17:03:32 2020 +0500
+
+    remove space
+
+[33mcommit ab29cfad2457fd2db1be608936c9463aac711eb6[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Wed Aug 5 19:03:06 2020 +0500
+
+    correct spelling
+
+[33mcommit c7078798772e1412a15c5530be0f1df3ffbd239d[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Thu Aug 6 16:12:01 2020 +0500
+
+    location should come below job title
+
+[33mcommit 8595aa806ea6b6e92801e3aa6e32fa83bc7d5ad0[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Thu Aug 6 14:31:25 2020 +0500
+
+    space removed
+
+[33mcommit b4185f559ed2656289f425131dab309ff36fe991[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Thu Aug 6 14:15:29 2020 +0500
+
+    Refer email text update
+
+[33mcommit e19d87aee831ffa5ae5f45ea80e3af10cb2b967c[m
+Author: zeeshan_humayun <zeeshantalking@gmail.com>
+Date:   Thu Aug 6 00:41:05 2020 +0500
+
+    utm parameters null/undefined checks etc
+
+[33mcommit dc235a26e7ecc9c4b2ab9e74aa90e8ef0459262f[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Wed Aug 5 23:53:19 2020 +0500
+
+    JOB_LOCATION
+
+[33mcommit a0b9cc62a39da2d32acb38cdfc12cba69c59a688[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Wed Aug 5 19:03:06 2020 +0500
+
+    correct spelling
+
+[33mcommit 1cb9db632505f82e7ceefcd24de050fa78a2aee5[m
+Merge: 20f181bc 4fbdf3e3
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Wed Aug 5 16:01:28 2020 +0500
+
+    Merge branch 'dev' of https://bitbucket.org/shahidbashir/ecospace-ng-simplifyhire into dev
+
+[33mcommit 20f181bc2d9eb15a5379a0e750def7aada5b8340[m
+Author: Wasim Hanif <tariqwasim124@gmail.com>
+Date:   Wed Aug 5 16:00:42 2020 +0500
+
+    add Google Tag Manager
+
+[33mcommit 4fbdf3e38768e5d6cfd3ee72403af6d65d6e455b[m
+Merge: e64ddc0a 285b545f
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Wed Aug 5 10:40:07 2020 +0500
+
+    Merge branch 'dev'
+
+[33mcommit e64ddc0a5570e23a62cbd38fa3eabe614f41f880[m
+Author: Shahid Bashir <shahid_chaudhary@outlook.com>
+Date:   Wed Aug 5 10:02:13 2020 +0500
+
+    change the api key

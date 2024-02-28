@@ -1,0 +1,8 @@
+  <div class="row">
+  <div class="col-md-3" *ngFor="let value of cardOptions">
+ <div class="card availabilitycard"  [ngClass]="{'active':isActive === value.name}" (click)="updateAcccountSettings($event)"name="fieldName" ngDefaultControl>
+                <i class="material-icons">{{value.emoji}}</i>
+                <h3 id="availablenow">{{value.name}}</h3>
+ </div>
+</div>
+</div>

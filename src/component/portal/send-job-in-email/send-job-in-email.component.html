@@ -1,0 +1,37 @@
+<div class="company-detail">
+    <h5 style="font-size: 17px !important;
+    font-weight: 600;
+    color: #414141;">Email this job</h5>
+
+<p style="padding-bottom: 0px; color: #485463;">To access this job later or share with a friend, please enter Name and Email Address below.</p>
+    
+    <input style="margin-top: 10px;" 
+     class="form-control" 
+     name="name" 
+     autocomplete="off"
+     [(ngModel)]="name"
+     placeholder="Name">
+    
+    <input style="margin-top: 10px;" 
+     class="form-control" 
+     name ="email" 
+     autocomplete="off"
+     [(ngModel)]="email"
+      placeholder="Email">
+
+    <button  class="btn btn-md btn-primary" 
+    [disabled]="isLoading"
+    (click)="sendEmail()"
+    style="
+    text-align: center;
+    margin-top: 10px;
+">Submit</button>
+
+<p></p>
+<span>Job Link</span>
+    <a style="cursor: pointer; color:#007bff" class="btn-link pull-right" (click)="copyMessage()">Copy
+       Link</a>
+    <input type="text" class="form-control copy-link" value="{{ job_link }}">
+
+</div>
+

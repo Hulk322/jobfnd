@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+.quickaction-tabs .link {
+    cursor: pointer;
+    color: #d3ccf9;
+}

@@ -1,0 +1,126 @@
+<app-sidebar [current_menu_item]="'industries'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+        <div class="head-left">
+            <h2 class="page-title">Industries</h2>
+          <a data-target="#edit_industry_model" data-toggle="modal" class="btn-orange"><i class="material-icons">add</i>Add Industrie</a>
+        </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs">
+               
+
+               <div class="searchbox">
+                   <form>
+                       <button><i class="material-icons">search</i></button>
+                       <input type="search" style="width: 250px;" name="search_keyword" placeholder="Search by Industrie Name" (keyup)="getIndustries()" [(ngModel)]="search_keyword">
+                   </form>
+               </div>
+           </div>
+            
+        </div>
+
+    </div>
+
+     <div style=" margin:120px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+              
+              
+        <div class="row justify-content-md-center">
+            
+            
+            <div class="col-md-12">
+                
+                <table class="custom-table table-style-2">
+                    <thead>
+                        <tr>
+                            <th>Industrie Name</th>
+                            <th>slug</th>
+                            <th>Status</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        
+                        <tr *ngFor="let indsutry of industries">
+                          <td>
+                             <label class="title-bold">{{ indsutry?.name | titlecase }}</label>
+                         </td>
+                         <td>
+                            <label class="title-bold">{{ indsutry?.slug | titlecase }}</label>
+                         </td>
+                        <td><span class="badge badge-success"  *ngIf="indsutry.status==1"> Active </span>
+                           <span class="badge badge-danger"  *ngIf="indsutry.status==0"> Inactive </span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                                   <td style="text-align: center;">
+                                      <div class="btn-group">
+                                         <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                           <i class="material-icons">more_horiz</i>
+                                         </button>
+                                         <div class="dropdown-menu dropdown-menu-right">
+                                         <a class="dropdown-item" (click)="edit(indsutry)"  data-target="#edit_industry_model" data-toggle="modal">Edit</a>
+                                          <a class="dropdown-item" style="cursor: pointer;" (click)="deleteIndustrie(indsutry.id, indsutry)">Delete</a>
+                                         </div>
+                                       </div>
+                                   </td>
+                                </tr>                         
+                    </tbody>
+                </table>
+            </div>
+        </div>
+           <div class="row">
+            <div class="col-md-12" style="margin-top: 20px;">
+                  <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                  [collectionSize]="pageObj.totalElements"
+                  [(page)]="pageObj.page"
+                  [maxSize]="5"
+                  (pageChange)="pageChange($event)" 
+                  [pageSize]="pageObj.pageSize"
+                  [boundaryLinks]="true">
+                  </ngb-pagination>
+               </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal smodal custom-form-group-flat" id="edit_industry_model" style="margin-top:0px;" data-keyboard="false" data-backdrop="static" #completeModal>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+         <h4 class="modal-title" *ngIf="!indsutry.id">Add Indsutry</h4>
+         <h4 class="modal-title" *ngIf="indsutry.id">Edit Indsutry</h4>
+            <button class="close" data-dismiss="modal">&times;</button>
+            
+         </div>
+         <div class="modal-body">
+                       <form ngNativeValidate>
+
+                                 <div class="form-group">
+                                    <label for="">Indsutry Name</label>
+                                    <input name="name" required  type="text"
+                                       class="form-control" id="" placeholder="" [(ngModel)]="indsutry.name">
+                                 </div>
+                                
+                              </form>
+         </div>
+         <div class="modal-footer">
+         <button type="submit" *ngIf="!indsutry.id" [disabled]="isLoading"
+                             class="btn btn-primary pull-right" (click)="addOrupdate()">Add<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+          <button type="submit" *ngIf="indsutry.id" [disabled]="isLoading"
+                             class="btn btn-primary pull-right" (click)="addOrupdate()">Update<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+

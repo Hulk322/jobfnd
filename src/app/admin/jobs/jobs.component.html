@@ -1,0 +1,163 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Jobs</h2>
+              
+            </div>
+            <app-header-right></app-header-right>
+            <div class="easytabs">
+               <div class="searchbox">
+                  <form>
+                     <button><i class="material-icons">search</i></button>
+                     <input type="search" style="width: 250px;" name="search_keyword" placeholder="Search by Title" 
+                     (keyup)="getJobs()" [(ngModel)]="search_keyword"  >
+                  </form>
+               </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+            <div class="col-md-12" *ngIf="jobs?.length<1 && !isLoading" style="text-align: center;">
+                    <img src="assets/images/no-job.svg" style="margin-top: 13%;">
+                 </div>
+
+
+        <div style="margin-bottom: 20px;">
+
+            <div class="row" *ngFor="let job of jobs">
+                <div class="col-md-12">
+                    <div class="card job-list">
+                        <div class="btn-group job-grid-actions">
+                            <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="true">
+                                <i class="material-icons">more_horiz</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" (click)="jobInterveiw(job.id)">Job Interviews</a>
+                                <a class="dropdown-item" (click)="jobSubmission(job.id)">Job Submissions</a>
+                                <a class="dropdown-item" (click)="jobOffer(job.id)">Job Offers</a>
+                                <a class="dropdown-item" style="cursor: pointer;"(click)="selectJob(job)"  data-toggle="modal" data-target="#job_delete_model">Delete</a>
+                            </div>
+                        </div>
+                        <div class="inner">
+                            <div class="s-details">
+                                <div class="job-head-list">
+                                    <a  class="card-title-lg" [routerLink]="['/admin/job/', job.id]">
+                                        <h2>{{ job.title | slice:0:25 }} ({{ job.id }})</h2>
+                                    </a>
+                                </div>
+                                <div class="badge-wrap">
+                                    <label *ngIf="job.job_type=='Full Time'" class="badge large green">{{ job.job_type }}</label>
+                                    <label *ngIf="job.job_type=='Temp Hire'" class="badge large red">{{ job.job_type }}</label>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="job-additionalinfo">
+                                    <ul>
+                                        <li>
+                                            <i class="material-icons">place</i> <span>{{ job.job_location }}</span>
+                                        </li>
+                                        <li *ngIf="job.category != null">
+                                            <i class="material-icons">category</i> <span>{{job.category.name}}</span>
+                                        </li>
+                                        <li>
+                                            <i class="material-icons">monetization_on</i>
+                                            <span *ngIf="job.job_type=='Full Time'">{{ job.salary  | currency: '$' }}</span>
+                                            <span itemprop="baseSalary" *ngIf="job.job_type=='Temp Hire'">
+                                               <span  *ngIf="job.min_rate>0">{{job.min_rate | currency: '$' }}/h - </span> 
+                                                    {{ job.max_rate | currency: '$' }}/h 
+
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <label class="experience-icon">
+                                            <svg *ngIf="job.experience=='Entry'||job.experience==null" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="b" y1="11.126" transform="translate(94.123 512.609)"/><line class="b" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+
+                                            <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="b" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+
+                                            <svg *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="a" y1="12.916" transform="translate(99.745 510.82)"/><line class="b" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+
+                                            <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5"><defs><style>.a{fill:none;stroke:#5bcb58;stroke-linecap:round;stroke-width:3px;}</style></defs><g transform="translate(-87 -506.736)"><line class="a" y2="8.434" transform="translate(88.5 515.302)"/><line class="a" y1="11.126" transform="translate(94.123 512.609)"/><line class="a" y1="12.916" transform="translate(99.745 510.82)"/><line class="a" y1="15.5" transform="translate(105.745 508.236)"/></g></svg>
+                                            </label>
+                                               <span>{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="job-information">
+                                    {{ job.excerpt }} ...
+                                </div>
+                                <ul class="requirements">
+                                    <li  *ngFor="let skill of job.skills  | slice:0:2" 
+                                    ><i class="material-icons">check</i> {{skill.name | slice:0:20 }}</li>
+                                    <li *ngIf="job?.skills?.length > 2">+{{ job?.skills?.length-2 }}</li>
+                                    <li *ngIf="job?.skills?.length < 1"> No Skills</li>
+                                </ul>
+                                <ul class="status">
+                                    <li>Offers <span>{{ job?.offers_count }}</span></li>
+                                    <li>Interview <span>{{ job?.interviews_count }}</span></li>
+                                    <li>Submissions <span>{{ job?.submissions_count }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="colo-md-12" style="padding-left: 15px;">
+                    <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                    [collectionSize]="pageObj.totalElements"
+                    [(page)]="pageObj.page"
+                    (pageChange)="pageChange($event)" 
+                    [pageSize]="pageObj.pageSize"
+                    [boundaryLinks]="true">
+                    </ngb-pagination>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Job modal -->
+<div class="modal fade" id="job_delete_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Job Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Reason</label>
+          <select class="form-control" name="reason" [(ngModel)]="job_delete.reason">
+            <option value="job closed">Job Closed</option>
+            <option value="test job">Test Job</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Note</label>
+          <textarea  cols="20" rows="5" name="notes" [(ngModel)]="job_delete.notes" class="form-control" ></textarea>
+        </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="deleteJob(job.id, job)" data-dismiss="modal">Delete Job</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,17 @@
+.asterik{
+    color:red;
+}
+
+select {
+	height: 48px;
+	-webkit-appearance:none; 
+}
+
+input[type="text"] {
+	height: 48px;
+	-webkit-appearance:none; 
+}
+
+.custom_field{
+    margin-bottom: 15px;
+}

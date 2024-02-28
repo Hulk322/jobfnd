@@ -1,0 +1,122 @@
+<div class="col-md-4" *ngFor="let job of jobs" style="cursor: pointer;">
+                  <div class="card-grid-job" (click)="goToJob(job)">
+                     <div class="job-title">
+                        <h4 (click)="goToJob(job)">{{job.title  }} ({{ job.id }}) </h4>
+                     </div>
+                     <div class="job-info">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="blckinfo">
+                                 <i class="material-icons">apartment</i>
+                                 <span>{{ job?.client_organization?.name }}</span>
+                              </div>
+                           </div>
+                           <div class="col-md-6" *ngIf="job.city!=null || job.state!=null || job.country!=null">
+                              <div class="blckinfo">
+                                 <i class="material-icons">room</i>
+                                 <span>{{ job.city }} {{ job.state }} {{ job.country }}</span>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="blckinfo">
+                                 <input type="hidden" value="{{ job?.category?.name }}" itemprop="industry" >
+                                 <input type="hidden" value="{{ job.openings }}" itemprop="totalJobOpenings" >
+                                 <input type="hidden" value="{{job.star_date}}" itemprop="jobStartDate">
+                                 <div class="icon-exp">
+                                    <svg *ngIf="job.experience=='Entry'||job.experience==null" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                       <defs>
+                                          <style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style>
+                                       </defs>
+                                       <g transform="translate(-87 -506.736)">
+                                          <line class="a" y2="8.434" transform="translate(88.5 515.302)"/>
+                                          <line class="b" y1="11.126" transform="translate(94.123 512.609)"/>
+                                          <line class="b" y1="12.916" transform="translate(99.745 510.82)"/>
+                                          <line class="b" y1="15.5" transform="translate(105.745 508.236)"/>
+                                       </g>
+                                    </svg>
+                                    <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                       <defs>
+                                          <style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style>
+                                       </defs>
+                                       <g transform="translate(-87 -506.736)">
+                                          <line class="a" y2="8.434" transform="translate(88.5 515.302)"/>
+                                          <line class="a" y1="11.126" transform="translate(94.123 512.609)"/>
+                                          <line class="b" y1="12.916" transform="translate(99.745 510.82)"/>
+                                          <line class="b" y1="15.5" transform="translate(105.745 508.236)"/>
+                                       </g>
+                                    </svg>
+                                    <svg *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                       <defs>
+                                          <style>.a,.b{fill:none;stroke-linecap:round;stroke-width:3px;}.a{stroke:#5bcb58;}.b{stroke:#c8c7c7;}</style>
+                                       </defs>
+                                       <g transform="translate(-87 -506.736)">
+                                          <line class="a" y2="8.434" transform="translate(88.5 515.302)"/>
+                                          <line class="a" y1="11.126" transform="translate(94.123 512.609)"/>
+                                          <line class="a" y1="12.916" transform="translate(99.745 510.82)"/>
+                                          <line class="b" y1="15.5" transform="translate(105.745 508.236)"/>
+                                       </g>
+                                    </svg>
+                                    <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                                       <defs>
+                                          <style>.a{fill:none;stroke:#5bcb58;stroke-linecap:round;stroke-width:3px;}</style>
+                                       </defs>
+                                       <g transform="translate(-87 -506.736)">
+                                          <line class="a" y2="8.434" transform="translate(88.5 515.302)"/>
+                                          <line class="a" y1="11.126" transform="translate(94.123 512.609)"/>
+                                          <line class="a" y1="12.916" transform="translate(99.745 510.82)"/>
+                                          <line class="a" y1="15.5" transform="translate(105.745 508.236)"/>
+                                       </g>
+                                    </svg>
+                                 </div>
+                                 <span>{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+                              </div>
+                           </div>
+                           <div class="col-md-6" *ngIf="(job.job_type=='Full Time' && job.salary!=null) || (job.job_type=='Temp Hire' && (job.min_rate>0 || job.max_rate>0) )">
+                              <div class="blckinfo">
+                                 <i class="material-icons">monetization_on</i>
+                                 <span *ngIf="job.job_type=='Temp Hire'">${{ job.min_rate | number: '1.2-2' }} / {{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}
+                                   
+                                    <label *ngIf="job.min_rate>0 && job.max_rate>0"> - </label>
+                                   
+                                    <label *ngIf="job.max_rate>0">  ${{ job.max_rate | number: '1.2-2' }} / {{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}</label></span>
+                                 <label *ngIf="job.job_type=='Full Time' && job.salary!=null">
+                                   {{job.salary | currency: '$' }} 
+                                    </label>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="job-description">
+                        <p [innerHtml]="job.excerpt"></p>
+                     </div>
+                     <div class="badges" *ngIf="job.light_candidate_submission">
+                        <span class="badge badge-green">{{ job.job_type }}</span>
+                        <span class="badge badge-white" *ngFor="let skill of job.skills | slice:0:2">{{ skill.name | slice:0:15 }}</span>
+                        <span *ngIf="job?.skills?.length > 2" class="badge badge-more badge-white"> +{{job?.skills?.length}} </span>
+                         <span class="badge badge-info {{job.light_candidate_submission?.id}}">{{job.light_candidate_submission?.status}} </span>
+                     </div>
+                     <div class="card-footer-job">
+                        <div class="row">
+                           <div class="col-md-7">
+
+                           </div>
+                           <div class="col-md-5">
+                              <a href="javascript:void(0)" style="display: none;" class="btn btn-primary btn-apply-1">Apply</a>
+                              <a href="javascript:void(0)"  
+                              *ngIf="job.saved == 1" style="display: none;"
+                              (click)="toggleSavedJob(job.id); job.saved=!job.saved; $event.stopPropagation();" 
+                              class="" 
+                              [ngStyle]="{'color':job.saved == 1 ? '#007bff' : '#cac7c7' }" > 
+                              <i class="material-icons bookmark-active">bookmark</i></a>
+                              <a href="javascript:void(0)"  
+                              *ngIf="job.saved != 1" style="display: none;"
+                              (click)="toggleSavedJob(job.id); job.saved=!job.saved; $event.stopPropagation();" 
+                              class="" 
+                              [ngStyle]="{'color':job.saved == 1 ? '#007bff' : '#cac7c7' }" > 
+                              <i class="material-icons">bookmark_border</i></a>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>

@@ -1,0 +1,33 @@
+<div class="wrap btm-padding-1 graybg">
+	<app-header></app-header>
+	<div class="inner-wrap">
+	   
+ <div class="job-list-grid">
+                    <div class="row grid" >
+                        <!-- Screen 1 -->
+                        <div class="col-md-12">
+                            <div class="card-grid-job mb-0">
+                                <div class="row">
+                                    <div class="application-success non-registered">
+                                    <img src="assets/images/success-application.svg" width="200px"> 
+                                    <h3>Your Application has been submitted Successfully</h3>
+                                    <p><span>Please complete your account registration process by clicking on account verification link sent you in email.</span> You will be able to get real time status update on your application!</p>
+                                    <br>
+                                    <a routerLink="/jobs" class="btn btn-primary">Find More Jobs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Screen 1 -->
+                    </div>
+                    
+	 	<div class="row">
+		  <div class="col-sm-12">
+			<app-similar-jobs [job_slug]="job_slug"></app-similar-jobs>
+		  </div>
+	  </div>
+	</div>
+	</div>
+ </div>
+
+ <app-footer></app-footer>

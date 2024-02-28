@@ -1,0 +1,236 @@
+<app-sidebar [current_menu_item]="'clients'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Clients</h2>
+              <a data-target="#add_new_client" data-toggle="modal" class="btn-orange" style="color: #fff;"><i class="material-icons" style="color: #fff;">add</i>Add Client</a>
+            </div>
+            <app-header-right></app-header-right>
+
+            <div class="easytabs">
+               
+
+               <div class="searchbox">
+                   <form>
+                       <button><i class="material-icons">search</i></button>
+                       <input type="search" style="width: 250px;" name="search_keyword" placeholder="Search by Name, Email" 
+                       (keyup)="getClients()" [(ngModel)]="search_keyword"  >
+                   </form>
+               </div>
+
+               
+
+           </div>
+            
+        </div>
+
+    </div>
+
+     <div style=" margin:120px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+              
+              
+        <div class="row justify-content-md-center">
+            
+            
+            <div class="col-md-12">
+                
+                <table class="custom-table table-style-2">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Last Login</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        
+                        <tr *ngFor="let client of clients">
+                          <td>
+                             <div class="text-avatar">{{ client?.first_name | slice:0:1 }}{{ client?.last_name | slice:0:1 }}</div>
+                             <label class="title-bold">{{ client.first_name | titlecase }} {{ client.last_name | titlecase }}</label>
+                         </td>
+                                   
+                                   <td>
+                                      
+                                      <span class="team-meber-email"><i class="material-icons">email</i>{{ client.email }}</span>
+                                   </td>
+
+                                   <td><span class="badge badge-success"  *ngIf="client.banned==0"> Active </span>
+                                      <span class="badge badge-danger"  *ngIf="client.banned==1"> Inactive </span>
+                                   </td>
+                                   <td>
+                                      <span *ngIf="client.last_login">{{ client.last_login | date:'short'  }}</span>
+                                      <span class="badge badge-danger" *ngIf="!client.last_login">Never Logged In</span>
+                                   </td>
+                                   <td style="text-align: center;">
+                                      <div class="btn-group">
+                                         <button type="button" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                           <i class="material-icons">more_horiz</i>
+                                         </button>
+                                         <div class="dropdown-menu dropdown-menu-right">
+                                          <a data-target="#edit_client_modal" data-toggle="modal"
+                                         (click)="editClient(client)" *ngIf="client.id!=current_user_id" class="dropdown-item">Edit</a>
+                                          <a class="dropdown-item" style="cursor: pointer;" (click)="deleteClient(client.id, client)">Delete</a>
+                                         <a class="dropdown-item" style="cursor: pointer;" (click)="selectClientInterview(client.id)">Client Interviews</a>
+                                         <a class="dropdown-item" style="cursor: pointer;" (click)="selectClientSubmission(client.id)">Client Submissions</a>
+                                         <a class="dropdown-item" style="cursor: pointer;" (click)="selectClientOffer(client.id)">Client Offers</a>
+                                         </div>
+                                       </div>
+                                   </td>
+                                </tr>                         
+                    </tbody>
+                </table>
+            </div>
+        </div>
+           <div class="row">
+            <div class="col-md-12" style="margin-top: 20px;">
+                  <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                  [collectionSize]="pageObj.totalElements"
+                  [(page)]="pageObj.page"
+                  [maxSize]="5"
+                  (pageChange)="pageChange($event)" 
+                  [pageSize]="pageObj.pageSize"
+                  [boundaryLinks]="true">
+                  </ngb-pagination>
+               </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<!-- references modal -->
+<div class="modal smodal custom-form-group-flat" id="edit_client_modal" style="margin-top:100px;">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+               <h4 class="modal-title">Edit Client</h4>
+            <button class="close" data-dismiss="modal">&times;</button>
+            
+         </div>
+         <div class="modal-body">
+            <form autocomplete="off">
+               <input autocomplete="false" name="hidden" type="text" style="display:none;">
+               
+               <div class="form-group">
+                  <label for="">First Name</label>
+                  <input type="text" 
+                        class="form-control" 
+                        name="first_name" 
+                        [(ngModel)]="client.first_name">
+               </div>
+
+               <div class="form-group">
+                  <label for="">Last Name</label>
+                  <input type="text" 
+                        class="form-control" 
+                        name="last_name" 
+                        [(ngModel)]="client.last_name">
+               </div>
+
+               <div class="form-group setup-password-field">
+                  <label for="">Password</label>
+                  <input type="password" 
+                        class="form-control" 
+                        #showpassword
+                        name="password" 
+                        [(ngModel)]="client.password">
+                        <i     #eye_show_password 
+                                                      (click)="showPassword(this)" 
+                                                      id="show-password"  
+                                                      class="fa fa-eye"></i>
+               </div>
+
+              
+                  
+                     <div class="form-group" style="margin-top: 15px;">
+                        <label for="">Confirm Password</label>
+                        <input type="password" 
+                               class="form-control" 
+                               name="password_confirmation" 
+                               [(ngModel)]="client.password_confirmation">
+                     </div>
+                  
+
+                  
+                     <div class="form-group">
+                        
+                        <input type="checkbox" 
+                               class="" 
+                               name="banned" 
+                               [(ngModel)]="client.banned">
+                               <label for="" style="margin-left:10px">Banned</label>
+                     </div>
+                  
+               
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" (click)="updateClient()">Update</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="modal smodal custom-form-group-flat" id="add_new_client" style="margin-top:0px;" data-keyboard="false" data-backdrop="static" #completeModal>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+         <h4 class="modal-title">Create New Client</h4>
+            <button class="close" data-dismiss="modal">&times;</button>
+            
+         </div>
+         <div class="modal-body">
+                       <form ngNativeValidate>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                               <label for="">First Name</label>
+                               <input name="first_name"  type="text"
+                                  class="form-control" id="" placeholder="" [(ngModel)]="clientForm.first_name">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                               <label for="">Last Name</label>
+                               <input name="last_name"  type="text"
+                                  class="form-control" id="" placeholder="" [(ngModel)]="clientForm.last_name">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                           <label for="">Email</label>
+                           <input name="email"  type="text"
+                              class="form-control" id="" placeholder="" [(ngModel)]="clientForm.email">
+                        </div>
+                        <div class="form-group">
+                           <label for="">Company Name</label>
+                           <input name="name" type="text"
+                              class="form-control" id="" placeholder="" [(ngModel)]="clientForm.company_name">
+                        </div>
+                      <div class="form-group">
+                         
+                         <input type="checkbox" 
+                                class="" 
+                                name="activate" 
+                                [(ngModel)]="clientForm.activate">
+                                <label for="" style="margin-left:10px">Activate</label>
+                      </div>
+ 
+                  </form>
+         </div>
+         <div class="modal-footer">
+         <button (click)="createClient()" type="submit" class="btn btn-primary pull-right" [disabled]="isLoading">Add<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         </div>
+      </div>
+   </div>
+</div>

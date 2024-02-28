@@ -1,0 +1,370 @@
+<app-sidebar [current_menu_item]="'submissions'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+    <div class="main-head nav-up no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                  <h2 class="page-title">Application Details</h2>
+                  <a (click)="backClicked()" class="btn-secondary">
+                     <i class="material-icons">arrow_back</i>Back</a>
+              </div>
+            <app-header-right></app-header-right>
+
+            
+        </div>
+
+    </div>
+
+    <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+         <div class="row">
+             
+             
+               <div class="col-md-9">
+                    
+                     <div class="card job-grid single-job">
+                         
+                         
+                         
+                         <div class="inner">
+                             
+                             <div class="card-tabs">
+                                 <ul>
+                                     <li [ngClass]="{'active':current_tab=='pdf'}">
+                                        <a href="javascript:void(0)" (click)="current_tab='pdf';$event.preventDefault()"><i class="material-icons">book</i>Resume</a></li>
+
+                                    <li [ngClass]="{'active':current_tab=='graph'}">
+                                            <a href="javascript:void(0)" (click)="current_tab='graph';$event.preventDefault()"><i class="material-icons">event_available</i>Candidate Ontology</a></li>
+
+                                     <li [ngClass]="{'active':current_tab=='job_details'}">
+                                        <a href="javascript:void(0)" (click)="current_tab='job_details';$event.preventDefault()"><i class="material-icons">work</i>Job Details</a></li>
+
+                                     <li [ngClass]="{'active':current_tab=='questions'}">
+                                        <a href="javascript:void(0)" (click)="current_tab='questions';$event.preventDefault()"><i class="material-icons">help</i>Qualifying Questions</a></li>
+
+                                    <li [ngClass]="{'active':current_tab=='interviews'}">
+                                            <a href="javascript:void(0)" (click)="current_tab='interviews';$event.preventDefault()"><i class="material-icons">event_available</i>Interviews</a></li>
+                                    
+        
+
+                                 </ul>
+                             </div>
+                             
+                             
+                             <div class="s-details pdf" *ngIf="current_tab=='pdf'">
+                                <div style="padding-top: 49px;
+                                padding-left: 0px;
+                                padding-right: 0px;">
+                                 <ngx-extended-pdf-viewer  *ngIf="submission.resumeFullUrl != '' && submission.resumeFullUrl != null" 
+                                        [src]="fullUrl" 
+                                       useBrowserLocale="true" 
+                                       height="180vh">
+                                       </ngx-extended-pdf-viewer>
+                                    </div>
+                             </div>
+
+                             <div class="s-details job_details" *ngIf="current_tab=='job_details'">
+                                 <div class="job-head-list">
+                                       <a routerLink="/client/job/{{ submission.job.id}}" class="card-title-lg">
+                                          <h2>{{ submission.job.title}}</h2></a>
+                                       <label>{{ submission.job.address}}</label>
+                                   </div>
+                                   
+                                   <div>
+                                       <label class="badge large red" *ngIf="submission.job.job_type=='Temp Hire'">{{ submission.job.job_type}}</label>
+                                       <label class="badge large green" *ngIf="submission.job.job_type=='Full Time'">{{ submission.job.job_type}}</label>
+                                       <label class="badge large gray">{{ submission?.job?.category?.name }}</label>
+                                       <label class="badge large gray" style="float: right;"><i class="material-icons">event</i>  <span>{{ submission?.job?.posted }}</span></label>
+                                       
+                                   </div>
+                                   
+                                   
+                                   
+                                   <div class="job-description">
+                                       <h3>Job Description</h3>
+                                       
+                                       <div [innerHTML]="submission?.job?.description"></div>
+   
+                                   </div>
+                              </div>
+
+                              <div class="s-details questions" *ngIf="current_tab=='questions'">
+                                    <section class="qn" *ngFor="let answer of submission.answers; let i = index">
+                                    
+                                          <h3>{{ i+1 | number:'2.0' }}. {{ answer.question.question }}</h3>
+                                          <p *ngIf="answer.question.type=='date'">{{ answer.answer | date: 'MM/dd/yyyy' }}</p>
+                                          <p *ngIf="answer.question.name=='expected-pay-rate'">{{ answer.answer | currency: '$' }}</p>
+                                          <p *ngIf="answer.question.type!='date' && answer.question.name!='expected-pay-rate'">{{ answer.answer }}</p>
+                                      
+                                      </section>
+                                      
+                                      
+                                 </div>
+
+                                 <div class="s-details interviews" *ngIf="current_tab=='interviews'">
+                                    <div class="s-details interview-details-wrap" *ngFor="let interview of interviews">
+                                        <div class="row">
+                                           <div class="col-md-8">
+                                              <div class="interview-title">
+                                                 {{ interview?.title }}
+                                              </div>
+                                              <div class="interview-location">
+                                                 <i class="material-icons">place</i>
+                                                 {{ interview?.location!=null?interview?.location:'Location not available' }}
+                                              </div>
+                                           </div>
+                                           <div class="col-md-4">
+                                              <div class="interview-type-s">
+                                                 <label>
+                                                 <i class="material-icons">videocam</i>
+                                                 {{ interview.type }}
+                                                 </label>
+                                              </div>
+                                           </div>
+                                        </div>
+                                        <div class="interview-note">
+                                           <b>Additional Notes - </b>
+                                           {{ interview.notes }}
+                                        </div>
+                                        <div class="interview-slots">
+                                           <table class="table">
+                                              <thead>
+                                                 <tr>
+                                                    <th><i class="material-icons">event</i> Date</th>
+                                                    <th><i class="material-icons">call_received</i>Time In</th>
+                                                    <th><i class="material-icons">call_made</i>Time Out</th>
+                                                    <th>Status</th>
+                                                 </tr>
+                                              </thead>
+                                              <tbody>
+                                                 <tr *ngFor="let date of interview.dates">
+                                                    <td>{{ date.date | date: 'MM/dd/yyyy' }}</td>
+                                                    <td>{{ date.time_in | date: 'hh:mm a' }}</td>
+                                                    <td>{{ date.time_out | date: 'hh:mm a' }}</td>
+                                                    <td *ngIf="date.is_selected==0"><i class="material-icons">hourglass_empty</i></td>
+                                                    <td *ngIf="date.is_selected==1"><i class="material-icons">check_circle</i></td>
+                                                 </tr>
+                                              </tbody>
+                                           </table>
+                                        </div>
+                                     </div>
+                                 </div>
+                                 <div class="s-details interviews" *ngIf="current_tab=='graph'">
+                                    <div class="s-details">
+                                        <div class="row">
+
+                                            <iframe id="myIframe" style=" width:1349px; height:700px;" [src] ="urlSafe"></iframe>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            
+                         
+                         </div>
+                     </div>
+                 
+                 </div>
+                 
+                 
+                 <div class="col-md-3">
+                     
+                     
+                     
+                     <div class="card job-grid">
+                         
+                         
+                         
+                         
+                         <div class="inner">
+                             
+                             <div class="s-details">
+                                 
+                                 <div [ngClass]="{'bookmark-btn absolute': true,  'active': submission.is_client_fav }">
+                                    <a 
+                                      (click)="toggleFavorite(submission.id)" >
+                                        <i class="material-icons">star</i>  
+                                       </a>
+                                 </div> 
+                                 
+                                 <div class="job-head-list">
+                                     <div class="text-avatar" style="margin-right: 13px;">
+                                          <img style="width: 45px;
+                                          border-radius: 50%;" *ngIf="submission.talent.meta.profilePictureFullUrl" 
+                                          [src]="submission.talent.meta.profilePictureFullUrl"
+                                          class="media-object"/>
+
+                                          <img style="width: 45px;
+                                          border-radius: 50%;" *ngIf="!submission.talent.meta.profilePictureFullUrl" class="media-object" src="assets/images/domnic-brown.png" alt=""/>
+                                     </div>
+                                     <a class="card-title-lg" *ngIf="submission.candidate?.first_name != '' && submission.candidate?.last_name != ''"><h2 (click)="goToView( submission.id )">{{ submission.candidate?.first_name | slice:0:8}} {{ submission.candidate?.last_name | slice:0:6 }}</h2></a>
+                                      <a class="card-title-lg" *ngIf="submission.candidate?.first_name == '' && submission.candidate?.last_name == ''"><h2 (click)="goToView( submission.id )">Unknown User</h2></a>
+                                     <label>{{(submission?.location?.length>0?submission.location:'Any location') | slice:0:21}}</label>
+                                 </div>
+                                 
+                                 <div>
+                                     <label class="badge large gray" style="margin-top: 10px;">
+                                         <i class="material-icons">work</i>
+                                         {{ submission?.job?.title| slice:0:15 }}...
+ 
+                                     </label>
+                                 </div>
+                                 
+                                 
+                             </div>
+                             
+                             <div class="job-additionalinfo" style="margin-top:0px;">
+                                 <ul>
+                                     <li class="estimated-date" style="margin-right: 40px;"><i class="material-icons">event</i>  <span>Submission Date: {{ submission.estimated_joning_date | date: 'MM/dd/yyyy' }}</span>
+                                     <span *ngIf="!submission.estimated_joning_date">N/A</span></li>
+                                     
+                                 </ul>
+                             </div>
+ 
+                             <div class="job-statisticsv1 submissions">
+ 
+                                 <div class="btn-group dropup">
+                                   <button type="button" class="btn btn-primary btn-md dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                     Actions
+                                   </button>
+                                   <div class="dropdown-menu">
+                                         <a (click)="acceptSubmission()" *ngIf="submission.status!='Accepted'" class="dropdown-item" href="javascript:void(0)">Accept</a>
+                                         <a (click)="rejectSubmission()" *ngIf="submission.status!='Rejected'" class="dropdown-item" href="javascript:void(0)">Reject</a>
+                                         <a (click)="withdrawSubmission()" 
+                                         *ngIf="submission.status != 'Withdrawn' && submission.from_discover_similar == true" class="dropdown-item" href="javascript:void(0)">Withdraw</a>
+                                         <a class="dropdown-item" 
+                                         *ngIf="!isLoading"
+                                         href="javascript:void(0)" (click)="togglesidebar($event)" >Schedule Interview</a>
+                                         <a *ngIf="submission.status!='Rejected'" class="dropdown-item" routerLink="/client/create-offer/{{submission.id}}">Create Offer</a>
+                                   </div>
+                                     
+                                   
+                                     
+                                 </div>
+
+                                 <span class="from_discover_similar" style="float: right;" *ngIf="submission.from_discover_similar==true">
+                                    <img src="assets/client/s.svg" style="width: 27px;">
+                                </span>
+                                <span class="private_pool" style="float: right;" *ngIf="submission.from_discover_similar==false">
+                                    <img src="assets/client/p.svg" style="width: 27px;">
+                                </span>
+                                 
+                                 
+                             </div>
+ 
+                             
+                         
+                         </div>
+                     </div>
+                     
+                     
+                     
+                     
+                     
+                     
+                     <div class="card job-grid" style="margin-top: 15px;">
+                         <div class="card job-grid billrate-widget no-bottom-margin"  style="margin-top: 0px;">
+                         
+                         <h3>Expected Pay Rate</h3>
+                         <div class="inner">
+                             <div class="row">
+                                 <div class="col-md-12">
+                                     <h2 *ngIf="submission.pay_rate != '' || submission.pay_rate != null"><span 
+                                       class="price">
+                                       ${{ submission.pay_rate | number: '1.2-2' }}
+                                       </span>
+                                       </h2>
+                                       <h2 *ngIf="submission.pay_rate == '' || submission.pay_rate == null"><span 
+                                         class="price">N/A
+                                         </span>
+                                      </h2>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                         
+                         <div class="inner">
+                             
+                             <div class="s-details ">
+                                 
+                                 <div class="job-head-list">
+                                     <a class="card-title-sm "><h2>Additional Details</h2></a>
+                                 </div>
+                                 
+                                 <div>
+                                    <table class="table-job-info job-table-responsive">
+                                        <tr *ngIf="submission.salary_type!=null">
+                                            <td><i class="material-icons">offline_bolt</i>Salary Type</td>
+                                            <td>{{ submission.salary_type }}</td>
+                                        </tr> 
+                                        
+                                        <tr>
+                                            <td><i class="material-icons">calendar_today</i>Start Date</td>
+                                            <td>{{ submission.estimated_joning_date | date: 'MM/dd/yyyy' }}</td>
+                                        </tr> 
+                                       
+                                        <tr *ngIf="submission.location!=null">
+                                            <td><i class="material-icons">gps_fixed</i>Location</td>
+                                            <td>{{ submission.location }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td><i class="material-icons">smartphone</i>Mobile</td>
+                                            <td>{{ submission.mobile | ngxPhoneMask }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="material-icons">local_phone</i>Home Phone</td>
+                                            <td>{{ submission.home_phone | ngxPhoneMask }}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td><i class="material-icons">emoji_flags</i>Submission Type</td>
+                                            <td>{{ submission.type | titlecase }}</td>
+                                        </tr>
+                                        
+                                        
+                                        <tr>
+                                         <td><i class="material-icons">waves</i> Skills</td>
+                                         
+                                        </tr>
+                                        <tr>
+                                         <td colspan="2" style="padding-bottom:0px;">
+                                             <div class="skillswrap">
+                                                 <ul>
+                                                     <li *ngFor="let skill of submission.skills | slice:0:defaultSkillsCount">{{ skill.name | slice:0:45 }}</li>
+                                                     
+                                                     
+                                                 </ul>
+                                             </div>
+                                         </td>
+                                        </tr>
+                                        <tr style="padding-bottom: 0px;
+                                        cursor: pointer;
+                                        text-decoration: underline;">
+                                           <td colspan="2" style="padding-top:0px;">
+                                                <span class="more" *ngIf="submission.skills.length>10" (click)="toggleSkillsCount()">{{showMoreText}}</span>
+                                           </td>
+                                        </tr>
+                                    </table>
+                                 </div>
+                                 
+                             </div>
+                             
+                         </div>
+                     </div>
+                     
+                     
+                 
+                 </div>
+             
+             
+         </div>
+         
+     </div>
+</div>
+
+
+<app-interview-modal 
+[current_submission]='submission' 
+[locations] = 'locations'
+[sidebar_open]='sidebar_open'></app-interview-modal>

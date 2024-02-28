@@ -1,0 +1,16 @@
+img.media-object {
+    max-width: 35px;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.pagination {
+    padding: 20px !important;
+}
+
+.api_job_id {
+    font-size: 12px;
+    
+}

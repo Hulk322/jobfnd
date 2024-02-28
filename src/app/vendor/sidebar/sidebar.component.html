@@ -1,0 +1,87 @@
+<div class="navigation" id="sidebar">
+        <div class="nav-wrapper">
+        <div class="sidebar__inner">
+            <ul>
+      <!--                <div class="logo"><label>S</label></div>-->
+                <div class="logo imglogo">
+                    <img src="assets/images/login/logo2.png">
+                    <!-- LOGO -->
+                </div>
+                
+                <li><a routerLink="/vendor/dashboard" 
+                    [ngClass]="{'active':current_menu_item=='dashboard'}">
+                    <i class="icon icon-meter"></i><label>Dashboard</label></a>
+                </li>
+                <li>
+                    <a routerLink="/vendor/jobs" 
+                    [ngClass]="{'active':current_menu_item=='jobs'}">
+                        <i class="icon icon-cardiac-pulse"></i><label>Jobs</label></a>
+      
+                </li>
+                <li>
+                    <a routerLink="/vendor/submissions" 
+                    [ngClass]="{'active':current_menu_item=='submissions'}">
+                    <i class="icon icon-paperclip"></i><label>Submissions</label></a>
+                </li>
+
+                <li><a routerLink="/vendor/talent-pool" 
+                    [ngClass]="{'active':current_menu_item=='talent-pool'}" >
+                    <i class="icon icon-windows"></i> <label>Pool</label></a>
+                </li>
+
+                <li>
+                    <a routerLink="/vendor/interviews" 
+                    [ngClass]="{'active':current_menu_item=='interviews'}">
+                        <i class="icon icon-cube"></i><label>Interviews</label>
+                    </a>
+                </li>
+    
+                <li>
+                    <a routerLink="/vendor/offers" 
+                    [ngClass]="{'active':current_menu_item=='offers'}">
+                    <i class="icon icon-user-outline "></i><label>Offers
+                    </label>
+                </a>
+            </li>
+    
+                
+    
+                
+    
+            <li>
+                    <a style="color: #d3ccf9; cursor: pointer;" [ngClass]="{'active':current_menu_item=='settings'}"><i class="icon icon-files"></i><label>Settings</label></a>
+                    <div class="submenu">
+                        <div class="submenu-title">
+                            <i class="icon icon-files"></i><label>Settings</label>
+                        </div>
+                        <ul>
+                            <li><a routerLink="/vendor/business-setup">Business Setup</a></li>
+                            <li><a routerLink="/vendor/team-members">Team Members</a></li>
+                            <li><a routerLink="/vendor/profile">Profile</a></li>
+                            <li><a routerLink="/vendor/change-password">Password</a></li>
+                        </ul>
+                    </div>
+                </li>
+                
+      
+            </ul>
+        </div>
+            
+            <div class="quickaction-tabs">
+                <a style="cursor: pointer;" class="add-new-btn"><label style="cursor: pointer; color: white;">+</label></a>
+                
+                <ul>
+                    <span>Add New</span>
+                    <li><a class="link" routerLink="/vendor/upload-talent"><i class="icon icon-user-outline"></i><label>Talent</label></a></li>
+                    <li><a class="link"><i class="icon icon-bubble-1"></i><label>Work Order</label></a></li>
+                    <li><a class="link"><i class="icon icon-windows"></i><label>Contract</label></a></li>
+                    <li><a class="link"><i class="icon icon-stopwatch"></i><label>Timesheet</label></a></li>
+                    <li><a class="link"><i class="icon icon-files"></i><label>Expense</label></a></li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        
+        
+      </div>

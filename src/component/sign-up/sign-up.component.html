@@ -1,0 +1,170 @@
+<div class="wrap">
+    <div class="content">
+        <div class="header">
+            <client-logo></client-logo>
+            <nav appLoginNavbar class="navbar navbar-expand-lg navbar-light">
+            </nav>
+        </div>
+        <div class="login-page create-accountwrap">
+            <div class="main-content">
+                <div class="logo-image  d-sm-none d-none d-md-block">
+                    <img src="assets/images/create-account.svg">
+                </div>
+                <div class="create-account custom-form-group">
+                    <h1>Create your account</h1>
+                    <app-errors></app-errors>
+                    <ul class="nav nav-tabs">
+                        <li [ngClass]="tab == 'candidate' ? 'active':'' ">
+                            <a href="#candidate" (click)="tabclick('candidate')" data-toggle="tab"><i class="fa fa-briefcase"
+                        aria-hidden="true"></i> Looking for Job</a>
+                        </li>
+                        <li [ngClass]="tab == 'company' ? 'active':'' ">
+                            <a href="#client" (click)="tabclick('company')" data-toggle="tab"><img src="assets/images/noun_hired_787424.svg"> Looking to Hire</a>
+                        </li>
+                        <li [ngClass]="tab == 'vendor' ? 'active':'' ">
+                            <a href="#vendor" (click)="tabclick('vendor')" data-toggle="tab"><img src="assets/images/vendor.svg"> Vendor / Supplier</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="candidate">
+                            <form #candidateSignupForm=ngForm (ngSubmit)="onSubmit()" ngNativeValidate>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">First Name</label>
+                                        <input autofocus required [(ngModel)]="form.first_name" type="text" class="form-control is-invalid is-invalid" placeholder="First Name" name="first_name" #firstname="ngModel">
+                                        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="invalid-feedback">
+                                            First Name is required
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Last Name</label>
+                                        <input required [(ngModel)]="form.last_name" type="text" class="form-control is-invalid" name="last_name" placeholder="Last Name" #lastName="ngModel">
+                                        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="invalid-feedback">
+                                            Last Name is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Email Address</label>
+                                    <input type="email" required class="form-control is-invalid" name="email" placeholder="Email Address" [(ngModel)]="form.email" #email="ngModel" email>
+                                    <div *ngIf="email.value !== '' && email.touched && email.invalid" class="invalid-feedback">
+                                        Enter valid Email
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="client">
+                            <form #clientSignupForm=ngForm (ngSubmit)="onSubmit()" ngNativeValidate>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">First Name</label>
+                                        <input autofocus required type="text" class="form-control is-invalid" [(ngModel)]="form.first_name" placeholder="First Name" name="first_name" #clientFname="ngModel">
+                                        <div *ngIf="clientFname.invalid && (clientFname.dirty || clientFname.touched)" class="invalid-feedback">
+                                            First Name is required
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Last Name</label>
+                                        <input type="text" required class="form-control is-invalid" name="last_name" placeholder="Last Name" [(ngModel)]="form.last_name" #clientLname="ngModel">
+                                        <div *ngIf="clientLname.invalid && (clientLname.dirty || clientLname.touched)" class="invalid-feedback">
+                                            Last Name is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Email Address</label>
+                                    <input type="email" required class="form-control is-invalid" [(ngModel)]="form.email" placeholder="Email Address" name="email" #cEmail="ngModel" email>
+                                    <div *ngIf="cEmail.value !== '' && cEmail.touched && cEmail.invalid" class="invalid-feedback">
+                                        Enter valid Email
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Company Name</label>
+                                    <input type="text" required class="form-control is-invalid" name="company_name" placeholder="Company Name" [(ngModel)]="form.company_name" #comName="ngModel">
+                                    <div *ngIf="comName.invalid && (comName.dirty || comName.touched)" class="invalid-feedback">
+                                        Company Name is required
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="vendor">
+                            <form #vendorSignupForm=ngForm (ngSubmit)="onSubmit()" ngNativeValidate>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">First Name</label>
+                                        <input autofocus required type="text" class="form-control is-invalid" [(ngModel)]="form.first_name" placeholder="First Name" name="first_name" #venFname="ngModel">
+                                        <div *ngIf="venFname.invalid && (venFname.dirty || venFname.touched)" class="invalid-feedback">
+                                            First Name is required
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Last Name</label>
+                                        <input type="text" required class="form-control is-invalid" name="last_name" placeholder="Last Name" [(ngModel)]="form.last_name" #venLname="ngModel">
+                                        <div *ngIf="venLname.invalid && (venLname.dirty || venLname.touched)" class="invalid-feedback">
+                                            Last Name is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Email Address</label>
+                                    <input type="email" required class="form-control is-invalid" [(ngModel)]="form.email" placeholder="Email Address" name="email" #vEmail="ngModel" email>
+                                    <div *ngIf="vEmail.value !== '' && vEmail.touched && vEmail.invalid" class="invalid-feedback">
+                                        Enter valid Email
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Company Name</label>
+                                    <input type="text" required class="form-control is-invalid" name="company_name" placeholder="Company Name" [(ngModel)]="form.company_name" #VcomName="ngModel">
+                                    <div *ngIf="VcomName.invalid && (VcomName.dirty || VcomName.touched)" class="invalid-feedback">
+                                        Company Name is required
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clearfix">
+                            <p class="pull-left member">Already member? <a routerLink="/login">Login</a>
+                            </p>
+                            <button *ngIf="tab == 'candidate'" [disabled]="(isLoading || !candidateSignupForm.form.valid)" (click)="onSubmit()" type="submit" class="btn btn-blue pull-right formBtn">Sign Up
+                           &nbsp; &nbsp; &nbsp;<img
+                              src="assets/images/right-arrow.svg"></button>
+                            <button *ngIf="tab == 'company'" [disabled]="(isLoading || !clientSignupForm.form.valid)" type="submit" (click)="onSubmit()" class="btn btn-blue pull-right formBtn">Sign Up
+                                    &nbsp; &nbsp; &nbsp;<img
+                                       src="assets/images/right-arrow.svg"></button>
+                            <button *ngIf="tab == 'vendor'" [disabled]="(isLoading || !vendorSignupForm.form.valid)" (click)="onSubmit()" type="submit" class="btn btn-blue pull-right formBtn">Sign Up
+                                             &nbsp; &nbsp; &nbsp;<img
+                                                src="assets/images/right-arrow.svg"></button>
+                        </div>
+
+                        <div class="other-links" *ngIf="tab == 'candidate'">
+                            <div class="titlelinesep">
+                                <p>Or continue with these social profiles</p>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <a (click)="social_signup('facebook')" class="btn btn-dark-blue btn-block">
+                                 Facebook <i class="fa fa-facebook"></i>
+                                 </a>
+                                </div>
+                                <div class="col">
+                                    <a (click)="social_signup('google')" class="btn btn-red btn-block">
+                                 Google <i class="fa fa-google"></i>
+                                 </a>
+                                </div>
+                                <div class="col">
+                                    <a (click)="social_signup('linkedin')" class="btn btn-light-blue  btn-block">
+                                       LinkedIn <i class="fa fa-linkedin"></i>
+                                 </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /wrap -->
+<app-footer></app-footer>

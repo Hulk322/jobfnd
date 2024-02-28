@@ -1,0 +1,489 @@
+<app-sidebar [current_menu_item]="'jobs'"></app-sidebar>
+
+<div class="content-area floated add-job-white" #content_area>
+
+   <div class="main-head no-tabs">
+
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title"  *ngIf="job.is_published==1">Edit Job</h2>
+            <h2 class="page-title"  *ngIf="job.is_published==0">Edit Draft</h2>
+            <a routerLink="/client/jobs" class="btn-secondary" *ngIf="job.is_published==1">
+               <i class="material-icons">arrow_back</i> Back to Jobs Listing</a>
+
+               <a routerLink="/client/job-drafts" class="btn-secondary" *ngIf="job.is_published==0">
+                  <i class="material-icons">arrow_back</i> Back to Drafts Listing</a>
+         </div>
+         <app-header-right></app-header-right>
+
+
+      </div>
+
+   </div>
+
+   <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="row justify-content-md-center">
+         <div class="col-md-12">
+
+            <div class="card job-grid new-job-block">
+               <div class="inner">
+                  <div class="">
+
+                     <div class="main-content-content form-style-v2">
+                        <div class="element-box">
+                           <form #f="ngForm" class="custom-form" autocomplete="off" (ngSubmit)="onSubmit(f)"
+                              name="create-job" ngNativeValidate>
+                              <input autocomplete="false" name="hidden" type="text" style="display:none;">
+
+                              <div class="card job-grid new-job-block" style="padding-bottom: 0px !important; ">
+                                 <div class="inner">
+                                    <div class="s-details job-form-block" style="padding-bottom: 20px !important;">
+                                       <h1 class="form-head" *ngIf="job.is_published==1">Edit your Job Here</h1>
+                                       <h1 class="form-head" *ngIf="job.is_published==0">Edit your Draft Here</h1>
+                                       <div class="main-content-content form-style-v2">
+                                          <div class="element-box">
+                                             <section class="s-form-row medium">
+                                                <label class="form-label">Job Title <span style="color:red;">*</span></label>
+                                                <input type="text" name="title" class="form-control"
+                                                   [(ngModel)]="job.title" placeholder="Enter Your Job Title" />
+
+                                             </section>
+
+                                             <div class="row">
+                                                <div class="col-md-5">
+                                                   <section class="s-form-row radio-box">
+                                                      <label class="form-label">Job Type</label>
+                                                      <div class="s-radio" *ngFor="let job_type of job_types" style="float: left;">
+                                                         <input 
+                                                         name="job_type" [(ngModel)]="job.job_type" type="radio"
+                                                            value="{{ job_type }}" id="{{ job_type }}">
+                                                         <label for="{{ job_type }}">
+                                                            <span>{{ job_type }}</span>
+                                                         </label>
+                                                      </div>
+                                                   </section>
+                                                </div>
+                                                <div class="col-md-7">
+
+                                                   <section class="s-form-row radio-box">
+                                                      <label class="form-label">Experience</label>
+                                                      <div class="s-radio" *ngFor="let experience of experiences" style="float: left;">
+                                                         
+                                                         <input 
+                                                         name="experience" [(ngModel)]="job.experience" type="radio"
+                                                            value="{{ experience }}" id="{{ experience }}">
+                                                         <label for="{{ experience }}">
+                                                            <span>{{ experience | titlecase }}</span>
+                                                         </label>
+
+                                                      </div>
+                                                   </section>
+                                                </div>
+                                             </div>
+
+                                             <section class="s-form-row large">
+                                                <label class="form-label">Job Description</label>
+                                                <editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew"
+                                                   [init]="{plugins: 'link',  height : '380px'}"
+                                                   (onBlur)="focusOutFunction()" name="description"
+                                                   [(ngModel)]="job.description">
+                                                </editor>
+                                             </section>
+
+                                             <div class="row">
+                                                <div class="col-md-12">
+                                                   <section class="s-form-row icon-left">
+                                                      <label class="form-label">Skills</label>
+                                                      <span><i class="material-icons">waves</i></span>
+                                                      <div class="icon-spacing">
+                                                         <ng-multiselect-dropdown
+                                                         [placeholder]="''"
+                                                         [data]="skills"
+                                                         name="skills"
+                                                         [(ngModel)]="job.skills"
+                                                         [settings]="dropdownSettings"
+                                                         (onSelect)="onItemSelect($event)"
+                                                         (onFilterChange)="onFilterChange($event)"
+                                                         (onSelectAll)="onSelectAll($event)"
+                                                       >
+                                                       </ng-multiselect-dropdown>
+                                                      </div>
+                                                   </section>
+                                                </div>
+                                             </div>
+
+                                             <div class="row">
+                                                <div class="col-md-6">
+                                                   <section class="s-form-row icon-left">
+                                                      <label class="form-label">Category <span style="color:red;">*</span></label>
+                                                      <span><i class="material-icons">category</i></span>
+                                                      <div class="icon-spacing">
+                                                      <ng-select2 
+                                           [data]="categories" 
+                                           [(ngModel)]="job.category_id" 
+                                           [value]="job.category_id"
+                                           name="category_id" 
+                                            placeholder="Choose Category" 
+                                             ></ng-select2>
+                                          </div>
+                                                   </section>
+                                                
+                                                </div>
+                                                <div class="col-md-6">
+                                                   <section class="s-form-row icon-left">
+                                                      <label class="form-label">Location</label>
+                                                      <span><i class="material-icons">gps_fixed</i></span>
+
+                                                      <div class="icon-spacing">
+                                                         <ng-select2 
+                                                         
+                                                          [data]="locations" 
+                                                          [(ngModel)]="job.address" 
+                                                          name="address" 
+                                                           placeholder="Choose Location" 
+                                                            ></ng-select2>
+                                                      </div>
+
+                                                      
+                                                   </section>
+                                                </div>
+                                             </div>
+                                             
+                                             
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="card job-grid new-job-block" style="padding-bottom: 0px !important; ">
+                                 <div class="inner">
+                                    <div class="s-details job-form-block" style="padding-bottom: 20px !important;">
+                                       <h1 class="form-head">Other Details</h1>
+                                       <div class="row">
+                                          <div class="col-md-3">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Salary Type</label>
+                                                <span><i class="material-icons">offline_bolt</i></span>
+                                                <div class="icon-spacing">
+                                                   <ng-select2 
+                                                    [data]="pay_types" 
+                                                    [(ngModel)]="job.salary_type" 
+                                                    name="salary_type" 
+                                                     placeholder="Choose Salary Type" 
+                                                      ></ng-select2>
+                                                </div>
+                                             </section>
+                                          </div>
+                                          <div class="col-md-3">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Currency </label>
+                                                <span><i class="material-icons">money</i></span>
+                                                <div class="icon-spacing">
+                                                   <ng-select2 
+                                                    [data]="currencies" 
+                                                    [(ngModel)]="job.currency" 
+                                                    name="currency" 
+                                                     placeholder="Choose Currency" 
+                                                      ></ng-select2>
+                                                </div>
+                                             </section>
+                                          </div>
+                                          <div class="col-md-3" *ngIf="job.job_type=='Full Time'">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Salary Amount</label>
+                                                <span><i class="material-icons">monetization_on</i></span>
+                                                <input type="text" name="salary" class="form-control" currencyMask
+                                                   [options]="{ prefix: '',  align: 'left' }" [(ngModel)]="job.salary">
+                                             </section>
+                                          </div>
+                                          <div class="col-md-3" *ngIf="job.job_type=='Temp Hire'">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Bill Rate Min</label>
+                                                <span><i class="material-icons">monetization_on</i></span>
+                                                <input type="text" placeholder="0.00" name="min_rate"
+                                                   class="form-control" currencyMask
+                                                   [options]="{ prefix: '',  align: 'left' }"
+                                                   [(ngModel)]="job.min_rate">
+                                             </section>
+                                          </div>
+                                          <div class="col-md-3" *ngIf="job.job_type=='Temp Hire'">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Bill Rate Max</label>
+                                                <span><i class="material-icons">monetization_on</i></span>
+                                                <input type="text" placeholder="0.00" name="max_rate"
+                                                   class="form-control" currencyMask
+                                                   [options]="{ prefix: '',  align: 'left' }"
+                                                   [(ngModel)]="job.max_rate">
+                                             </section>
+                                          </div>
+                                       </div>
+                                       <div class="row">
+                                          <div class="col-md-3">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Start Date</label>
+                                                <span><i class="material-icons">calendar_today</i></span>
+                                                <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                                                   [(ngModel)]="job.start_date" name="start_date" [bsConfig]="{ containerClass: 'theme-blue', 
+                                   dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                             </section>
+                                          </div>
+                                          <div class="col-md-3" *ngIf="job.job_type=='Temp Hire'">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">End Date </label>
+                                                <span><i class="material-icons">event</i></span>
+                                                <input type="text" placeholder="MM/DD/YYYY" class="form-control"
+                                                   [(ngModel)]="job.tentative_end_date" name="tentative_end_date"
+                                                   [bsConfig]="{ containerClass: 'theme-blue', 
+                                   dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                             </section>
+                                          </div>
+                                          <div class="col-md-3">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Number of Openings</label>
+                                                <span><i class="material-icons">directions_run</i></span>
+                                                <input type="text" placeholder="" name="openings"
+                                                   [(ngModel)]="job.openings">
+                                             </section>
+                                          </div>
+                                          <div class="col-md-3">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Hiring Manager</label>
+                                                <span><i class="material-icons">person_add</i></span>
+                                                <div class="icon-spacing">
+                                                   <ng-select2 
+                                                    [data]="hiring_managers" 
+                                                    [(ngModel)]="job.hiring_manager" 
+                                                    name="hiring_manager" 
+                                                     placeholder="Choose Manager" 
+                                                      ></ng-select2>
+                                                </div>
+                                             </section>
+                                          </div>
+
+                                          <div class="col-md-3" *ngIf="departments.length">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Department</label>
+                                                <span><i class="material-icons">person_add</i></span>
+                                                <div class="icon-spacing">
+                                                   <ng-select2 
+                                                    [data]="departments" 
+                                                    [(ngModel)]="job.department_id" 
+                                                    name="department_id" 
+                                                     placeholder="Choose Department" 
+                                                      ></ng-select2>
+                                                </div>
+                                             </section>
+                                          </div>
+
+                                          <div class="col-md-3" *ngIf="programs.length">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Program</label>
+                                                <span><i class="material-icons">person_add</i></span>
+                                                <div class="icon-spacing">
+                                                   <ng-select2 
+                                                    [data]="programs" 
+                                                    [(ngModel)]="job.program_id" 
+                                                    name="program_id" 
+                                                     placeholder="Choose" 
+                                                      ></ng-select2>
+                                                </div>
+                                             </section>
+                                          </div>
+
+                                          <div class="col-md-3" *ngIf="cost_center_codes.length">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Cost Center</label>
+                                                <span><i class="material-icons">person_add</i></span>
+                                                <div class="icon-spacing">
+                                                   <ng-select2 
+                                                    [data]="cost_center_codes" 
+                                                    [(ngModel)]="job.costcenter_id" 
+                                                    name="costcenter_id" 
+                                                     placeholder="Choose" 
+                                                      ></ng-select2>
+                                                </div>
+                                             </section>
+                                          </div>
+
+                                          <div class="col-md-3" *ngIf="billing_codes.length">
+                                             <section class="s-form-row icon-left">
+                                                <label class="form-label">Billing Code</label>
+                                                <span><i class="material-icons">person_add</i></span>
+                                                <div class="icon-spacing">
+                                                   <ng-select2 
+                                                    [data]="billing_codes" 
+                                                    [(ngModel)]="job.billing_code_id" 
+                                                    name="billing_code_id" 
+                                                     placeholder="Choose Bill" 
+                                                      ></ng-select2>
+                                                </div>
+                                             </section>
+                                          </div>
+
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+
+                              <div class="card m-t-20"  *ngIf="custom_fields?.length>0">
+                                 <h4>Custom Fields</h4>
+                                 <div class="custom_field" *ngFor="let field of custom_fields; let i=index">
+               
+                                    <div class="form-group" style="margin-bottom:0px">
+                                       <label>{{ field.label }}</label>
+                                    </div>
+               
+                                    <div *ngIf="field.type=='text'" class="type text">
+                                       <input type="text" name="answer-{{field.id}}" 
+                                       value="{{ field.default_value }}" class="form-control"
+                                          [(ngModel)]="field.answer">
+                                    </div>
+               
+                                    <div *ngIf="field.type=='textarea'" class="type textarea">
+                                          <editor apiKey="58e2dg82xaj8fu10sg5x8whraonzk97pd7z6hyka6folhzew"
+                                          [init]="{plugins: 'link',  height : '230px'}" 
+                                          name="answer-{{field.id}}" [(ngModel)]="field.answer"></editor>
+                                    </div>
+               
+                                    <div *ngIf="field.type=='date'" class="type date">
+                                       <div class="input-group mb-3">
+                                         <div class="input-group-prepend">
+                                           <span class="input-group-text" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                                         </div>
+                                          <input required type="text" placeholder="MM/DD/YYYY" class="form-control"
+                                            [(ngModel)]="field.answer" name="answer-{{field.id}}" [minDate]="minDate" [bsConfig]="{ containerClass: 'theme-blue', dateInputFormat: 'MM/DD/YYYY' }" bsDatepicker>
+                                       </div>
+                                    </div>
+               
+                                    <div *ngIf="field.type!='text' 
+                                                && field.type!='textarea'
+                                                && field.type!='date'
+                                                " class="type text">
+                                                <input type="text" name="answer-{{field.id}}" 
+                                                value="{{ field.default_value }}" class="form-control"
+                                                   [(ngModel)]="field.answer">
+                                          </div>
+                                    
+                                 </div>
+                              </div>
+                        
+
+                              <div class="card " style="padding-bottom: 0px !important; padding-left: 0 ;  padding-top: 0;  ">
+                                 <div class="inner" style="padding-bottom: 25px;">
+                                    <div class="s-details job-form-block"
+                                       style="padding-top: 0px !important; 
+                                              padding-bottom: 0px !important; 
+                                              padding-left: 0px !important;
+                                              padding-right: 0px !important;">
+                                       
+                                       
+                                       <section class="s-form-row check-box">
+                                    
+                                          <div class="s-radio"  style="float: left;" >
+                                              <input  type="checkbox" id="Supplier" value="1" [checked]=true name="publish_to_supplier"
+                                                [(ngModel)]="job.publish_to_supplier">
+                                              <label for="Supplier">
+                                                  <span>Publish to Supplier</span>
+                                              </label>
+                                          </div>
+                                          <div class="s-radio"  style="float: left;" >
+                                              <input  type="checkbox" id="Portals" 
+                                               name="publish_to_portals" 
+                                                [checked]=true value="1" 
+                                                (change)="FieldsChange($event)"
+                                                [(ngModel)]="job.publish_to_portals">
+                                              <label for="Portals">
+                                                  <span>Publish to Portals</span>
+                                              </label>
+                                          </div>
+
+                                          <div class="s-radio"  style="float: left;" *ngIf="job.publish_to_portals==true" >
+                                             <input  type="checkbox" id="Broadbean" 
+                                             (change)="BroadbeanChange($event)"
+                                             name="Broadbean" value="1"
+                                               [(ngModel)]="job.broadbean">
+                                             <label for="Broadbean">
+                                                 <span>Broadbean</span>
+                                             </label>
+                                         </div>
+               
+                                         
+               
+                                      <div class="s-radio"  style="float: left;" *ngIf="job.broadbean==true && job.publish_to_portals==true" >
+                                       <input  type="checkbox" id="dice" name="dice" value="1"
+                                         [(ngModel)]="job.dice">
+                                       <label for="dice">
+                                           <span>Dice</span>
+                                       </label>
+                                   </div>
+
+                                   
+               
+                                   <div class="s-radio"  style="float: left;" *ngIf="job.broadbean==true && job.publish_to_portals==true" >
+                                    <input  type="checkbox" id="career_builder" name="career_builder" value="1"
+                                      [(ngModel)]="job.career_builder">
+                                    <label for="career_builder">
+                                        <span>Career Builder</span>
+                                    </label>
+                                </div>
+
+                                <div class="s-radio"  style="float: left;" *ngIf="job.publish_to_portals==true" >
+                                 <input  type="checkbox" id="indeed" name="indeed" value="1"
+                                   [(ngModel)]="job.indeed">
+                                 <label for="indeed">
+                                     <span>Indeed</span>
+                                 </label>
+                             </div>
+               
+                                         <div class="s-radio"  style="float: left;" *ngIf="job.publish_to_portals==true" >
+                                          <input  type="checkbox" id="zip_recruiter" name="zip_recruiter" value="1"
+                                            [(ngModel)]="job.zip_recruiter">
+                                          <label for="zip_recruiter">
+                                              <span>Zip Recruiter</span>
+                                          </label>
+                                      </div>
+
+                                       </section>
+
+               
+                                       <div class="form-action-buttons">
+                                         
+                                          <button *ngIf="job.is_published==0" 
+                                          [disabled]="isLoading" (click)="form_type='draft'" 
+                                           class="btn btn-lg btn-primary">{{ publish_job_text }}</button>
+
+                                             <button [disabled]="isLoading" type="submit" 
+                                             *ngIf="job.is_published==0" 
+                                             (click)="form_type='job'"
+                                             class="btn btn-lg btn-primary">Update Draft</button>
+
+                                             <button [disabled]="isLoading" type="submit" 
+                                             *ngIf="job.is_published==1" 
+                                             (click)="form_type='job'"
+                                             class="btn btn-lg btn-primary">{{ save_job_text }}</button>
+
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                           </form>
+
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+
+
+      </div>
+   </div>
+
+
+</div>

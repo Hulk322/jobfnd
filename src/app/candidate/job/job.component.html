@@ -1,0 +1,168 @@
+<app-sub-menu></app-sub-menu>
+
+<div class="container">
+   <div class="element-box">
+
+         <app-errors></app-errors>
+
+      <div class="content-sidebar">
+
+         <div class="content-sidebar__content">
+
+            <div class="__content__header">
+
+               <div class="media">
+                  <div class="media-left">
+                     <a href="#">
+                        
+
+                           <img *ngIf="job?.client_organization?.businessLogoFullUrl != 'null'" class="pull-left business-logo"
+                           src="{{ job?.client_organization?.businessLogoFullUrl }}">
+                        
+
+                     </a>
+                  </div>
+                  <div class="media-body">
+                     <h4 class="media-heading">{{ job?.title | titlecase  }} - {{ job.job_type }}</h4>
+                     <p><i class="fa fa-calendar-check-o"></i> Date Created :
+                        {{ job.created_at | date:'MM/dd/yyyy' }}</p>
+                  </div>
+               </div>
+            </div> <!-- __content__header  -->
+
+            <div class="__content__body">
+
+                  <h4 class="heading"><a>
+                        <i *ngIf="showDescription==true" class="fa fa-minus-square-o" (click)="toggleDescription()"></i>
+                        <i *ngIf="showDescription==false" class="fa fa-plus-square-o" (click)="toggleDescription()"></i> 
+                        </a>Description
+                     </h4>
+                     
+                     <div *ngIf="showDescription==true">
+                     <p [innerHTML]="job.description">
+                     </p>
+
+                     <p [innerHTML]="job.reason_for_hire">
+
+                     </p>
+                  </div>
+
+
+                     <h4 class="heading"><a>
+                           <i *ngIf="showDetail==true" class="fa fa-minus-square-o" (click)="toggleDetail()"></i>
+                        <i *ngIf="showDetail==false" class="fa fa-plus-square-o" (click)="toggleDetail()"></i> 
+                     </a>Additional Detail
+                  </h4>
+                     <p [innerHTML]="job.additional_detail" *ngIf="showDetail==true">
+
+                     </p>
+
+
+
+
+
+            </div> <!-- __content__body -->
+
+
+         </div>
+
+         <div class="content-sidebar__sidebar">
+
+            <div class="__sidebar__card">
+               <input class="btn btn-success" type="submit" [disabled]="job.hasApplied==true"
+               value="Apply" name="Apply" (click)="applyToJob(job.id)">
+
+
+            </div> <!-- __sidebar__card -->
+
+            <div class="__sidebar__card">
+               <table class="table table-transparent rates">
+                  <tbody>
+                     <tr>
+                        <div *ngIf="job.job_type=='Temp Hire'">
+                           <td class="text-left text-black"> Bill Rate - min <span
+                                 class="price">${{ job.min_rate  | number: '1.2-2' }}</span>
+                           </td>
+                           <td class="text-center" style="    width: 45px;"><i class="icons_ratetttttt"></i>
+                           </td>
+                           <td class="text-black">
+                              <div class="">
+                                 Bill Rate - max <span class="price">
+                                    ${{ job.max_rate  | number: '1.2-2' }}</span>
+                              </div>
+                           </td>
+                        </div>
+
+                        <div *ngIf="job.job_type=='Direct Hire'">
+                           <td class="text-left text-black"> Salary
+                           </td>
+                           <td class="text-center" style="    width: 45px;"><i class="icons_ratetttttt"></i>
+                           </td>
+                           <td class="text-black">
+                              <span class="price">${{ job.salary  | number: '1.2-2' }}</span>
+                           </td>
+                        </div>
+                     </tr>
+                  </tbody>
+               </table>
+            </div> <!-- __sidebar__card -->
+
+            <div class="__sidebar__card">
+               <table class="table table-transparent submision-detials text-size-13">
+                  <tbody>
+
+                     <tr>
+                        <td class=""><img class="inline-block" src="assets/images/icons/briefcase_gray.svg">
+                           Salary Type</td>
+                        <td class="text-black text-right">{{ job.salary_type  }}</td>
+                     </tr>
+                     <tr>
+                        <td class=""><img class="inline-block" src="assets/images/icons/briefcase_gray.svg">
+                           Currency</td>
+                        <td class="text-black text-right">{{ job.currency!=null?job.currency:'USD' }}</td>
+                     </tr>
+                     <tr>
+                        <td class=""><i class="fa fa-bank"></i> Start Date</td>
+                        <td class="text-black text-right">{{ job.start_date | date:'MM/dd/yyyy'  }}</td>
+                     </tr>
+                     <tr *ngIf="job.job_type=='Temp Hire'">
+                        <td class=""><i class="fa fa-bank"></i> End Date</td>
+                        <td class="text-black text-right">{{ job.tentative_end_date | date:'MM/dd/yyyy'  }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class=""><i class="fa fa-bank"></i>Openings</td>
+                        <td class="text-black text-right">{{ job.openings}}</td>
+                     </tr>
+                     <tr>
+                        <td class=""><i class="fa fa-bank"></i> Experience</td>
+                        <td class="text-black text-right"> {{ job.experience}}</td>
+                     </tr>
+                     <tr>
+                        <td class=""><i class="fa  fa-bell-slash"></i> Location</td>
+                        <td class="text-black text-right"> {{ job.address}}</td>
+                     </tr>
+                     <tr>
+                        <td class=""><i class="fa  fa-bell-slash"></i> Category</td>
+                        <td class="text-black text-right">{{ job?.category?.name | titlecase }}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div> <!-- __sidebar__card -->
+
+            <div class="__sidebar__card __sidebar__skills text-size-13">
+               <p>
+                  <i class="fa  fa-bell-slash"></i> Skills
+               </p>
+               <div>
+
+                 <span class="label label-info" [title]="skill.name" *ngFor="let skill of job.skills | slice:0:defaultSkillsCount">{{ skill.name | slice:1:45 }} </span>
+                 <span class="more" *ngIf="job.skills.length>10" (click)="toggleSkillsCount()">{{showMoreText}}</span>
+               </div>
+            </div> <!-- __sidebar__card -->
+
+         </div>
+
+      </div>
+   </div>
+</div>

@@ -1,0 +1,290 @@
+<app-sidebar [current_menu_item]="'settings'"></app-sidebar>
+
+<div class="content-area floated" #content_area>
+
+   <div class="main-head no-tabs">
+
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Team Members</h2>
+            <a href="" data-target="#edit_client_modal" data-toggle="modal" class="btn-orange"><i class="material-icons">person_add</i>Invite</a>
+         </div>
+         <app-header-right></app-header-right>
+
+
+      </div>
+
+   </div>
+
+   <!-- <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+      <div class="row">
+
+
+         <div class="col-md-9">
+
+            <div class="card job-grid single-job">
+               <div class="inner">
+                  <div class="s-details ">
+
+                     <div class="main-content-content eco-box-shadow">
+
+
+                        <div class="setting-right-side">
+
+                           <div class="setting-right-side-content">
+                              <table class="custom-table">
+                                 <tbody>
+                                    <tr>
+                                       <th>#</th>
+                                       <th>Name / Email</th>
+                                       <th>Access Level</th>
+                                       <th>Status</th>
+                                       <th>Actions</th>
+                                    </tr>
+                                    <tr *ngFor="let member of teamMembers; let i = index">
+                                       <td> {{ i+1 }} </td>
+                                       <td>{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}
+                                          <br>
+                                          <small>{{ member.email }}</small>
+                                       </td>
+                                       <td>{{ member?.pivot?.access_level | titlecase  }} </td>
+                                       <td><span class="label label-success" *ngIf="member.banned==0"> Active </span>
+                                          <span class="label label-danger" *ngIf="member.banned==1"> Inactive </span>
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <a (click)="edit(member)" *ngIf="member.id!=current_user_id"
+                                             class="btn btn-primary" style="margin-right:5px; color: white;">
+                                             <i class="fa fa-pencil"></i>
+                                          </a>
+                                          <button (click)="delete(member.id, member)" *ngIf="member.id!=current_user_id"
+                                             [disabled]="member.deleted" class="btn btn-danger"
+                                             [ngClass]="{ 'fa fa-spinner': member.deleted  }">
+                                             <i [ngClass]="{ 'fa fa-trash': !member.deleted }"></i>
+
+                                          </button>
+                                       </td>
+                                    </tr>
+
+
+
+
+
+                                 </tbody>
+                              </table>
+                           </div>
+                           <div class="setting-left-side form-style-v2">
+                              <h4 style="margin-top:25px" *ngIf="!team_member.id">Add Team Member</h4>
+                              <h4 style="margin-top:25px" *ngIf="team_member.id">Update Team Member</h4>
+                              <form method="POST" role="form" class="custom-form" (ngSubmit)="onSubmit()"
+                                 ngNativeValidate>
+
+                                 <div class="form-group">
+                                    <label for="">First Name</label>
+                                    <input name="first_name" required [(ngModel)]="team_member.first_name" type="text"
+                                       class="form-control" id="" placeholder="" value="">
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="">Last Name</label>
+                                    <input name="last_name" required [(ngModel)]="team_member.last_name" type="text"
+                                       class="form-control" id="" placeholder="" value="">
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="">Email</label>
+                                    <input name="email" required [(ngModel)]="team_member.email" type="text"
+                                       class="form-control" id="" placeholder="" value="">
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Access Level</label>
+                                    <select name="access_level" [(ngModel)]="team_member.pivot.access_level"
+                                       class="form-control" required="required">
+                                       <option value="{{ level }}" *ngFor="let level of accessLevels">
+                                          {{ level | titlecase }}
+                                       </option>
+                                    </select>
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="">Status</label>
+                                    <select name="banned" required [(ngModel)]="team_member.banned"
+                                       class="form-control select2" tabindex="-1">
+                                       <option value="0">Active</option>
+                                       <option value="1">Inactive</option>
+                                    </select>
+                                 </div>
+
+
+
+
+
+                                 <button type="submit" *ngIf="!team_member.id" [disabled]="isLoading"
+                                    class="btn btn-primary pull-right">Add</button>
+                                 <button type="submit" *ngIf="team_member.id" [disabled]="isLoading"
+                                    class="btn btn-primary pull-right">Update</button>
+                              </form>
+                           </div>
+                        </div>
+
+
+
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+
+
+      </div>
+   </div> -->
+
+   <div style=" margin:80px auto 30px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            
+      <div class="row justify-content-md-center">
+          
+          
+          <div class="col-md-12">
+              
+              <table class="custom-table table-style-2 table table-striped">
+                  <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Status</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+
+                      
+                      <tr *ngFor="let member of teamMembers">
+                        <td>
+                           <div class="text-avatar">{{ member.first_name | titlecase | slice:0:1 }} {{ member.last_name | titlecase | slice:0:1 }}</div>
+                           <label class="title-bold">{{ member.first_name | titlecase }} {{ member.last_name | titlecase }}</label>
+                       </td>
+                                 
+                                 <td>
+                                    
+                                    <span class="team-meber-email"><i class="material-icons">email</i>{{ member.email }}</span>
+                                 </td>
+                                 <td>
+                                    <label [ngStyle]="member.pivot.access_level === 'owner' ? {'color':'orange'} : member.pivot.access_level === 'manager' ? {'color':'#3ec53e'} :{'color':'gray'}" [ngClass]="member.pivot.access_level === 'owner' ? {'label orange':'orange'} : member.pivot.access_level === 'manager' ? {'label green':'#3ec53e'} :{'label gray':'gray'}">{{ member?.pivot?.access_level | titlecase  }}</label>
+                                    
+                                 </td>
+                                 <td><span  *ngIf="member.banned==0"> Active </span>
+                                    <span  *ngIf="member.banned==1"> Inactive </span>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <!-- <a (click)="edit(member)" *ngIf="member.id!=current_user_id"
+                                       class="btn btn-primary" style="margin-right:5px; color: white;">
+                                       <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <button (click)="delete(member.id, member)" *ngIf="member.id!=current_user_id"
+                                       [disabled]="member.deleted" class="btn btn-danger"
+                                       [ngClass]="{ 'fa fa-spinner': member.deleted  }">
+                                       <i [ngClass]="{ 'fa fa-trash': !member.deleted }"></i>
+
+                                    </button> -->
+                                    <div class="btn-group">
+                                       <button type="button" *ngIf="member.id!=current_user_id || member.id!=current_user_id" class="btn options-group-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                         <i class="material-icons">more_horiz</i>
+                                       </button>
+                                       <div class="dropdown-menu dropdown-menu-right">
+                                         <a data-target="#edit_client_modal" data-toggle="modal" (click)="edit(member)" *ngIf="member.id!=current_user_id" class="dropdown-item">Edit</a>
+                                         <a (click)="delete(member.id, member)" *ngIf="member.id!=current_user_id" class="btn btn-danger"
+                                         [ngClass]="{ 'fa fa-spinner': member.deleted  }" class="dropdown-item">Delete</a>
+                                       </div>
+                                     </div>
+                                 </td>
+                              </tr>                         
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal smodal custom-form-group-flat" id="edit_client_modal" style="margin-top:0px;"data-keyboard="false" data-backdrop="static" #completeModal>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+               <h4 class="modal-title"  *ngIf="!team_member.id">Add Team-Member</h4>
+               <h4 class="modal-title"  *ngIf="team_member.id">Edit Team-Member</h4>
+            <button class="close" data-dismiss="modal" (click)="dataDismiss()">&times;</button>
+            
+         </div>
+         <div class="modal-body">
+             <form  class="custom-form"
+                                 ngNativeValidate>
+
+                                 <div class="form-group">
+                                    <label for="">First Name</label>
+                                    <input name="first_name" required [(ngModel)]="team_member.first_name" type="text"
+                                       class="form-control" id="" placeholder="" value="">
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="">Last Name</label>
+                                    <input name="last_name" required [(ngModel)]="team_member.last_name" type="text"
+                                       class="form-control" id="" placeholder="" value="">
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="">Email</label>
+                                    <input name="email" required [(ngModel)]="team_member.email" type="text"
+                                       class="form-control" id="" placeholder="" value="">
+                                 </div>
+
+                                 
+                                    <div class="form-group">
+                                 
+                                    
+                                    <label for="exampleInputEmail1">Access Level</label>
+                                    
+                                    <div class="icon-spacing">
+                                       <ng-select2 
+                                        [data]="accessLevels" 
+                                        [width]="width"
+                                        [(ngModel)]="team_member.pivot.access_level" 
+                                        [value]="team_member.pivot.access_level"
+                                        name="access_level" 
+                                         placeholder="Choose" 
+                                          ></ng-select2>
+                                    </div>
+
+                                 
+                                 
+                                 </div>
+                                 
+
+                                 <div class="form-group">
+                                    <label for="">Status</label>
+
+                                    <div class="icon-spacing">
+                                       <ng-select2 
+                                        [data]="statuses" 
+                                        [width]="width"
+                                        [(ngModel)]="team_member.banned" 
+                                        [value]="team_member.banned"
+                                        name="banned" 
+                                         placeholder="Choose" 
+                                          ></ng-select2>
+                                    </div>
+                                    
+                                 </div>
+                              </form>
+         </div>
+         <div class="modal-footer">
+            <button type="submit" (click)="addOrupdate()"  *ngIf="!team_member.id" [disabled]="isLoading" class="btn btn-primary pull-right">Add<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+            <button type="submit" (click)="addOrupdate()"  *ngIf="team_member.id" [disabled]="isLoading" class="btn btn-primary pull-right">Update<span *ngIf="isLoading" style="padding-left: 5px;"><i class="fa fa-spinner fa-spin"></i></span></button>
+         </div>
+      </div>
+   </div>
+</div>

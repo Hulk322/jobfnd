@@ -1,0 +1,393 @@
+<div class="wrap btm-padding-1 graybg">
+    <app-header></app-header>
+    <div class="inner-wrap">
+        <div class="search-bar" *ngIf="!isCandidateLoggedIn">
+            <div class="form-group item">
+                <input type="text" name="job" [(ngModel)]="filters.what" (keyup.enter)="search()" class="form-control" placeholder="Search by keywords (PHP, .Net, etc)">
+            </div>
+            <div class="form-group item">
+                <AutocompleteComponent [placeholder]="placeholder" [autocompleteInput]="filters.where" (setAddress)="getAddress($event)" adressType="geocode">
+                </AutocompleteComponent>
+                <span class="icons_tracker pull-right"></span>
+                <input type="text" class="form-control" placeholder="Choose Location" style="display: none">
+            </div>
+            <div class="form-group item">
+                <ng-select2 style="display: block; padding-left: 0px" [data]="all_categories" [(ngModel)]="filters.categories" [options]="options" [width]="355" (change)="search()" name="categories" placeholder="Choose Category" (keyup.enter)="search()"></ng-select2>
+            </div>
+            <div class="form-group submit">
+                <button type="submit" name="search" (click)="search()" class="btn btn-bright-blue btn-block btn-lg">Search</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9 col-sm-12" itemscope itemtype="http://schema.org/JobPosting">
+                <div class="job job-single-header">
+                    <!-- <button class="btn btn-default" *ngIf="isCandidateLoggedIn"
+                  [disabled]="job.hasApplied==true || isLoading" data-toggle="modal" data-target="#myModal"
+                  (click)="oneClickApplyToJob(job.id); $event.stopPropagation();"><i
+                     class="fa fa-check-circle"></i>&nbsp; {{ job.hasApplied?'Applied':'Apply' }}</button>
+               <button *ngIf="!isCandidateLoggedIn" [disabled]="job.hasApplied==true" (click)="openApplyForm(job);"
+                  #applymodalBtn class="btn btn-default" data-toggle="modal" data-target="#myModal"
+                  data-backdrop="static" data-keyboard="false"><i class="fa fa-check-circle"></i>&nbsp; Apply</button> -->
+                    <h4 itemprop="title" class="single-job-title-1">{{ job?.title }}</h4>
+                    <div class="job-details-hor single-job-head">
+
+                        <label class="blckinfo blue"><i class="material-icons">apartment</i>
+                     <span>{{ job?.source_company_name }} </span></label>
+
+                        <label [title]="job.job_location" class="blckinfo">
+                     <i class="material-icons">room</i>
+                     <span>{{ job.job_location!=null?job.job_location:'Not Available' }}</span>
+                  </label>
+
+                        <label class="blckinfo">
+                     <div class="icon-exp">
+
+                        <svg *ngIf="job.experience=='Entry'||job.experience==null" xmlns="http://www.w3.org/2000/svg"
+                           width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                           <defs>
+                              <style>
+                                 .a,
+                                 .b {
+                                    fill: none;
+                                    stroke-linecap: round;
+                                    stroke-width: 3px;
+                                 }
+
+                                 .a {
+                                    stroke: #5bcb58;
+                                 }
+
+                                 .b {
+                                    stroke: #c8c7c7;
+                                 }
+                              </style>
+                           </defs>
+                           <g transform="translate(-87 -506.736)">
+                              <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                              <line class="b" y1="11.126" transform="translate(94.123 512.609)" />
+                              <line class="b" y1="12.916" transform="translate(99.745 510.82)" />
+                              <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                           </g>
+                        </svg>
+
+                        <svg *ngIf="job.experience=='Experienced'||job.experience=='experienced'"
+                           xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                           <defs>
+                              <style>
+                                 .a,
+                                 .b {
+                                    fill: none;
+                                    stroke-linecap: round;
+                                    stroke-width: 3px;
+                                 }
+
+                                 .a {
+                                    stroke: #5bcb58;
+                                 }
+
+                                 .b {
+                                    stroke: #c8c7c7;
+                                 }
+                              </style>
+                           </defs>
+                           <g transform="translate(-87 -506.736)">
+                              <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                              <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                              <line class="b" y1="12.916" transform="translate(99.745 510.82)" />
+                              <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                           </g>
+                        </svg>
+
+                        <svg
+                           *ngIf="job.experience=='Intermediate'||job.experience=='intermediate'||job.experience=='Intermediate (1 to 4 years)'"
+                           xmlns="http://www.w3.org/2000/svg" width="20.245" height="18.5" viewBox="0 0 20.245 18.5">
+                           <defs>
+                              <style>
+                                 .a,
+                                 .b {
+                                    fill: none;
+                                    stroke-linecap: round;
+                                    stroke-width: 3px;
+                                 }
+
+                                 .a {
+                                    stroke: #5bcb58;
+                                 }
+
+                                 .b {
+                                    stroke: #c8c7c7;
+                                 }
+                              </style>
+                           </defs>
+                           <g transform="translate(-87 -506.736)">
+                              <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                              <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                              <line class="a" y1="12.916" transform="translate(99.745 510.82)" />
+                              <line class="b" y1="15.5" transform="translate(105.745 508.236)" />
+                           </g>
+                        </svg>
+
+                        <svg *ngIf="job.experience=='Expert'" xmlns="http://www.w3.org/2000/svg" width="20.245"
+                           height="18.5" viewBox="0 0 20.245 18.5">
+                           <defs>
+                              <style>
+                                 .a {
+                                    fill: none;
+                                    stroke: #5bcb58;
+                                    stroke-linecap: round;
+                                    stroke-width: 3px;
+                                 }
+                              </style>
+                           </defs>
+                           <g transform="translate(-87 -506.736)">
+                              <line class="a" y2="8.434" transform="translate(88.5 515.302)" />
+                              <line class="a" y1="11.126" transform="translate(94.123 512.609)" />
+                              <line class="a" y1="12.916" transform="translate(99.745 510.82)" />
+                              <line class="a" y1="15.5" transform="translate(105.745 508.236)" />
+                           </g>
+                        </svg>
+
+                     </div>
+                     <span
+                          >{{ job.experience==null?'Entry':job.experience | titlecase }}</span>
+
+
+                  </label>
+
+                        <label class="blckinfo" style="margin-bottom: 0px" *ngIf="(job.job_type=='Full Time' && job.salary!=null) || (job.job_type=='Temp Hire' && (job.min_rate>0 || job.max_rate>0) )">
+                        <i class="material-icons">monetization_on</i>
+                        <span class="" *ngIf="job.job_type=='Full Time' && job.salary!=null">
+                           {{job.salary | currency: '$' }}
+                        </span>
+                        <span  *ngIf="job.job_type=='Temp Hire' && job.min_rate!=null" style="overflow: inherit;">
+                           <label
+                                 *ngIf="job.min_rate>0">{{job.min_rate | currency: '$' }}/{{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}
+                                  </label>
+                        <label *ngIf="job.min_rate>0 && job.max_rate>0"> - </label>
+                        <label *ngIf="job.max_rate>0"> {{ job.max_rate | currency: '$' }}/{{ job.salary_type==''||job.salary_type==null?'h':job.salary_type }}</label>
+
+
+                        </span>
+                        </label>
+
+
+                        <div class="job-skills-type">
+                            <div class="badges">
+                                <span [ngClass]="{'badge': true, 'badge-green': job.job_type=='Full Time', 'badge-red': job.job_type=='Temp Hire' }">{{ job.job_type }}</span>
+                                <span class="badge badge-white" *ngFor="let skill of job.skills | slice:0:5">{{ skill.name }}</span>
+                                <span class="badge badge-more badge-white" *ngIf="job.skills.length>5">
+                           +{{ job.skills.length-5 }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div [ngClass]="{'job job-detail s-job-detail-single': true, 'open':  show_more_description==true }">
+                    <h3>Job Brief</h3>
+                    <p itemprop="description" [innerHTML]="job.description">
+                    </p>
+                    <p [innerHTML]="job.reason_for_hire">
+                    </p>
+                    <p><span class="api_job_id" itemprop="identifier">{{ job.api_job_id }}</span></p>
+                    <input type="hidden" value="{{ job?.category?.name }}" itemprop="industry">
+                    <input type="hidden" value="{{ job.openings }}" itemprop="totalJobOpenings">
+                    <input type="hidden" value="{{job.posted}}" itemprop="datePosted">
+                    <input type="hidden" value="{{job.start_date}}" itemprop="jobStartDate">
+                </div>
+                <div class="job-footer job-single-footer">
+                    <a (click)="show_more_description=!show_more_description" href="javascript:void(0)" class="expand-job-description">
+                        <i *ngIf="show_more_description==false" class="material-icons">expand_more</i>
+                        <i *ngIf="show_more_description==true" class="material-icons">keyboard_arrow_up</i> {{ show_more_description==false?'SHOW MORE':'SHOW LESS' }}</a>
+                </div>
+
+                <div class="card m-t-20" *ngIf="custom_fields?.length>0" style="padding-left: 30px; padding-right: 30px; padding-bottom: 20px;">
+
+                    <div class="custom_field" *ngFor="let field of custom_fields; let i=index" style="margin-top: 20px;
+               margin-bottom: 0px;">
+
+                        <div class="form-group" style="margin-bottom:0px">
+                            <h4>{{ field.label }}</h4>
+                        </div>
+
+                        <div>
+                            <p [innerHTML]='field.answer'></p>
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="job-footer">
+                    <button class="btn btn-lg btn-primary pull-right" *ngIf="isCandidateLoggedIn" [disabled]="job.hasApplied==true || isLoading" data-toggle="modal" data-target="#myModal" (click)="oneClickApplyToJob(job.id); $event.stopPropagation();"><i
+                     class="fa fa-check-circle"></i>&nbsp; Apply</button>
+                    <button *ngIf="!isCandidateLoggedIn" [disabled]="job.hasApplied==true" (click)="openApplyForm(job);" #applymodalBtn class="btn btn-lg btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-check-circle"></i>&nbsp; Apply</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div class="company-detail" *ngIf="show_company_sidebar==true">
+                    <img style="width: 236px" src="{{ job?.client_organization.businessLogoFullUrlPublic }}">
+
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th>Company Name</th>
+                                <td>{{ job?.source_company_name }}</td>
+                            </tr>
+                            <tr *ngIf="job?.client_organization?.location">
+                                <th>Location</th>
+                                <td>{{ job?.client_organization?.location }}</td>
+                            </tr>
+                            <tr>
+                                <th>Open Jobs</th>
+                                <td>{{ organizationOpenJobs==null?0:organizationOpenJobs }}</td>
+                            </tr>
+                            <tr *ngIf="job?.client_organization?.created_at">
+
+                                <th>Member Since</th>
+                                <td>{{ job?.client_organization?.created_at | date:'MM/dd/yyyy' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>About Company</h4>
+                    <p itemprop="hiringOrganization" [innerHTML]="job?.client_organization?.description"></p>
+
+                    <a itemprop="hiringOrganization" (click)="searchClientJobs(job?.source_company_name)" class="badge badge-gray badge-block">More from {{ job?.source_company_name }}</a>
+                </div>
+                <div class="subscribe">
+                    <app-subscribe-to-job [job_slug]="job.slug"></app-subscribe-to-job>
+                </div>
+                <div class="send-in-email">
+                    <app-send-job-in-email [job_slug]="job.slug"></app-send-job-in-email>
+                </div>
+
+                <app-similar-jobs [job_slug]="job.slug"></app-similar-jobs>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal window" id="myModal">
+    <div class="modal-dialog  modal-xl">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="flex-box">
+                <div class="new-user">
+                    <h1 class="pb-4">Are you a new user?</h1>
+                    <ul>
+                        <li>
+                            <span class="icon icon-file"></span>
+                            <h4>Submit your resume</h4>
+                            <p>Submit your resume in .doc or .pdf format</p>
+                        </li>
+                        <li>
+                            <span class="cl1"><i class="icon icon-verified"></i></span>
+                            <h4>Complete job application</h4>
+                            <p>Answer additional questions</p>
+                        </li>
+                        <li>
+                            <span class="cl2"><i class="icon icon-rocket"></i></span>
+                            <h4>Complete your profile</h4>
+                            <p>Publish your profile in Talentzhire</p>
+                        </li>
+                    </ul>
+                    <h1 class="pb-2">Already a Member?</h1>
+                    <button [disabled]="isLoading" routerLink="/login" class="btn btn-default p-3" data-dismiss="modal">
+                  <i class="material-icons">lock_open</i> Login to your account and continue</button>
+                </div>
+                <div class="submit-application">
+                    <button type="button" class="close" *ngIf="!isLoading" data-dismiss="modal">&times;</button>
+                    <h4>Submit your application for</h4>
+                    <p itemprop="title" class="company-name">{{ job?.title }}</p>
+                    <app-errors></app-errors>
+                    <p [hidden]="!isApplied">{{ApplySuccessMsg}}</p>
+                    <!-- <div class="alert alert-danger" *ngIf="isFormError">
+                  <button type="button" (click)="isFormError=false" class="close" aria-hidden="true">&times;</button>
+                  <span>
+                     <p style="margin-bottom: 5px;" [innerHTML]="errorMsg"></p>
+                  </span>
+               </div> -->
+                    <form role="form" [hidden]="isApplied" *ngIf="step2==true">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="first_name">Verification Code <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="code" name="code" [(ngModel)]="code">
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding-left: 0px;">
+                                <button type="button" style="margin-top: 23px;" *ngIf="step2==true" [disabled]="isLoading" class="btn btn-bright-blue" (click)="verifyCode()">{{ isLoading?'Processing ...':'Verify' }}</button>
+                            </div>
+                        </div>
+                    </form>
+                    <form role="form" [formGroup]="applyJobForm" [hidden]="isApplied" *ngIf="step2==false">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="first_name">First Name <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="first_name" formControlName="first_name">
+                                    <div *ngIf="submitted && f.first_name.errors" style="color:red;">
+                                        <div *ngIf="submitted && f.first_name.errors.required">First Name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="first_name">Last Name <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="last_name" formControlName="last_name">
+                                    <div *ngIf="submitted && f.first_name.errors" style="color:red;">
+                                        <div *ngIf="submitted && f.first_name.errors.required">Last Name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email <span style="color:red;">*</span></label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email">
+                            <div *ngIf="submitted && f.email.errors" style="color:red;">
+                                <div *ngIf="f.email.errors.required">Email is required</div>
+                                <div *ngIf="f.email.errors.email">Enter a valid email address</div>
+                            </div>
+                        </div>
+                        <p> <label for="exampleInputFile">Resume <span style="color:red;">*</span></label></p>
+                        <div class="custom-file resume-upload" style="margin-bottom: 30px; margin-top: 0px">
+
+                            <input type="file" class="custom-file-input" formControlName="file" id="customFile" (change)="handleFileInput($event.target.files)">
+                            <div *ngIf="submitted && f.file.errors" style="margin-top:7px;color:red;">
+                                <div *ngIf="submitted && f.file.errors.required">File upload is required</div>
+                            </div>
+                            <label class="custom-file-label" for="customFile">
+                        {{fileName}}
+                        <i class="or" style="display:none">or</i>
+                     </label>
+                        </div>
+                        <div class="custom-file resume-upload" style="display: none">
+                            <div class="form-group">
+                                <label for="exampleInputFile">Resume *</label>
+                                <input type="file" class="custom-file-input" formControlName="file" id="customFile" (change)="handleFileInput($event.target.files)">
+                                <div *ngIf="submitted && f.file.errors" style="color:red;">
+                                    <div *ngIf="submitted && f.file.errors.required">File upload is required</div>
+                                </div>
+                                <label class="custom-file-label" for="customFile">
+                           <i class="icon-file"></i> Drop your resume here
+                           <i class="or">or</i>
+                        </label>
+                            </div>
+                        </div>
+                        <button type="button" *ngIf="step2==false" [disabled]="isLoading" class="btn btn-bright-blue pull-right" (click)="applyToJob()">  {{ isLoading?'Parsing Resume ':'Submit' }}
+                     <span *ngIf="isLoading" style="padding-left: 10px;"><i class="fa fa-spinner fa-spin"></i></span>
+                      </button>
+                        <a data-dismiss="modal" *ngIf="!isLoading" style="cursor: pointer" class="btn btn-default pull-left">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

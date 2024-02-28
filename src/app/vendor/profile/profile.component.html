@@ -1,0 +1,108 @@
+<app-sidebar [current_menu_item]="'profile'"></app-sidebar>
+
+<div class="content-area" #content_area>
+
+      <div class="main-head no-tabs">
+            
+            <div class="childfix">
+                <div class="head-left">
+                    <h2 class="page-title">Profile</h2>
+                    
+                </div>
+                <app-header-right></app-header-right>
+
+                
+            </div>
+            
+        </div>
+
+      <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+            
+            <div class="row">
+                
+                
+                <div class="col-md-9">
+                    
+                    <div class="card job-grid single-job">
+                        <div class="inner">
+                            <div class="s-details ">
+
+<div class="main-content-content form-style-v2">
+   <div class="element-box">
+         <form #updateProfileForm=ngForm class="custom-form" (submit)="onSubmit()" ngNativeValidate>
+               
+               <div class="row">
+                  <div class="col-sm-6">
+                     <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input [(ngModel)]="user.first_name" name="first_name" id="first_name" class="form-control"
+                           type="text">
+                     </div>
+                  </div>
+                  <div class="col-sm-6">
+                     <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input [(ngModel)]="user.last_name" name="last_name" id="last_name" class="form-control" type="text">
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="email">Email</label>
+                  <input [(ngModel)]="user.email" name="email" id="email" class="form-control" type="email" readonly>
+               </div>
+      
+               <div class="form-group">
+                  <label for="business_name">Name of Business / Organization</label>
+                  <input name="business_name" id="business_name" [(ngModel)]="userOrganization.name" class="form-control"
+                     type="text">
+               </div>
+               <div class="form-group">
+                  <label for="business_description">Describe your business</label>
+                  <textarea name="business_description" id="business_description" [(ngModel)]="userOrganization.description"
+                     class="form-control"></textarea>
+               </div>
+               <div class="row m-b-20">
+                  <div class="col-sm-6">
+                     <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input ngxPhoneMask [(ngModel)]="user.meta.phone" name="phone" id="phone" class="form-control"
+                           type="text">
+                     </div>
+                  </div>
+                  <div class="col-sm-6">
+                     <label for="profile_picture">Profile Picture</label>
+                     <div class="input-group">
+                        <input type="text" class="form-control" value="{{uploaded_file_name}}" readonly>
+                        <label class="input-group-btn">
+                           <span class="btn btn-primary">
+                              Browse&hellip; <input name="user.profile_picture" type="file"
+                                 (change)="handleFileUpload($event.target.files)" id="profile_picture" ref="file"
+                                 class="form-element form-control" style="display: none;">
+                           </span>
+                        </label>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-divider"></div>
+               <div class="form-row">
+                  <button type="submit" class="btn btn-primary" [disabled]="isLoading"><span *ngIf="!isLoading">Update
+                        Profile</span><span *ngIf="isLoading">Updating Profile...</span></button>
+               </div>
+            </form>
+   </div>
+</div>
+
+</div>
+</div></div></div>
+
+
+
+
+</div></div>
+<!-- templates modal-->
+
+
+</div>
+        
+        
+    

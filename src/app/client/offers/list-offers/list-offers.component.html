@@ -1,0 +1,271 @@
+<app-sidebar [current_menu_item]="'offers'"></app-sidebar>
+<div class="content-area floated">
+   <div class="main-head tabs-active">
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Offers</h2>
+         </div>
+         <app-header-right></app-header-right>
+         <div class="easytabs">
+            <ul style="display: none;">
+               <li class="active"><a ><label class="blue dot"></label> All Offers</a></li>
+               <li><a ><label class="green dot"></label> Recent</a></li>
+               <li><a ><label class="orange dot"></label> Cancelled</a></li>
+            </ul>
+            <div class="searchbox">
+               <form>
+                  <button><i class="material-icons">search</i></button>
+                  <input type="search"  
+                  name="search_keyword" 
+                  [(ngModel)]="search_keyword" (keyup)="pageObj.page=1; getOffersByKeyword()" 
+                  placeholder="Search Offers">
+               </form>
+            </div>
+            <div class="view-switcher">
+               <ul>
+                  <li>
+                     <a href="javascript:void(0)" class="open-filter"><i class="material-icons">filter_list</i></a>
+                     <div class="drop-wrap light-theme">
+                        <div class="submission-filter-wrap">
+                           <h1>
+                              <i class="material-icons">filter_list</i> Filter
+                              <a href="javascript:void(0)" class="close-filter-panel">
+                              <i class="material-icons">cancel</i>
+                              </a>
+                           </h1>
+                           <h2 class="drop-down-subtitle">Filter By Status</h2>
+                           <div class="block">
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 
+                                 <input type="radio" name="optionsRadios"  class="custom-control-input"
+                                    (click)="pageObj.page=1; getByStatus('Pending')" id="optionsRadios5">
+                                 
+                                 <label class="custom-control-label" for="optionsRadios5">Pending</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 
+                                 <input type="radio" name="optionsRadios" class="custom-control-input"
+                                    (click)="pageObj.page=1; getByStatus('Reject')" id="optionsRadios6">
+                                    <label class="custom-control-label" for="optionsRadios6">Cancelled</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 
+                                 <input type="radio" name="optionsRadios"  class="custom-control-input"
+                                    (click)="pageObj.page=1; getByStatus('Reschedule')" id="optionsRadios7">
+                                    <label class="custom-control-label" for="optionsRadios7">Reschedule</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 
+                                 <input type="radio" name="optionsRadios"  class="custom-control-input"
+                                    (click)="pageObj.page=1; getByStatus('complete')" id="optionsRadios8">
+                                    <label class="custom-control-label" for="optionsRadios8">Completed</label>
+                              </div>
+                           </div>
+
+                           <h2 class="drop-down-subtitle">Sort By</h2>
+                           <div class="block">
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 
+                                 <input type="radio" name="optionsRadios" class="custom-control-input"
+                                    id="optionsRadios1"  
+                                    (click)="pageObj.page=1; todayOffers()">
+                                 
+                                 <label class="custom-control-label" for="optionsRadios1">Todays Offer</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 
+                                 <input type="radio" name="optionsRadios"  class="custom-control-input"
+                                    (click)="pageObj.page=1; weekOffers()" id="optionsRadios2">
+                                    <label class="custom-control-label" for="optionsRadios2">This week</label>
+                              </div>
+
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 
+                                 <input type="radio" name="optionsRadios"  class="custom-control-input"
+                                    (click)="pageObj.page=1; sortAscOffers()" id="optionsRadios3">
+                                    <label class="custom-control-label" for="optionsRadios3">Asceding</label>
+                              </div>
+
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 
+                                 <input type="radio" name="optionsRadios"  
+                                    (click)="pageObj.page=1; sortDescOffers()" id="optionsRadios4" class="custom-control-input">
+                                 
+                                    <label class="custom-control-label" for="optionsRadios4">Descending</label>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  <li style="display: none;"><a style="cursor: pointer;"><i class="material-icons">menu</i></a></li>
+                  <li style="display: none;"><a style="cursor: pointer;"><i class="material-icons">view_module</i></a></li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="col-md-12" *ngIf="offers?.length<1 && !isLoading" style="text-align: center;">
+         
+         <div class="errormsgscreen">
+            <img src="assets/admin/images/graphics/no-offers.svg" style="margin-top: 13%;">
+            <h3>No Offers Found</h3>
+        </div>
+         
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+            <div class="main-content-content">
+               <div class="talent-pool">
+                  <div class="talent-pool_content form-style-v2">
+                     <div class="">
+                        <table class="custom-table table table-striped" *ngIf="offers?.length>0">
+                           <thead>
+                              <tr>
+                                 <th></th>
+                                 <th>BillRate</th>
+                                 <th>BillRate OT</th>
+                                 <th>Created At</th>
+                                 <th>Status</th>
+                                 <th></th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr *ngFor="let offer of offers">
+                                 <td>
+                                    <div class="text-avatar">{{ offer?.submission?.first_name | slice:0:1 }}{{ offer?.submission?.last_name | slice:0:1 }}</div>
+                                    <div>
+                                       <label class="title-bold">{{ offer?.submission?.first_name }} {{offer?.submission?.last_name}}</label>
+                                       <label [ngClass]="{'badge large':true, 
+                                          'green': offer.type=='Full Time',
+                                          'red': offer.type=='Temp Hire'}">
+                                       {{ offer.type }}
+                                       </label>
+                                       <label class="badge large gray">
+                                       <i class="material-icons">work</i>
+                                       {{ offer?.job?.title }}
+                                       </label>
+                                    </div>
+                                 </td>
+                                 <td class="rate-column">
+                                    <label>${{ (offer.type=='Full Time'?offer.salary:offer.bill_rate) | number: '1.2-2' }}</label>
+                                 </td>
+                                 <td class="rate-column">
+                                    <label>{{ (offer.type=='Full Time'?offer.vendor_markup:offer.bill_rate_overtime) | number: '1.2-2' }}%</label>
+                                 </td>
+                                 <td class="rate-column">
+                                    <label>{{ offer.created_at | date:'MM/dd/yyyy' }}</label>
+                                 </td>
+                                 <td class="rate-column">
+                                    <label [ngClass]="{
+                                       'status plaine':true,
+                                       'orange':  offer.current_status=='New',
+                                       'red': offer.current_status=='Vendor Rejected',
+                                       'green': offer.current_status=='Vendor Accepted',
+                                       'blue': offer.current_status=='Pending Approval'
+                                       }">{{ offer.current_status }}</label>
+                                 </td>
+                                 <td width="50">
+                                    <div class="btn-group">
+                                       <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                       <i class="material-icons">more_vert</i>
+                                       </button>
+                                       <div class="dropdown-menu dropdown-menu-right">
+                                          <a class="dropdown-item" routerLink="/client/offer/{{offer.id}}">View</a>
+                                          <a class="dropdown-item" href="javascript:void(0)" (click)="deleteOffer(offer.id, offer)" >Delete</a>
+                                       </div>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  <!-- talent-pool_content -->
+                  <div class="talent-pool_sidebar_outer" style="display: none;">
+                     <div class="talent-pool_sidebar_inner">
+                        <button style="display: none" type="button" class="btn btn-success btn-fat btn-block m-b-20"> <i
+                           class="fa fa-plus"></i> Create new Offer</button>
+                        <div class="card">
+                           <p class="filter">Sort By</p>
+                           <div class="radio radio-blue">
+                              <label for="optionsRadios1">
+                              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option2"
+                                 (click)="todayOffers()">
+                              <span class="label-text">Todays Offer</span>
+                              </label>
+                           </div>
+                           <div class="radio radio-blue">
+                              <label for="optionsRadios2">
+                              <input type="radio" name="optionsRadios" (click)="weekOffers()" id="optionsRadios2"
+                                 value="option2">
+                              <span class="label-text">This week</span>
+                              </label>
+                           </div>
+                           <div class="radio radio-blue">
+                              <label for="optionsRadios3">
+                              <input type="radio" name="optionsRadios" (click)="sortAscOffers()" id="optionsRadios3"
+                                 value="option2">
+                              <span class="label-text">Asceding</span>
+                              </label>
+                           </div>
+                           <div class="radio radio-blue">
+                              <label for="optionsRadios4">
+                              <input type="radio" name="optionsRadios" (click)="sortDescOffers()" id="optionsRadios4"
+                                 value="option2">
+                              <span class="label-text">Descending</span>
+                              </label>
+                           </div>
+                           <p class="filter">Filter By Status</p>
+                           <div class="radio radio-blue">
+                              <label for="optionsRadios5">
+                              <input type="radio" name="optionsRadios" (click)="getByStatus('Pending')" id="optionsRadios5"
+                                 value="option2">
+                              <span class="label-text">Pending</span>
+                              </label>
+                           </div>
+                           <div class="radio radio-blue">
+                              <label for="optionsRadios6">
+                              <input type="radio" name="optionsRadios" (click)="getByStatus('Reject')" id="optionsRadios6"
+                                 value="option2">
+                              <span class="label-text">Cancelled</span>
+                              </label>
+                           </div>
+                           <div class="radio radio-blue">
+                              <label for="optionsRadios7">
+                              <input type="radio" name="optionsRadios" (click)="getByStatus('Reschedule')" id="optionsRadios7"
+                                 value="option2">
+                              <span class="label-text">Reschedule</span>
+                              </label>
+                           </div>
+                           <div class="radio radio-blue">
+                              <label for="optionsRadios8">
+                              <input type="radio" name="optionsRadios" (click)="getByStatus('complete')" id="optionsRadios8"
+                                 value="option2">
+                              <span class="label-text">Completed</span>
+                              </label>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- talent-pool -->
+            </div>
+         </div>
+      </div>
+
+      <div class="row" *ngIf="!isLoading" style="margin-top: 30px;">
+         <div class="pagination">
+            <ngb-pagination *ngIf="pageObj.totalElements > 15"
+            [collectionSize]="pageObj.totalElements"
+            [maxSize]="5"
+            [(page)]="pageObj.page"
+            (pageChange)="pageChange($event)" 
+            [pageSize]="pageObj.pageSize"
+            [boundaryLinks]="true">
+            </ngb-pagination>
+         </div>
+      </div>
+
+   </div>
+</div>

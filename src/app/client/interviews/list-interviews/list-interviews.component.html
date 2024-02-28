@@ -1,0 +1,315 @@
+<app-sidebar [current_menu_item]="'interviews'"></app-sidebar>
+<div class="content-area floated" #content_area>
+   <div class="main-head tabs-active" #main_head>
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Interviews</h2>
+         </div>
+         <app-header-right></app-header-right>
+         <div class="easytabs">
+            <ul style="display: none;">
+               <li class="active"><a href="#"><label class="blue dot"></label> All Interviews</a></li>
+               <li><a href="#"><label class="green dot"></label> Up Coming</a></li>
+               <li><a href="#"><label class="orange dot" ></label> Cancelled</a></li>
+               <li><a href="#"><label class="gray dot"></label> Calendar View</a></li>
+            </ul>
+            <div class="searchbox">
+               <form>
+                  <button><i class="material-icons">search</i></button>
+                  <input type="search" 
+                  name="search_keyword" 
+                  [(ngModel)]="search_keyword" (keyup)="pageObj.page=1; getInterviewsByKeyword()" 
+                  placeholder="Search Interviews">
+               </form>
+            </div>
+            <div class="view-switcher">
+               <ul>
+                  <li>
+                     <a href="javascript:void(0)" class="open-filter"><i class="material-icons">filter_list</i></a>
+                     <div class="drop-wrap light-theme">
+                        <div class="submission-filter-wrap">
+                           <h1>
+                              <i class="material-icons">filter_list</i> Filter
+                              <a href="javascript:void(0)" class="close-filter-panel">
+                              <i class="material-icons">cancel</i>
+                              </a>
+                           </h1>
+                           <h2 class="drop-down-subtitle">Filter By Status</h2>
+                           <div class="block">
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 <input type="radio" name="optionsRadios" 
+                                    class="custom-control-input"
+                                    (click)="pageObj.page=1; getInterviewsByStatus('Pending')" id="optionsRadios5">
+                                 <label class="custom-control-label" for="optionsRadios5">Pending</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 <input type="radio" name="optionsRadios" 
+                                    class="custom-control-input"
+                                    (click)="pageObj.page=1; getInterviewsByStatus('Reject')" id="optionsRadios6">
+                                 <label class="custom-control-label" for="optionsRadios6">Cancelled</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 <input type="radio" name="optionsRadios" 
+                                    class="custom-control-input"
+                                    (click)="pageObj.page=1; getInterviewsByStatus('Reschedule')" id="optionsRadios7" >
+                                 <label class="custom-control-label" for="optionsRadios7">Reschedule</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 <input type="radio" name="optionsRadios"  class="custom-control-input"
+                                    (click)="pageObj.page=1; getInterviewsByStatus('complete')" id="optionsRadios8" >
+                                 <label class="custom-control-label" for="optionsRadios8">Completed</label>
+                              </div>
+                           </div>
+                           <h2 class="drop-down-subtitle">Sort By</h2>
+                           <div class="block">
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 <input type="radio" name="optionsRadios" class="custom-control-input"
+                                    id="optionsRadios1" 
+                                    (click)="pageObj.page=1; todayInterviews()">
+                                 <label class="custom-control-label" for="optionsRadios1">Todays Interview</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 <input type="radio" name="optionsRadios" class="custom-control-input"
+                                    (click)="pageObj.page=1; weekInterviews()"
+                                    id="optionsRadios2">
+                                 <label class="custom-control-label" for="optionsRadios2">This week</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 <input type="radio" name="optionsRadios"  class="custom-control-input"
+                                    (click)="pageObj.page=1; sortAscInterviews()" id="optionsRadios3" value="option2">
+                                 <label class="custom-control-label" for="optionsRadios3">Asceding</label>
+                              </div>
+                              <div class="custom-control custom-radio my-1 mr-sm-2">
+                                 <input type="radio" name="optionsRadios"  class="custom-control-input"
+                                    (click)="pageObj.page=1; sortDescInterviews()" id="optionsRadios4" value="option2">
+                                 <label class="custom-control-label" for="optionsRadios4">Descending</label>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  <li [ngClass]="{'active': view_type=='list'}">
+                     <a href="javascript:void(0)" (click)="view_type='list'"><i class="material-icons">menu</i></a>
+                  </li>
+                  <li [ngClass]="{'active': view_type=='grid'}">
+                     <a href="javascript:void(0)" (click)="view_type='grid'"><i class="material-icons">view_module</i></a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="col-md-12" *ngIf="interviews?.length<1 && !isLoading" style="text-align: center;">
+         <div class="errormsgscreen">
+            <img src="assets/admin/images/graphics/no-interviews.svg" style="margin-top: 13%;">
+            <h3>No Interviews Found</h3>
+        </div>
+      </div>
+      <div class="row" *ngIf="view_type=='list'">
+         <div class="col-md-12">
+            <table class="custom-table" *ngIf="interviews?.length>0" style="margin-bottom: 30px;">
+               <thead>
+                  <tr>
+                     <th></th>
+                     <th>Date</th>
+                     <th>Type</th>
+                     <th>Status</th>
+                     <th></th>
+                  </tr>
+               </thead>
+               <tbody *ngIf="isLoading">
+                  <tr *ngFor="let number of [0,1,2,3,4,5]">
+                     <td>
+                        <div class="shine mini"></div>
+                        <div>
+                           <label class="title-bold">
+                              <div class="shine mini"></div>
+                           </label>
+                        </div>
+                     </td>
+                     <td class="interview-time-col">
+                        <div class="shine mini"></div>
+                        <div class="shine mini"></div>
+                     </td>
+                     <td class="rate-column interview-type">
+                        <div class="shine mini"></div>
+                        <div class="shine mini"></div>
+                     </td>
+                     <td class="rate-column">
+                        <div class="shine mini"></div>
+                        <div class="shine mini"></div>
+                     </td>
+                     <td width="50">
+                        <div class="shine mini"></div>
+                        <div class="shine mini"></div>
+                     </td>
+                  </tr>
+               </tbody>
+               <tbody *ngIf="!isLoading">
+                  <tr *ngFor="let interview of interviews | orderBy:'id':true">
+                     <td>
+                        <div class="text-avatar"> <img class="media-object" 
+                           style="border-radius: 50%;
+                           /* margin-left: 5px; */
+                           /* padding-right: 10px; */
+                           max-width: 50px;" 
+                           src="{{ interview?.candidate?.meta?.profilePictureFullUrl }}" alt="Image"></div>
+                        <div>
+                           <label class="title-bold">{{ interview.title }}</label>
+                           <label class="badge large gray">
+                           <i class="material-icons">gps_fixed</i>
+                           {{ interview.location | slice:0:16 }}
+                           </label>
+                           <label class="badge large gray" *ngIf="interview?.job?.title != null">
+                           <i class="material-icons">insert_emoticon</i>
+                           {{ interview?.job?.title }}
+                           </label>
+                        </div>
+                     </td>
+                     <td class="interview-time-col">
+                        <ul class="interview-time-list">
+                           <li>
+                              <div class="date">
+                                 <i class="material-icons">event</i>
+                                 <span>{{ interview?.dates[0]?.date | date:'MM/dd/yyyy' }}</span>
+                              </div>
+                              <div class="time">
+                                 <i class="material-icons">access_time</i>
+                                 <span>{{ interview?.dates[0]?.time_in | date:'shortTime' }} - {{ interview?.dates[0]?.time_out | date:'shortTime' }}</span>
+                              </div>
+                           </li>
+                        </ul>
+                        <!--                                    <a href="#" class="more-interview-time"><i class="material-icons">keyboard_arrow_down</i></a>-->
+                     </td>
+                     <td class="rate-column interview-type">
+                        <label><i class="material-icons" *ngIf="interview.type=='face-to-face' || interview.type=='Face to face' ">face</i></label>
+                        <label><i class="material-icons" *ngIf="interview.type=='video' || interview.type=='Video'">videocam</i></label>
+                        <label><i class="material-icons" *ngIf="interview.type=='Phone' || interview.type=='phone'">phone</i></label>
+                        <label><i class="material-icons" *ngIf="interview.type=='Skype' || interview.type=='skype'">chat</i></label>
+                     </td>
+                     <td style="text-align: center;">
+                        <label [ngClass]="{'status plaine': true, 
+                           'green': interview.current_status=='Vendor Accepted' || interview.current_status=='Accept', 
+                           'red': interview.current_status=='Vendor Rejected' || interview.current_status=='Reject', 
+                           'blue': interview.current_status=='New' || interview.current_status=='Pending'}" >
+                        {{ interview.current_status }}
+                        </label>
+                     </td>
+                     <td>
+                        <div class="btn-group">
+                           <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <i class="material-icons">more_vert</i>
+                           </button>
+                           <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" 
+                                 routerLink="/client/interview/{{interview.id}}">View Details</a>
+
+                                 <a class="dropdown-item" 
+                                 routerLink="/client/create-offer/{{interview?.submission?.id}}"
+                                 >Create Offer</a>
+                                 
+                                 
+
+                              <a class="dropdown-item" 
+                                 style="cursor: pointer;" 
+                                 (click)="deleteInterview(interview.id, interview)">Delete</a>
+                           </div>
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <div class="row" *ngIf="view_type=='grid' && interviews?.length>0 && !isLoading">
+         <!-- interview posting grid view start here -->
+         <div class="col-md-4" *ngFor="let interview of interviews | orderBy:'id':true">
+            <div class="card job-grid int-grid">
+               <div class="btn-group job-grid-actions">
+                  <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true"
+                     aria-expanded="false">
+                  <i class="material-icons">more_vert</i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                     <a class="dropdown-item" 
+                        routerLink="/client/interview/{{interview.id}}"
+                        >View Details</a>
+
+                        <a class="dropdown-item" 
+                        routerLink="/client/create-offer/{{interview?.submission?.id}}"
+                        >Create Offer</a>
+
+                     <a class="dropdown-item" 
+                        (click)="deleteInterview(interview.id, interview)">Delete</a>
+                  </div>
+               </div>
+               <div class="inner">
+                  <div class="s-details">
+                     <div class="job-head-list" style="min-height: 50px;">
+                        <div class="text-avatar">
+                           <img class="media-object" 
+                              style="border-radius: 50%;
+                              /* margin-left: 5px; */
+                              /* padding-right: 10px; */
+                              max-width: 50px;" 
+                              src="{{ interview?.candidate?.meta?.profilePictureFullUrl }}" alt="Image">
+                        </div>
+                        <a class="card-title-lg">
+                           <h2 routerLink="/client/interview/{{interview.id}}">{{ interview.title }}</h2>
+                        </a>
+                        <label>{{ interview.location | slice:0:16 }}</label>
+                     </div>
+                     <div>
+                        <label class="badge large gray">
+                        <i class="material-icons">insert_emoticon</i>
+                        {{ interview?.job?.title }}
+                        </label>
+                     </div>
+                  </div>
+                  <div class="job-additionalinfo no-margin">
+                     <ul>
+                        <li class="estimated-date">
+                           <i class="material-icons">event</i> 
+                           <span>{{ interview?.dates[0]?.date | date:'MM/dd/yyyy' }}</span>
+                        </li>
+                        <li class="estimated-date">
+                           <i class="material-icons">access_time</i> 
+                           <span>{{ interview?.dates[0]?.time_in | date:'shortTime' }} - {{ interview?.dates[0]?.time_out | date:'shortTime' }}</span>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="job-statisticsv1 submissions">
+                     
+                     <label class="mode"><i class="material-icons" *ngIf="interview.type=='face-to-face' || interview.type=='Face to face' ">face</i></label>
+                        <label class="mode"><i class="material-icons" *ngIf="interview.type=='video' || interview.type=='Video'">videocam</i></label>
+                        <label class="mode"><i class="material-icons" *ngIf="interview.type=='Phone' || interview.type=='phone'">phone</i></label>
+                        <label class="mode"><i class="material-icons" *ngIf="interview.type=='Skype' || interview.type=='skype'">chat</i></label>
+                     <label [ngClass]="{'submission-status': true, 
+                        'accepted green': interview.current_status=='Vendor Accepted' || interview.current_status=='Accepted', 
+                        'rejected': interview.current_status=='Vendor Rejected' || interview.current_status=='Rejected', 
+                        'new': interview.current_status=='New' || interview.current_status=='Pending'}" >
+                     {{ interview.current_status }}
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Interview posting grid view end here -->
+      </div>
+
+      <div class="row" *ngIf="!isLoading">
+         <div class="pagination">
+            <ngb-pagination *ngIf="pageObj.totalElements > 15"
+            [collectionSize]="pageObj.totalElements"
+            [maxSize]="5"
+            [(page)]="pageObj.page"
+            (pageChange)="pageChange($event)" 
+            [pageSize]="pageObj.pageSize"
+            [boundaryLinks]="true">
+            </ngb-pagination>
+         </div>
+      </div>
+
+   </div>
+</div>

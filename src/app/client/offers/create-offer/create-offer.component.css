@@ -1,0 +1,10 @@
+.sub-title{
+    font-size: 17px;
+}
+
+.notes{
+    height: 150px;
+}
+#google_autocomplete_input {
+    height: 40px !important;
+}

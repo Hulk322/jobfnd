@@ -1,0 +1,81 @@
+<app-sidebar [current_menu_item]="'submissions'"></app-sidebar>
+<div class="content-area floated" #content_area>
+   <div class="main-head nav-up no-tabs" #main_head>
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Candidate Details</h2>
+            <a routerLink="/client/discover-candidates/{{job_id}}" class="btn-secondary">
+            <i class="material-icons">arrow_back</i>Back to Candidates List</a>
+         </div>
+         <app-header-right></app-header-right>
+      </div>
+   </div>
+   <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="row">
+         <div class="col-md-9">
+            <div class="card job-grid single-job">
+               <div class="inner">
+                  <div class="card-tabs">
+                     <ul>
+                        <li [ngClass]="{'active':current_tab=='pdf'}">
+                           <a href="javascript:void(0)" (click)="current_tab='pdf';$event.preventDefault()"><i class="material-icons">book</i>Resume</a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="s-details pdf" *ngIf="current_tab=='pdf'">
+                     <div style="padding-top: 49px;
+                        padding-left: 0px;
+                        padding-right: 0px;">
+                        <ngx-extended-pdf-viewer  *ngIf="submission.user.resume.resumeFullUrl != '' && submission.user.resume.resumeFullUrl != null" 
+                        [src]="fullUrl" 
+                        useBrowserLocale="true" 
+                        height="180vh">
+                        </ngx-extended-pdf-viewer>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div class="card job-grid">
+               <div class="inner">
+                  <div class="s-details">
+                     <div [ngClass]="{'bookmark-btn absolute': true,  'active': submission.is_client_fav }">
+                        
+                     </div>
+                     <div class="job-head-list">
+                        <div class="text-avatar" style="margin-right: 13px;">
+                            {{ submission?.user?.first_name | slice:0:1 }}
+                        </div>
+                        <a class="card-title-lg">
+                           <h2>{{ submission?.user?.first_name}} {{ submission?.user?.last_name}}</h2>
+                        </a>
+                        <label>{{(submission?.Address?.length>0?submission.Address:'') | slice:0:21}}</label>
+                     </div>
+                     <div>
+
+                        
+
+                        <button  
+                        [disabled]="isLoading" 
+                            (click)="inviteToJob()" 
+                            style="width: 179px; margin-top: 10px;"
+                        class="btn btn-primary"> Add to Job</button>
+
+                        <button style="margin-top: 10px;" 
+                        (click)="goToFindResumes()"
+                        [disabled]="isLoading"
+                        class="btn btn-primary">Find Similar Resumes</button>
+                     </div>
+                  </div>
+                  <div class="job-additionalinfo" style="margin-top:0px;" style="display: none;">
+                     <ul>
+                        <li class="estimated-date" style="margin-right: 40px;"><i class="material-icons">event</i>  <span>Submission Date: {{ submission.estimated_joning_date | date: 'MM/dd/yyyy' }}</span></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

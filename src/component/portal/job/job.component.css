@@ -1,0 +1,12 @@
+img.media-object {
+    max-width: 50px;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.api_job_id {
+    font-size: 12px;
+    color: #b7b5b5;
+}

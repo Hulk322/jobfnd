@@ -1,0 +1,16 @@
+<div class="alert alert-danger " *ngIf="error">
+	<button type="button" (click)="clearError($event)" class="close"  aria-hidden="true">&times;</button>
+	
+	<span *ngFor="let message of messages | keyvalue">
+		
+		<p style="margin-bottom: 5px;" *ngFor="let error of message.value ">{{error}}</p>
+	</span>
+</div> 
+
+
+<div class="alert alert-success" *ngIf="success">
+	<button type="button" (click)="clearError($event)"  class="close"  aria-hidden="true">&times;</button>
+	<span *ngFor="let message of messages | keyvalue">
+		<p style="margin-bottom: 5px;" *ngFor="let error of message.value ">{{error}}</p>
+	</span>
+</div>

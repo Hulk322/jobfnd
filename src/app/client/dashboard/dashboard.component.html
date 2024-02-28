@@ -1,0 +1,635 @@
+<app-sidebar [current_menu_item]="'dashboard'"></app-sidebar>
+
+<!-- <div class="content-area floated dashboard" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Dashboard</h2>
+                <a routerLink="/client/jobs/create" class="btn-orange"><i class="material-icons">add</i>Add Job</a>
+                <a routerLink="/client/templates/create" class="btn-secondary">Add Job Template</a>
+            </div>
+            <app-header-right></app-header-right>
+            
+        </div>
+
+    </div>
+
+    <div style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="row dashborad-header">
+
+                    <div class="col-md-3" (click)="goToJobs()">
+                        <div class="card dashboard-item">
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-1">
+                                work
+                            </i>
+                            </div>
+                            <div class="item-summary">
+                                <p><span>{{ activeJobs }}</span> Active Jobs</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" (click)="goToSubmissions()">
+                        <div class="card dashboard-item">
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-2">
+                                    attach_file
+                                </i>
+                            </div>
+                            <div class="item-summary">
+                                <p><span>{{ todaysSubmissions }}</span> Today's Submissions</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" (click)="goToInterviews()">
+                        <div class="card dashboard-item">
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-3">
+                                chat_bubble
+                            </i>
+                            </div>
+                            <div class="item-summary">
+                                <p><span>{{ todaysInterviews }}</span> Todays Interviews</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" (click)="goToSubmissions()">
+                        <div class="card dashboard-item">
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-2">
+                                    attach_file
+                                </i>
+                            </div>
+                            <div class="item-summary">
+                                <p><span>{{ newSubmissions }}</span> New Applications</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="flex statistics-card"  style="display: none;">
+                        <div _ngcontent-njs-c18="" class="flex-inner">
+                            <div _ngcontent-njs-c18="" class="pr-1"><span _ngcontent-njs-c18=""
+                                    class="badge badge-light-green"><i _ngcontent-njs-c18=""
+                                        class="icons-invitation"></i></span></div>
+                            <div _ngcontent-njs-c18="" class="col-md-auto">
+                                <h4 _ngcontent-njs-c18=""></h4>
+                                <p _ngcontent-njs-c18="">Today's Interviews</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex statistics-card" (click)="goToInterviews()" style="display: none;">
+                        <div _ngcontent-njs-c18="" class="flex-inner">
+                            <div _ngcontent-njs-c18="" class="pr-1"><span _ngcontent-njs-c18=""
+                                    class="badge badge-light-green"><i _ngcontent-njs-c18=""
+                                        class="icons-invitation"></i></span></div>
+                            <div _ngcontent-njs-c18="" class="col-md-auto">
+                                <h4 _ngcontent-njs-c18="">{{ pendingInterviews }}</h4>
+                                <p _ngcontent-njs-c18="">Pending Interviews</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex statistics-card" (click)="goToOffers()" style="display: none;">
+                        <div _ngcontent-njs-c18="" class="flex-inner">
+                            <div _ngcontent-njs-c18="" class="pr-1"><span _ngcontent-njs-c18=""
+                                    class="badge badge-light-green"><i _ngcontent-njs-c18=""
+                                        class="icons-invitation"></i></span></div>
+                            <div _ngcontent-njs-c18="" class="col-md-auto">
+                                <h4 _ngcontent-njs-c18="">{{ readyForOffers }}</h4>
+                                <p _ngcontent-njs-c18="">Ready Offers</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card wg-eq-height">
+                    <h5>Interview Calendar Submissions</h5>
+                    <div class="dashborad-header db-calendar">
+                        <full-calendar
+                        defaultView="timeGridWeek"
+                        [plugins]="calendarPlugins"
+                        [weekends]="true"
+                        themeSystem="bootstrap"
+                        [events]="calendar?.interviews"
+                      ></full-calendar>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card wg-eq-height">
+                    <h5>Chart</h5>
+                    <div class="dashboard-chart">
+                        <app-charts *ngIf="chartData" [data]="chartData"></app-charts>
+                    </div>
+                </div> 
+              </div>
+            </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <h5>Recent Submissions</h5>
+                    <table class="dashboard-table" *ngIf="!isLoading">
+                        <thead>
+                            <tr>
+                                <th>Job</th>
+                                <th>Candidate Name</th>
+                                <th>Candidate Email</th>
+                                <th>Candidate Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr   *ngFor="let submission of recentSubmissions">
+                                <td>
+                                    <a routerLink="/client/job/{{submission.job.id}}">{{submission.job.title}}</a>
+                                </td>
+                                <td>
+                                        <a routerLink="/client/submissions/{{submission.id}}"> {{submission.candidate.first_name}} {{submission.candidate.last_name}}</a>
+                                </td>
+                                <td> <a routerLink="/client/submissions/{{submission.id}}"> {{submission.candidate.email}} </a> </td>
+                                <td> <a routerLink="/client/submissions/{{submission.id}}"> {{submission.candidate.meta.phone}} </a> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <h5>Recent Jobs</h5>
+                    <table class="dashboard-table" *ngIf="!isLoading">
+                        <thead>
+                            <tr>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Submissions Count</th>
+                                    <th>Interviews Count</th>
+                                    <th>Hired Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr   *ngFor="let jobs of recentjobs">
+                                <td>
+                                    <a routerLink="/client/job/{{jobs.id}}">{{jobs.title}}</a>
+                                </td>
+                                <td>
+                                        <a [ngClass]="{'temp': jobs.job_type=='Full Time', 'full': jobs.job_type=='Temp Hire' }" routerLink="/client/job/{{jobs.id}}"> {{jobs.job_type}} </a>
+                                </td>
+                                <td> <a routerLink="/client/job/{{jobs.id}}"> {{jobs.submissionsCount}} </a> </td>
+                                <td> <a routerLink="/client/job/{{jobs.id}}"> {{jobs.interviewsCount}} </a> </td>
+                                <td> <a routerLink="/client/job/{{jobs.id}}"> {{jobs.hiredCount}} </a> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+        <div class="row dashborad-header" style="margin: 40px 20px">
+            
+              <div class="col-md-6">
+                
+              </div>
+
+        </div>
+
+    </div>
+</div>
+
+</div> -->
+
+<div class="content-area floated dashboard" #content_area>
+
+    <div class="main-head no-tabs" #main_head>
+
+        <div class="childfix">
+            <div class="head-left">
+                <h2 class="page-title">Dashboard</h2>
+                <a routerLink="/client/jobs/create" class="btn-orange"><i class="material-icons">add</i>Add Job</a>
+                <a routerLink="/client/templates/create" class="btn-secondary">Add Job Template</a>
+            </div>
+            <app-header-right></app-header-right>
+            
+        </div>
+
+    </div>
+
+    <div class="dashboard-style" style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; " *ngIf="isNoData">
+        <!-- No jobs added ui for dashboard start here-->
+        <div class="row" *ngIf="!isNoData">
+            <div class="col-md-12">
+                <div class="errormsgscreen">
+                    <img src="assets/admin/images/graphics/no-jobs-found.svg">
+                    <h3>No Jobs Added yet</h3>
+                    <a routerLink="/client/jobs/create" class="btn-orange"><i class="material-icons">add</i>Add your First job</a>
+                </div>
+            </div>
+        </div>
+         <!-- No jobs added ui for dashboard end here-->
+        <div class="row">
+            <div class="col-12">
+                <div class="row dashborad-header">
+
+                    <div class="col-md-3" (click)="goToJobs()">
+                        <div *ngIf="!isLoading" class="card dashboard-item-1">
+						    <div class="item-summary">
+                                <p><span>{{ activeJobs }}</span> Active Jobs</p>
+                            </div>
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-1">
+                                work_outline
+                            </i>
+                            </div>
+                        </div>
+                        <div *ngIf="isLoading" class="card dashboard-item-1">
+						    <div class="item-summary">
+                                <span class="shine shine-icon" style="margin-bottom: 12px;"></span> 
+                                <div class="clearfix"></div>
+                                <span class="shine" style="width: 70%;"></span>
+                            </div>
+                            <div class="dashboard-icon">
+                                <span class="shine shine-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" (click)="goToSubmissions()">
+                        <div *ngIf="!isLoading" class="card dashboard-item-2">
+						    <div class="item-summary">
+                                <p><span>{{ todaysSubmissions }}</span> Today's Applications</p>
+                            </div>
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-2">
+                                    attach_file
+                                </i>
+                            </div>
+                        </div>
+                        <div *ngIf="isLoading" class="card dashboard-item-2">
+						    <div class="item-summary">
+                                <span class="shine shine-icon" style="margin-bottom: 12px;"></span> 
+                                <div class="clearfix"></div>
+                                <span class="shine" style="width: 70%;"></span>
+                            </div>
+                            <div class="dashboard-icon">
+                                <span class="shine shine-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" (click)="goToInterviews()">
+                        <div *ngIf="!isLoading" class="card dashboard-item-3">
+						    <div class="item-summary">
+                                <p><span>{{ todaysInterviews }}</span> Todays Interviews</p>
+                            </div>
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-3">
+                                chat_bubble
+                            </i>
+                            </div>
+                        </div>
+                        <div *ngIf="isLoading" class="card dashboard-item-3">
+						    <div class="item-summary">
+                                <span class="shine shine-icon" style="margin-bottom: 12px;"></span> 
+                                <div class="clearfix"></div>
+                                <span class="shine" style="width: 70%;"></span>
+                            </div>
+                            <div class="dashboard-icon">
+                                <span class="shine shine-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" (click)="goToSubmissions()">
+                        <div *ngIf="!isLoading" class="card dashboard-item-4">						
+                            <div class="item-summary">
+                                <p><span>{{ newSubmissions }}</span> New Applications</p>
+                            </div>
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-4">
+                                    attach_file
+                                </i>
+                            </div>
+                        </div>
+                        <div *ngIf="isLoading" class="card dashboard-item-4">
+						    <div class="item-summary">
+                                <span class="shine shine-icon" style="margin-bottom: 12px;"></span> 
+                                <div class="clearfix"></div>
+                                <span class="shine" style="width: 70%;"></span>
+                            </div>
+                            <div class="dashboard-icon">
+                                <span class="shine shine-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+					
+					<!-- <div class="col-md-3" (click)="goToInterviews()">
+                        <div class="card dashboard-item">
+                            <div class="item-summary">
+                                <p><span>{{ pendingInterviews }}</span> Pending Interviews</p>
+                            </div>
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-2">
+                                    attach_file
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+					
+					<div class="col-md-3" (click)="goToOffers()">
+                        <div class="card dashboard-item">						
+                            <div class="item-summary">
+                                <p><span>{{ readyForOffers }}</span> Ready Offers</p>
+                            </div>
+                            <div class="dashboard-icon">
+                                <i class="material-icons color-2">
+                                    attach_file
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+					
+					<div class="col-md-3" routerLink="/client/jobs/create">
+                        <div class="card dashboard-item">						
+                            <div class="item-summary">
+                                <p class="add-new">
+                                    <i class="material-icons">
+                                        add_circle
+                                    </i>
+                                    Add New Job
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+					
+					<div class="col-md-3" routerLink="/client/templates/create">
+                        <div class="card dashboard-item">						
+                            <div class="item-summary">
+                                <p class="add-new">
+                                    <i class="material-icons">
+                                        add_circle
+                                    </i>
+                                    Add Job Template
+                                </p>
+                            </div>
+                         </div>
+                    </div> -->
+                    
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 *ngIf="!isLoading">Daily Applications of Jobs</h5>
+                            <h5 *ngIf="isLoading"><span class="shine" style="width: 70%;"></span></h5>
+                        </div>
+                    </div> 
+                    <div class="dashboard-chart">
+                        <!-- <app-charts *ngIf="chartData" [data]="chartData"></app-charts> -->
+                        <div *ngIf="newChartData" id="chart" class="bar-chart"></div>
+                    </div>
+                    <div *ngIf="isLoading" style="height: 320px;">
+                        <span class="shine"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h5 *ngIf="!isLoading">Job Status</h5>
+                            <h5 *ngIf="isLoading"><span class="shine" style="width: 70%;"></span></h5>
+                        </div>
+                    </div>
+                    <div class="dashboard-chart">
+                        <!-- <app-charts *ngIf="chartData" [data]="chartData"></app-charts> -->
+                        <div  id="pie_chart"></div>
+                    </div>
+                    <div *ngIf="isLoading" style="height: 320px;">
+                        <span class="shine"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <h5 *ngIf="!isLoading">Action Items</h5>
+                    <h5 *ngIf="isLoading"><span class="shine" style="width: 70%;"></span></h5>
+                    <ul class="quick-detail">
+                        <li>
+                            <a (click)="goToSubmissions()">
+                                <div *ngIf="!isLoading" class="icon">
+                                    <i class="material-icons">
+                                        person_add
+                                    </i>
+                                </div>
+                                <div *ngIf="!isLoading" class="info">{{ todaysSubmissions }} New Applications</div>
+                               <span *ngIf="isLoading" class="shine" style="height: 33px;"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a (click)="goToInterviews()">
+                                <div *ngIf="!isLoading" class="icon">
+                                    <i class="material-icons">
+                                        refresh
+                                    </i>
+                                </div>
+                                <div *ngIf="!isLoading" class="info">{{ todaysInterviews }} Interviews</div>
+                                <span *ngIf="isLoading" class="shine" style="height: 33px;"></span>
+                            </a> 
+                        </li>
+                        <li>
+                            <a>
+                                <div *ngIf="!isLoading" class="icon">
+                                    <i class="material-icons">
+                                        timer
+                                    </i>
+                                </div>
+                                <div *ngIf="!isLoading" class="info">12 Orders</div>
+                                <span *ngIf="isLoading" class="shine" style="height: 33px;"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <div *ngIf="!isLoading" class="icon">
+                                    <i class="material-icons">
+                                        error
+                                    </i>
+                                </div>
+                                <div *ngIf="!isLoading" class="info">4 Orders</div>
+                                <span *ngIf="isLoading" class="shine" style="height: 33px;"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card wg-eq-height">
+                    <h5 *ngIf="!isLoading">Interview Calendar Applications</h5>
+                    <h5 *ngIf="isLoading"><span class="shine" style="width: 70%;"></span></h5>
+                    <div *ngIf="!isLoading" class="dashborad-header db-calendar int-calendar">
+                        <full-calendar
+                        defaultView="listWeek"
+                        [header]="{
+                            left: 'today,prev,next',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                          }"
+                        [plugins]="calendarPlugins"
+                        [weekends]="false"
+                        [nowIndicator]="true"
+                        themeSystem="bootstrap"
+                        [events]="calendar?.interviews" [height]= 500
+                      ></full-calendar>
+                    </div>
+                    <div *ngIf="isLoading" style="height: 500px;">
+                        <span class="shine"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card wg-eq-height">
+                    <h5 *ngIf="!isLoading">Top Jobs Activities</h5>
+                    <h5 *ngIf="isLoading"><span class="shine" style="width: 70%;"></span></h5>
+                    <div class="dashboard-chart">
+                        <div *ngIf="isLoading" style="height: 400px;">
+                            <span class="shine"></span>
+                        </div>
+                        <!-- <app-charts *ngIf="chartData" [data]="chartData"></app-charts> -->
+                        <div id="dnut_chart" class="dnut-chart"></div>
+                    </div>
+                </div> 
+              </div>
+            </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="card mb-0">
+                    <h5 *ngIf="!isLoading">Recent Applications</h5>
+                    <h5 *ngIf="isLoading"><span class="shine" style="width: 70%;"></span></h5>
+                    <div class="max-height-table">
+                        <table class="dashboard-table" *ngIf="!isLoading">
+                            <thead>
+                                <tr>
+                                    <th>Job</th>
+                                    <th>Candidate Name</th>
+                                    <th>Candidate Email</th>
+                                    <th>Candidate Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr   *ngFor="let submission of recentSubmissions">
+                                    <td>
+                                        <a routerLink="/client/job/{{submission.id}}">{{submission.id}}</a>
+                                    </td>
+                                    <td>
+                                            <a routerLink="/client/submissions/{{submission.id}}"> {{submission.first_name}} {{submission.last_name}}</a>
+                                    </td>
+                                    <td> <a routerLink="/client/submissions/{{submission.id}}"> {{submission.email}} </a> </td>
+                                    <td> <a routerLink="/client/submissions/{{submission.id}}"> {{submission.phone}} </a> </td>
+                                </tr>
+                                <tr *ngIf="recentSubmissions.length === 0">
+                                    <td colspan="4" class="content-empty text-center">
+                                        <span class="material-icons">
+                                        wb_sunny
+                                        </span>
+                                        <p>no applications found</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="isLoading" style="height: 320px;">
+                            <span class="shine"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card mb-0">
+                    <h5 *ngIf="!isLoading">Recent Jobs</h5>
+                    <h5 *ngIf="isLoading"><span class="shine" style="width: 70%;"></span></h5>
+                    <div class="max-height-table">
+                        <table class="dashboard-table" *ngIf="!isLoading">
+                            <thead>
+                                <tr>
+                                        <th>Title</th>
+                                        <th>Type</th>
+                                        <th>Applications</th>
+                                        <th>Interviews</th>
+                                        <th>Hired</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr   *ngFor="let jobs of recentjobs">
+                                    <td>
+                                        <a routerLink="/client/job/{{jobs.id}}">{{jobs.title}}</a>
+                                    </td>
+                                    <td>
+                                            <a [ngClass]="{'temp': jobs.job_type=='Full Time', 'full': jobs.job_type=='Temp Hire' }" routerLink="/client/job/{{jobs.id}}"> {{jobs.job_type}} </a>
+                                    </td>
+                                    <td> <a routerLink="/client/job/{{jobs.id}}"> {{jobs.submissionsCount}} </a> </td>
+                                    <td> <a routerLink="/client/job/{{jobs.id}}"> {{jobs.interviewsCount}} </a> </td>
+                                    <td> <a routerLink="/client/job/{{jobs.id}}"> {{jobs.hiredCount}} </a> </td>
+                                </tr>
+                                <tr *ngIf="recentjobs.length === 0">
+                                    <td colspan="4" class="content-empty text-center">
+                                        <span class="material-icons">
+                                        wb_sunny
+                                        </span>
+                                        <p>no Job found</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="isLoading" style="height: 320px;">
+                            <span class="shine"></span>
+                        </div>
+                    </div>
+                </div>
+        <!-- <div class="row dashborad-header" style="margin: 40px 20px">
+            
+              <div class="col-md-6">
+                
+              </div>
+
+        </div> -->
+    </div>
+</div>
+</div>
+
+<div class="content-area floated dashboard" #content_area *ngIf="!isNoData">
+<div class="dashboard-style" style=" margin:80px auto 20px auto; font-size: 13px;  min-height: 100vh; " *ngIf="!isNoData">
+    <!-- No jobs added ui for dashboard start here-->
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="errormsgscreen">
+                <img src="assets/admin/images/graphics/no-jobs-found.svg">
+                <h3>No Jobs Added yet</h3>
+                <a routerLink="/client/jobs/create" class="btn-orange"><i class="material-icons">add</i>Add your First job</a>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>

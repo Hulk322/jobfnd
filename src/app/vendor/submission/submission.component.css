@@ -1,0 +1,23 @@
+.label-success{
+    padding: 10px;
+    font-size: 13px;
+    font-weight: normal;
+    display: inline-block;
+    margin: 2px;
+}
+
+.__sidebar__skills .label {
+    border-radius: 29px;
+    border: 1px solid #CECECE;
+    background: transparent;
+    color: #000;
+    padding: 4px 8px;
+    margin-bottom: 4px;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+.billrate-widget h2 .price{
+    color:#fff;
+  }

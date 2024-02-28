@@ -1,0 +1,342 @@
+<div class="row" style="margin:20px;">
+
+    <div class="col-sm-12 col-xxxl-12">
+     <div class="element-wrapper">
+        <h6 class="element-header">
+                      Submission Step 2
+        </h6>
+       
+            <div class="element-box">
+                
+
+                
+
+                
+
+                    <form id="form1" name="form1" #form="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate> 
+
+                    <app-errors></app-errors>
+
+                    <div class="form-row-group with-icons">
+
+                        <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+                        <label class="section-title" style="font-weight:bold;">Other Details</label>  
+                    </div>
+                </div>
+
+                <div class="row">
+                    
+                    
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="experience">Years of experience</label>
+                             <span *ngIf="submission.experience == null">
+                
+            </span>
+                            <select [(ngModel)]="submission.experience" name="experience" class="form-control select2 " tabindex="-1" >
+                               
+                                                                        <option value="1">1 year(s)</option>
+                                                                        <option value="2">2 year(s)</option>
+                                                                        <option value="3">3 year(s)</option>
+                                                                        <option value="4">4 year(s)</option>
+                                                                        <option value="5">5 year(s)</option>
+                                                                    </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="industry">Industry</label>
+                            <select [(ngModel)]="submission.industry" name="industry" class="form-control select2 " tabindex="-1" >
+                                <option value="">Select</option>
+                                                                        <option value="Aerospace industry">Aerospace industry</option>
+                                                                        <option value="Agriculture">Agriculture</option>
+                                                                        <option value="Fishing industry">Fishing industry</option>
+                                                                        <option value="Timber industry">Timber industry</option>
+                                                                        <option value="Tobacco industry">Tobacco industry</option>
+                                                                        <option value="Chemical industry">Chemical industry</option>
+                                                                        <option value="Pharmaceutical industry">Pharmaceutical industry</option>
+                                                                        <option value="Computer industry">Computer industry</option>
+                                                                        <option value="Software industry">Software industry</option>
+                                                                        <option value="Construction industry">Construction industry</option>
+                                                                        <option value="Defense industry">Defense industry</option>
+                                                                        <option value="Arms industry">Arms industry</option>
+                                                                        <option value="Education industry">Education industry</option>
+                                                                        <option value="Energy industry">Energy industry</option>
+                                                                        <option value="Electrical power industry">Electrical power industry</option>
+                                                                        <option value="Petroleum industry">Petroleum industry</option>
+                                                                        <option value="Entertainment industry">Entertainment industry</option>
+                                                                        <option value="Financial services industry">Financial services industry</option>
+                                                                        <option value="Insurance industry">Insurance industry</option>
+                                                                        <option value="Food industry">Food industry</option>
+                                                                        <option value="Fruit production">Fruit production</option>
+                                                                        <option value="Health care industry">Health care industry</option>
+                                                                        <option value="Hospitality industry">Hospitality industry</option>
+                                                                        <option value="Information industry">Information industry</option>
+                                                                        <option value="Manufacturing">Manufacturing</option>
+                                                                        <option value="Automotive industry">Automotive industry</option>
+                                                                        <option value="Electronics industry">Electronics industry</option>
+                                                                        <option value="Pulp and paper industry">Pulp and paper industry</option>
+                                                                        <option value="Steel industry">Steel industry</option>
+                                                                        <option value="Shipbuilding industry">Shipbuilding industry</option>
+                                                                        <option value="Mass media">Mass media</option>
+                                                                        <option value="Broadcasting">Broadcasting</option>
+                                                                        <option value="Film industry">Film industry</option>
+                                                                        <option value="Music industry">Music industry</option>
+                                                                        <option value="News media">News media</option>
+                                                                        <option value="Publishing">Publishing</option>
+                                                                        <option value="World Wide Web">World Wide Web</option>
+                                                                        <option value="Mining">Mining</option>
+                                                                        <option value="Telecommunications industry">Telecommunications industry</option>
+                                                                        <option value="Internet">Internet</option>
+                                                                        <option value="Transport industry">Transport industry</option>
+                                                                        <option value="Water industry">Water industry</option>
+                                                                        <option value="Service">Service</option>
+                                                                        <option value="Direct Selling industry">Direct Selling industry</option>
+                                                                    </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="highest_degree">Highest Degree Earned</label>
+                            <select [(ngModel)]="submission.highest_degree" name="highest_degree" class="form-control select2" tabindex="-1" >
+                                <option value="">Select</option>
+                                                                        <option value="Doctoral Degree">Doctoral Degree</option>
+                                                                        <option value="Profesional degree">Profesional degree</option>
+                                                                        <option value="Master's Degree">Master's Degree</option>
+                                                                        <option value="Bachelor's Degree">Bachelor's Degree</option>
+                                                                        <option value="Associate's Degree">Associate's Degree</option>
+                                                                        <option value="Diploma">Diploma</option>
+                                                                        <option value="High School">High School</option>
+                                                                    </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="veteran_status">Veteran Status</label>
+                            <select [(ngModel)]="submission.veteran_status" name="veteran_status" class="form-control select2" tabindex="-1" >
+                                <option value="">Select</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="profile_type">Profile Type</label>
+                            <select [(ngModel)]="submission.profile_type" name="profile_type" class="form-control select2" tabindex="-1" >
+                                <option value="">Select</option>
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+                        <label class="section-title" style="font-weight:bold;">References</label>  
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Name</label>
+                            <input type="text" name="reference_1_name" [(ngModel)]="submission.reference_1_name" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Contact</label>
+                            <input type="text" name="reference_1_contact" [(ngModel)]="submission.reference_1_contact" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input type="text" name="reference_1_email" [(ngModel)]="submission.reference_1_email" value="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Name</label>
+                            <input type="text" name="reference_2_name" [(ngModel)]="submission.reference_2_name" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Contact</label>
+                            <input type="text" name="reference_2_contact" [(ngModel)]="submission.reference_2_contact" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input type="text" name="reference_2_email" [(ngModel)]="submission.reference_2_email" value="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Name</label>
+                            <input type="text" name="reference_3_name" [(ngModel)]="submission.reference_3_name" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Contact</label>
+                            <input type="text" name="reference_3_contact" [(ngModel)]="submission.reference_3_contact" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input type="text" name="reference_3_email" [(ngModel)]="submission.reference_3_email" value="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+                        <label class="section-title" style="font-weight:bold;">Compensation</label>  
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="compensation_type">Compensation Type</label>
+                            <select [(ngModel)]="submission.compensation_type" name="compensation_type" class="form-control select2" tabindex="-1" >
+                                <option value="">Select</option>
+                                                                        <option value="Hourly">Hourly</option>
+                                                                        <option value="Weekly">Weekly</option>
+                                                                        <option value="Monthly">Monthly</option>
+                                                                        <option value="Annual">Annual</option>
+                                                                    </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <div class="form-group">
+                            <label for="compensation_amount">Compensation Amount</label>
+                            <input type="text" [(ngModel)]="submission.compensation_amount" name="compensation_amount" class="form-control" id="address" placeholder="" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+                        <label class="section-title" style="font-weight:bold;">Executive Summary</label>  
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Title Summary</label>
+                                <textarea required class="form-control" [(ngModel)]="submission.title_summary" name="title_summary"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Quick Summary</label>
+                                <textarea class="form-control" [(ngModel)]="submission.quick_summary" name="quick_summary"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+                        <label class="section-title" style="font-weight:bold;">Documents</label>  
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                         <div class="form-group">
+                            <label>Right</label>
+                            <input required type="file" ref="file" (change)="handleFileUpload($event.target.files)" class="form-element form-control"
+                                   placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+                        <label class="section-title" style="font-weight:bold;">Register</label>  
+                    </div>
+                </div>
+
+                <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input required type="email" class="form-control" name="email" [(ngModel)]="submission.email" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input required type="password" name="password" class="form-control" [(ngModel)]="submission.password" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input required type="password" name="confirm_password" class="form-control" [(ngModel)]="submission.password_confirmation" />
+                            </div>
+                        </div>
+                </div>
+
+
+                       
+                        
+                        
+
+
+                        
+
+                        
+
+                        
+
+                    </div>
+
+                    
+
+                    <div class="form-divider"></div>
+
+                    <div *ngIf="errors.length" class="alert alert-danger">
+                      {{ errors }}
+                    </div>
+
+                    <div class="form-row">
+                        <button *ngIf="!isLoading" type="submit" class="btn btn-success">Submit</button>
+                        <span *ngIf="isLoading" style="padding-left:5px;"> Processing...</span>
+                    </div>
+
+                </form>
+
+                
+            </div>
+            </div>
+        
+        <!-- Page content end -->
+    </div>
+</div>

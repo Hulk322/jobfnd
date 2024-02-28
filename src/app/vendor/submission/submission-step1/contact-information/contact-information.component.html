@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 m-t-30">
+        <label class="section-title" style="font-weight:bold;">Contact Information</label>  
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-row no-padding form-group">
+            <label>Email</label>
+            <input  [(ngModel)]="submission.email" type="email" name="email" class="form-element form-control"
+                       placeholder="">
+
+            </div>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="home_phone">Home Phone</label>
+                    <input type="text" ngxPhoneMask [(ngModel)]="submission.home_phone" name="home_phone" value="" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+                <div class="form-row no-padding form-group">
+                    <label>Mobile</label>
+                    <input   [(ngModel)]="submission.mobile" ngxPhoneMask name="mobile" class="form-element form-control"
+                               placeholder="">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+
+        <div class="row">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text"  [(ngModel)]="submission.address" name="full_address" class="form-control" id="address" placeholder="">
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text"  [(ngModel)]="submission.city" name="city" class="form-control" id="city" placeholder="" value="">
+        </div>
+    </div>
+</div>
+
+        
+<div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="text"  [(ngModel)]="submission.state" name="state" class="form-control" id="state" placeholder="" value="">
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group">
+            <label for="zip">Zip</label>
+            <input type="text"  [(ngModel)]="submission.zip" name="zip" class="form-control" id="zip" placeholder="" value="">
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group">
+            <label for="">Country</label>
+            <app-countries [submission]="submission"></app-countries>
+        </div>
+    </div>
+</div>
+        
+
+       <div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group">
+            <label for="">Facebook</label>
+            <input type="text"  [(ngModel)]="submission.facebook" name="facebook" value="" class="form-control">
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group">
+            <label for="">LinkedIn</label>
+            <input type="text"  [(ngModel)]="submission.linkedin" name="linkedin" value="" class="form-control">
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="form-group">
+            <label for="">Twitter</label>
+            <input type="text"  [(ngModel)]="submission.twitter" name="twitter" value="" class="form-control">
+        </div>
+    </div>
+</div> 

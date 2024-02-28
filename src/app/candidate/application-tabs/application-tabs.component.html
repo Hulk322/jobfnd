@@ -1,0 +1,60 @@
+<div class="candidate-header-tabs with-btns">
+    <div class="row">
+        <div class="col-md-2">
+            <a routerLink="/candidate/applied-jobs" [ngStyle]="{'background-color': application_tabs=='applied-jobs' ? '#6ccac9' : null}"  [ngClass]="application_tabs=='applied-jobs'? 'active': ''" class="statistics-cards card color-text-1">
+                <div class="text-center">
+                    <i class="material-icons">touch_app</i>
+                </div>
+                <span class="text-color sub-title-1">{{profileStats.applied}}</span>
+                <label class="text-color sub-title">  Applied Jobs</label>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a  routerLink="/candidate/accepted-jobs" [ngStyle]="{'background-color': application_tabs=='accepted-jobs' ? '#ff6c60' : null}"  [ngClass]="application_tabs=='accepted-jobs'? 'active': ''" class="statistics-cards card color-text-2">
+                <div class="text-center">
+                    <i class="material-icons">spellcheck</i>
+                </div>
+                <span class="text-color sub-title-1">{{profileStats.accepted}}</span>
+                <label class="text-color sub-title">Accepted</label> 
+              
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a routerLink="/candidate/interviews" [ngStyle]="{'background-color': application_tabs=='interview' ? '#f8d347' : null}"  [ngClass]="application_tabs=='interview'? 'active': ''" class="statistics-cards card color-text-5">
+                <div class="text-center">
+                    <i class="material-icons">event</i>
+                </div>
+              
+                <span class="text-color sub-title-1">{{profileStats.interviews}}</span>
+                <label class="text-color sub-title">Interviews</label>   
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a routerLink="/candidate/offers"  [ngStyle]="{'background-color': application_tabs=='offers' ? '#57c8f2' : null}"  [ngClass]="application_tabs=='offers'? 'active': ''" class="statistics-cards card color-text-3">
+                <div class="text-center">
+                    <i class="material-icons">recent_actors</i>
+                </div>
+              
+                <span class="text-color sub-title-1">{{profileStats.offers}}</span>
+                <label class="text-color sub-title">Offers</label>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a routerLink="/candidate/contracts"  [ngStyle]="{'background-color': application_tabs=='contracts' ? '#a9d96c' : null}" [ngClass]="application_tabs=='contracts'? 'active': ''" class="statistics-cards card color-text-4">
+                <div class="text-center">
+                    <i class="material-icons">rate_review</i>
+                </div>
+             
+                <span class="text-color  sub-title-1">{{profileStats.contracts}}</span>
+                <label class="text-color  sub-title"> Contracts </label>
+            </a>
+        </div>
+    </div>
+ 
+   
+   
+   
+   
+  
+</div>
+                    

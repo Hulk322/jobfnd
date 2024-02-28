@@ -1,0 +1,350 @@
+<div class="wrap btm-padding-1 graybg">
+   <div class="shadow-header-wrap header-publicnav">
+      <app-header></app-header>
+      <app-sub-menu [current_menu_item]="'offers'"></app-sub-menu>
+   </div>
+
+
+
+
+   <div class="inner-wrap">
+
+      <div class="page-subhead">
+         <div class="row">
+          
+         <div class="col-md-12">
+           <application-tabs [application_tabs]="'offers'"></application-tabs>
+         </div>
+
+
+
+            <!-- <div class="col-md-3" *ngIf="!isLoading">
+               <div class="btn-group custom-btn-group pull-right" role="group">
+                  <button 
+                      (click)="view_type='grid'" type="button" class="btn btn-default btn-sm"><i class="material-icons">apps</i></button>
+                  <button 
+                  (click)="view_type='list'" type="button" class="btn btn-default btn-sm"><i class="material-icons">menu</i></button>
+                  <button type="button" class="btn btn-default btn-sm"><i class="material-icons">graphic_eq</i> <span>Filter</span></button>
+               </div>
+            </div> -->
+
+         </div>
+      </div>
+
+      <div class="row" *ngIf="isLoading" style="margin-top: 0px;">
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card-grid-job">
+                  <div class="job-title">
+                     <label class="shine"></label>
+                  </div>
+                  <div class="job-info">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="blckinfo">
+                              <i class="material-icons"><label class="shine shine-icon"></label></i>
+                              <span><label class="shine" style="width: 80%;"></label></span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="job-description">
+                     <label class="shine"></label>
+                     <label class="shine"></label>
+                  </div>
+                  <div class="badges">
+                     <label class="shine"></label>
+                  </div>
+               </div>
+            </div>
+         </div>
+        
+        <app-empty-list  *ngIf="offers?.length<1 && !isLoading" [pageName]="'offers'"></app-empty-list>
+
+
+         <table class="table" style="background-color: white;" *ngIf="offers?.length>0">
+            <thead>
+               <tr>
+                  <th>ID</th>
+                  <th>Job ID</th>
+                  <th>Candidate Name</th>
+                  <th>Type</th>
+                  <th>Salary / Bill Rate</th>
+                  <th>Created At</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngIf="offers?.length<1">
+                  <td colspan="8" class="text-center">No Offers found.</td>
+               </tr>
+               <tr *ngFor="let offer of offers">
+                  <td>{{ offer.id }}</td>
+                  <td><a routerLink="/candidate/applied-jobs/{{ offer.job_id }}">{{ offer.job_id }}</a></td>
+                  <td>{{ offer?.submission?.first_name | titlecase }} {{ offer?.submission?.last_name | titlecase }}
+                  </td>
+                  <td>{{ offer.type }}</td>
+                  <td>${{ (offer.type=='Full Time'?offer.salary:offer.bill_rate) | number: '1.2-2' }} </td>
+                  
+                  <td>{{ offer.created_at | date:'MM/dd/yyyy' }}</td>
+                  <td style="">
+                     <div [ngClass]="{ 'interviews__label':true, 'btn btn-success': offer.current_status=='Vendor Accepted'
+                   , 'btn btn-danger': offer.current_status=='Vendor Rejected', 
+                   'new': offer.current_status=='New'}">
+                        {{ offer.current_status }}</div>
+                  </td>
+                  <td>
+                     <a routerLink="/candidate/offers/{{offer.id}}" class="btn btn-primary action"
+                        style="margin-right:5px;">
+                        <i class="fa fa-eye"></i>
+                     </a>
+
+                     
+
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+
+         <div class="row" *ngIf="!isLoading">
+            <div class="col-md-12" style="padding-left: 15px;">
+                    <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                    [collectionSize]="pageObj.totalElements"
+                    [(page)]="pageObj.page"
+                    (pageChange)="pageChange($event)" 
+                    [pageSize]="pageObj.pageSize"
+                    [boundaryLinks]="true">
+                    </ngb-pagination>
+            </div>
+        </div>
+      
+   </div>
+</div>

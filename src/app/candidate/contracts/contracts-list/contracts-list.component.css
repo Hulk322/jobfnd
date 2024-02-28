@@ -1,0 +1,19 @@
+.badge.large {
+    background: #d2d2d2;
+    padding: 7px 9px;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 3px;
+}
+
+.badge.green {
+    background: #41e541 !important;
+    color: #fff;
+    margin-right: 3px;
+}
+
+.badge.red {
+    background: #E28F47 !important;
+    color: #fff;
+    margin-right: 3px;
+}

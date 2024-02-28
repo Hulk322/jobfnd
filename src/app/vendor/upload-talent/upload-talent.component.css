@@ -1,0 +1,10 @@
+.dropzone-container .right {
+    float: right;
+    width: 40%;
+    padding-left: 20px;
+}
+
+.dropzone-container .left {
+ 
+    border-right: 1px dashed #6E8DB7;
+}

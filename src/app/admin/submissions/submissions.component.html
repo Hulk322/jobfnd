@@ -1,0 +1,99 @@
+<app-sidebar [current_menu_item]="'submissions'"></app-sidebar>
+<div class="content-area" #content_area>
+   <div class="main-head no-tabs" #main_head>
+      <div class="childfix">
+         <div class="head-left">
+            <h2 class="page-title">Submissions</h2>
+         </div>
+         <app-header-right></app-header-right>
+         <div class="easytabs">
+            <div class="searchbox">
+               <form>
+                  <button><i class="material-icons">search</i></button>
+                  <input type="search" style="width: 250px;" name="search_keyword" placeholder="Search by Title" 
+                  (keyup)="getSubmissions()" [(ngModel)]="search_keyword"  >
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div style=" margin:120px auto 20px auto; font-size: 13px;  min-height: 100vh; ">
+      <div class="col-md-12" *ngIf="submissions?.length<1 && !isLoading" style="text-align: center;">
+         <img src="assets/images/no-job.svg" style="margin-top: 13%;">
+      </div>
+      <div class="row">
+         <div class="col-md-12" style="padding: 0;"  *ngFor="let submission of submissions" >
+             <div class="card submission-list">
+                 <div class="btn-group sub-list-actions">
+                     <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true"
+                         aria-expanded="false">
+                         <i class="material-icons">more_horiz</i>
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-right">
+                         <a class="dropdown-item" (click)="viewSubmissionDetail(submission.id)">View Details</a>
+                         <a class="dropdown-item" style="cursor: pointer;" (click)="selectSubmission(submission.id)">Submission Interviews</a>
+                         <a class="dropdown-item" style="cursor: pointer;" (click)="selectoffer(submission.id)">Submission Offers</a>
+                         <a class="dropdown-item" style="cursor: pointer;" (click)="delete(submission.id, submission)">Delete Submission</a>
+                     </div>
+
+                 </div>
+                 <div class="inner">
+                     <div class="s-details">
+                         <div class="submission-head-list">
+                             <div class="text-avatar">
+                                 {{ submission.candidate?.first_name | slice:0:1 }}{{ submission.candidate?.last_name | slice:0:1}} 
+                             </div>
+                             <div class="title-place">
+                                 <a href="javaScript:void(0)" class="card-title-lg">
+                                     <h2>{{ submission.candidate?.first_name }} {{ submission.candidate?.last_name }}({{submission.id}})</h2>
+                                 </a>
+                                 <div class="sub-additionalinfo">
+                                     <ul>
+                                         <li>
+                                             <i class="material-icons">place</i> <span>{{(submission?.location?.length>0?submission.location:'Any location') | slice:0:21}}</span>
+                                         </li>
+                                         <li>
+                                             <i class="material-icons">work</i> <span>{{ submission?.job?.title| slice:0:20 }}...</span>
+                                         </li>
+                                         <li *ngIf="submission.estimated_joning_date"><i class="material-icons">event</i> Est. Start Date :{{submission.estimated_joning_date | date:'MM/dd/yyyy' }}</li>
+                                         <li *ngIf="!submission.estimated_joning_date"><i class="material-icons">event</i> Est. Start Date : Not defined</li>
+                                     </ul>
+                                 </div>
+                             </div>
+                         </div>
+
+
+                         <div class="clearfix"></div>
+                         <label *ngIf="submission.status!='Rejected'" class="submission-status green">
+                             <i class="material-icons">lens</i> {{ submission.status }}
+                         </label>
+                         <label *ngIf="submission.status=='Rejected'" class="submission-status red">
+                             <i class="material-icons">lens</i> {{ submission.status }}
+                         </label>
+                         <ul class="requirements">
+                             <li *ngFor="let skill of submission.skills | slice:0:2;  let i=index"
+                                 ><i class="material-icons">check</i> {{skill.name  | slice:0:15 }}</li>
+                                 <li *ngIf="submission?.skills?.length > 2">+{{ submission?.skills?.length-2 }}</li>
+                             <li  *ngIf="submission?.skills?.length < 1"><i class="material-icons">check</i> No Skills</li>
+                         </ul>
+
+                     </div>
+                 </div>
+             </div>
+         </div>
+         </div>
+
+      <div class="row">
+          <div class="col-md-12" style="margin-top: 20px;">
+                <ngb-pagination *ngIf="pageObj.totalElements > 15"
+                [collectionSize]="pageObj.totalElements"
+                [maxSize]="5"
+                [(page)]="pageObj.page"
+                (pageChange)="pageChange($event)" 
+                [pageSize]="pageObj.pageSize"
+                [boundaryLinks]="true">
+                </ngb-pagination>
+             </div>
+      </div>
+   </div>
+</div>
